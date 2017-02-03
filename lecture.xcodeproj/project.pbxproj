@@ -1,0 +1,1016 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		107AC29265B1E16675C22E85 /* Pods_lecture.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F279395B15AC6CBF8C25ED66 /* Pods_lecture.framework */; };
+		247E0BC5951760BDA6DECF92 /* Pods_lectureUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27C9E6F452095A7EA63A78F1 /* Pods_lectureUITests.framework */; };
+		5AEADC37CB3FC87A4E145FC9 /* Pods_lectureTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC521F2BEE5E872F0E750272 /* Pods_lectureTests.framework */; };
+		BE040DEF1E1126D70054C5CA /* LectureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE040DEE1E1126D70054C5CA /* LectureViewController.m */; };
+		BE040DF21E112D580054C5CA /* Lecture.m in Sources */ = {isa = PBXBuildFile; fileRef = BE040DF11E112D580054C5CA /* Lecture.m */; };
+		BE040DF51E112D840054C5CA /* LectureQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = BE040DF41E112D840054C5CA /* LectureQuestion.m */; };
+		BE040DF81E112D990054C5CA /* ListenerQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = BE040DF71E112D990054C5CA /* ListenerQuestion.m */; };
+		BE14145E1E3507CF0086AA8B /* ALSendQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE14145D1E3507CF0086AA8B /* ALSendQuestionViewController.m */; };
+		BE1E2B201E30DD2A007A9718 /* SocketConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE1E2B1F1E30DD2A007A9718 /* SocketConnectionManager.m */; };
+		BE5E6ADE1DF1C50200A4FB9D /* EnterProfileInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE5E6ADD1DF1C50200A4FB9D /* EnterProfileInfoViewController.m */; };
+		BE663DB51E43D4790061109E /* DateValueFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = BE663DB01E43D4790061109E /* DateValueFormatter.m */; };
+		BE663DB61E43D4790061109E /* DayAxisValueFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = BE663DB21E43D4790061109E /* DayAxisValueFormatter.m */; };
+		BE663DB71E43D4790061109E /* IntAxisValueFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = BE663DB41E43D4790061109E /* IntAxisValueFormatter.m */; };
+		BE6BD28B1E007923002D9C93 /* CreateLectureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE6BD28A1E007923002D9C93 /* CreateLectureViewController.m */; };
+		BE9040A21DEF550F001F9BAC /* QuestionsWallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9040A11DEF550F001F9BAC /* QuestionsWallViewController.m */; };
+		BE9040A61DEF568B001F9BAC /* QuestionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9040A51DEF568B001F9BAC /* QuestionTableViewCell.m */; };
+		BE9040A91DEFA453001F9BAC /* GlobalData.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9040A81DEFA453001F9BAC /* GlobalData.m */; };
+		BE9040AC1DEFAB5F001F9BAC /* AskQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9040AB1DEFAB5F001F9BAC /* AskQuestionViewController.m */; };
+		BE90E6951D5B4FA900BD3BBB /* StartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE90E6941D5B4FA900BD3BBB /* StartViewController.m */; };
+		BE90E6981D5B50B400BD3BBB /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE90E6971D5B50B400BD3BBB /* LogInViewController.m */; };
+		BE90E69B1D5B50C700BD3BBB /* RegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE90E69A1D5B50C700BD3BBB /* RegistrationViewController.m */; };
+		BE90E69E1D5B50D300BD3BBB /* ActivationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE90E69D1D5B50D300BD3BBB /* ActivationViewController.m */; };
+		BE927D481DFF7AC7000969E9 /* LecturerUser.m in Sources */ = {isa = PBXBuildFile; fileRef = BE927D471DFF7AC7000969E9 /* LecturerUser.m */; };
+		BE927D4B1DFF818A000969E9 /* LecturerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE927D4A1DFF818A000969E9 /* LecturerManager.m */; };
+		BE927D4E1DFF819F000969E9 /* ListenerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE927D4D1DFF819F000969E9 /* ListenerManager.m */; };
+		BE94683D1E1D11FB0081F42B /* EditQAnswerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE94683C1E1D11FB0081F42B /* EditQAnswerTableViewCell.m */; };
+		BE98FD521E37AE9D007B2D48 /* BadgeSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = BE98FD511E37AE9D007B2D48 /* BadgeSegmentedControl.m */; };
+		BEA8668F1E00389800360C98 /* LecturerSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA8668E1E00389800360C98 /* LecturerSettingTableViewController.m */; };
+		BEABACAF1DF8BF0500BADF54 /* LecturerHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEABACAE1DF8BF0500BADF54 /* LecturerHomeViewController.m */; };
+		BEABACB21DF8C58200BADF54 /* LectureTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEABACB11DF8C58200BADF54 /* LectureTableViewCell.m */; };
+		BEABACB51DF8CCCF00BADF54 /* QuickQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEABACB41DF8CCCF00BADF54 /* QuickQuestionViewController.m */; };
+		BEC42B0B1DF9F70D00BC16EA /* HttpManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC42B0A1DF9F70D00BC16EA /* HttpManager.m */; };
+		BED5611F1E12D6FF0056FD07 /* LectureQuestionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BED5611E1E12D6FF0056FD07 /* LectureQuestionTableViewCell.m */; };
+		BEDBA4A51E1311F500195E3B /* QuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDBA4A41E1311F500195E3B /* QuestionViewController.m */; };
+		BEDBA4A81E132E5300195E3B /* QAnswerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDBA4A71E132E5300195E3B /* QAnswerTableViewCell.m */; };
+		BEE973F21DE3C8F100E30FDA /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = BEE973F11DE3C8F100E30FDA /* Podfile */; };
+		BEEB81901D50C44D00F6D80F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BEEB818F1D50C44D00F6D80F /* main.m */; };
+		BEEB81931D50C44D00F6D80F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BEEB81921D50C44D00F6D80F /* AppDelegate.m */; };
+		BEEB81991D50C44D00F6D80F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEEB81971D50C44D00F6D80F /* Main.storyboard */; };
+		BEEB819C1D50C44D00F6D80F /* lecture.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BEEB819A1D50C44D00F6D80F /* lecture.xcdatamodeld */; };
+		BEEB819E1D50C44D00F6D80F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEEB819D1D50C44D00F6D80F /* Assets.xcassets */; };
+		BEEB81A11D50C44D00F6D80F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEEB819F1D50C44D00F6D80F /* LaunchScreen.storyboard */; };
+		BEEB81AC1D50C44D00F6D80F /* lectureTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BEEB81AB1D50C44D00F6D80F /* lectureTests.m */; };
+		BEEB81B71D50C44D00F6D80F /* lectureUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = BEEB81B61D50C44D00F6D80F /* lectureUITests.m */; };
+		BEEFFC5C1E2E570900CB9027 /* LectureWallTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEEFFC5B1E2E570900CB9027 /* LectureWallTableViewCell.m */; };
+		BEEFFC681E2E61C700CB9027 /* ALViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEEFFC671E2E61C700CB9027 /* ALViewController.m */; };
+		BEEFFC6B1E2E6BB800CB9027 /* ALQuestionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEEFFC6A1E2E6BB800CB9027 /* ALQuestionTableViewCell.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BEEB81A81D50C44D00F6D80F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BEEB81831D50C44D00F6D80F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BEEB818A1D50C44D00F6D80F;
+			remoteInfo = lecture;
+		};
+		BEEB81B31D50C44D00F6D80F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BEEB81831D50C44D00F6D80F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BEEB818A1D50C44D00F6D80F;
+			remoteInfo = lecture;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		033F26B7FD52B85326D3A619 /* Pods-lecture.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lecture.debug.xcconfig"; path = "Pods/Target Support Files/Pods-lecture/Pods-lecture.debug.xcconfig"; sourceTree = "<group>"; };
+		27C9E6F452095A7EA63A78F1 /* Pods_lectureUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_lectureUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7344EE486014685AEB5D76E2 /* Pods-lectureUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lectureUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-lectureUITests/Pods-lectureUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		8115A2222670B47DF7FAC9BD /* Pods-lectureTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lectureTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-lectureTests/Pods-lectureTests.debug.xcconfig"; sourceTree = "<group>"; };
+		8FA71FCD1D37BB184D7E6870 /* Pods-lecture.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lecture.release.xcconfig"; path = "Pods/Target Support Files/Pods-lecture/Pods-lecture.release.xcconfig"; sourceTree = "<group>"; };
+		B4B9F6119D8AD1B1B771DD66 /* Pods-lectureUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lectureUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-lectureUITests/Pods-lectureUITests.release.xcconfig"; sourceTree = "<group>"; };
+		BE040DED1E1126D70054C5CA /* LectureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LectureViewController.h; sourceTree = "<group>"; };
+		BE040DEE1E1126D70054C5CA /* LectureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LectureViewController.m; sourceTree = "<group>"; };
+		BE040DF01E112D580054C5CA /* Lecture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lecture.h; sourceTree = "<group>"; };
+		BE040DF11E112D580054C5CA /* Lecture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lecture.m; sourceTree = "<group>"; };
+		BE040DF31E112D840054C5CA /* LectureQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LectureQuestion.h; sourceTree = "<group>"; };
+		BE040DF41E112D840054C5CA /* LectureQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LectureQuestion.m; sourceTree = "<group>"; };
+		BE040DF61E112D990054C5CA /* ListenerQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListenerQuestion.h; sourceTree = "<group>"; };
+		BE040DF71E112D990054C5CA /* ListenerQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListenerQuestion.m; sourceTree = "<group>"; };
+		BE14145C1E3507CF0086AA8B /* ALSendQuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALSendQuestionViewController.h; sourceTree = "<group>"; };
+		BE14145D1E3507CF0086AA8B /* ALSendQuestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALSendQuestionViewController.m; sourceTree = "<group>"; };
+		BE1E2B1E1E30DD2A007A9718 /* SocketConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketConnectionManager.h; sourceTree = "<group>"; };
+		BE1E2B1F1E30DD2A007A9718 /* SocketConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocketConnectionManager.m; sourceTree = "<group>"; };
+		BE5E6ADC1DF1C50200A4FB9D /* EnterProfileInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnterProfileInfoViewController.h; sourceTree = "<group>"; };
+		BE5E6ADD1DF1C50200A4FB9D /* EnterProfileInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterProfileInfoViewController.m; sourceTree = "<group>"; };
+		BE663DAF1E43D4790061109E /* DateValueFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateValueFormatter.h; sourceTree = "<group>"; };
+		BE663DB01E43D4790061109E /* DateValueFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateValueFormatter.m; sourceTree = "<group>"; };
+		BE663DB11E43D4790061109E /* DayAxisValueFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayAxisValueFormatter.h; sourceTree = "<group>"; };
+		BE663DB21E43D4790061109E /* DayAxisValueFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DayAxisValueFormatter.m; sourceTree = "<group>"; };
+		BE663DB31E43D4790061109E /* IntAxisValueFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntAxisValueFormatter.h; sourceTree = "<group>"; };
+		BE663DB41E43D4790061109E /* IntAxisValueFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntAxisValueFormatter.m; sourceTree = "<group>"; };
+		BE6BD2891E007923002D9C93 /* CreateLectureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateLectureViewController.h; sourceTree = "<group>"; };
+		BE6BD28A1E007923002D9C93 /* CreateLectureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateLectureViewController.m; sourceTree = "<group>"; };
+		BE9040A01DEF550F001F9BAC /* QuestionsWallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionsWallViewController.h; sourceTree = "<group>"; };
+		BE9040A11DEF550F001F9BAC /* QuestionsWallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionsWallViewController.m; sourceTree = "<group>"; };
+		BE9040A41DEF568B001F9BAC /* QuestionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionTableViewCell.h; sourceTree = "<group>"; };
+		BE9040A51DEF568B001F9BAC /* QuestionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionTableViewCell.m; sourceTree = "<group>"; };
+		BE9040A71DEFA453001F9BAC /* GlobalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalData.h; sourceTree = "<group>"; };
+		BE9040A81DEFA453001F9BAC /* GlobalData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalData.m; sourceTree = "<group>"; };
+		BE9040AA1DEFAB5F001F9BAC /* AskQuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AskQuestionViewController.h; sourceTree = "<group>"; };
+		BE9040AB1DEFAB5F001F9BAC /* AskQuestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AskQuestionViewController.m; sourceTree = "<group>"; };
+		BE90E6931D5B4FA900BD3BBB /* StartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartViewController.h; sourceTree = "<group>"; };
+		BE90E6941D5B4FA900BD3BBB /* StartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartViewController.m; sourceTree = "<group>"; };
+		BE90E6961D5B50B400BD3BBB /* LogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
+		BE90E6971D5B50B400BD3BBB /* LogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogInViewController.m; sourceTree = "<group>"; };
+		BE90E6991D5B50C700BD3BBB /* RegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationViewController.h; sourceTree = "<group>"; };
+		BE90E69A1D5B50C700BD3BBB /* RegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationViewController.m; sourceTree = "<group>"; };
+		BE90E69C1D5B50D200BD3BBB /* ActivationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivationViewController.h; sourceTree = "<group>"; };
+		BE90E69D1D5B50D300BD3BBB /* ActivationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivationViewController.m; sourceTree = "<group>"; };
+		BE927D461DFF7AC7000969E9 /* LecturerUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LecturerUser.h; sourceTree = "<group>"; };
+		BE927D471DFF7AC7000969E9 /* LecturerUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LecturerUser.m; sourceTree = "<group>"; };
+		BE927D491DFF818A000969E9 /* LecturerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LecturerManager.h; sourceTree = "<group>"; };
+		BE927D4A1DFF818A000969E9 /* LecturerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LecturerManager.m; sourceTree = "<group>"; };
+		BE927D4C1DFF819F000969E9 /* ListenerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListenerManager.h; sourceTree = "<group>"; };
+		BE927D4D1DFF819F000969E9 /* ListenerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListenerManager.m; sourceTree = "<group>"; };
+		BE94683B1E1D11FB0081F42B /* EditQAnswerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditQAnswerTableViewCell.h; sourceTree = "<group>"; };
+		BE94683C1E1D11FB0081F42B /* EditQAnswerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditQAnswerTableViewCell.m; sourceTree = "<group>"; };
+		BE98FD501E37AE9D007B2D48 /* BadgeSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BadgeSegmentedControl.h; sourceTree = "<group>"; };
+		BE98FD511E37AE9D007B2D48 /* BadgeSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BadgeSegmentedControl.m; sourceTree = "<group>"; };
+		BEA8668D1E00389800360C98 /* LecturerSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LecturerSettingTableViewController.h; sourceTree = "<group>"; };
+		BEA8668E1E00389800360C98 /* LecturerSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LecturerSettingTableViewController.m; sourceTree = "<group>"; };
+		BEABACAD1DF8BF0500BADF54 /* LecturerHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LecturerHomeViewController.h; sourceTree = "<group>"; };
+		BEABACAE1DF8BF0500BADF54 /* LecturerHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LecturerHomeViewController.m; sourceTree = "<group>"; };
+		BEABACB01DF8C58200BADF54 /* LectureTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LectureTableViewCell.h; sourceTree = "<group>"; };
+		BEABACB11DF8C58200BADF54 /* LectureTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LectureTableViewCell.m; sourceTree = "<group>"; };
+		BEABACB31DF8CCCF00BADF54 /* QuickQuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickQuestionViewController.h; sourceTree = "<group>"; };
+		BEABACB41DF8CCCF00BADF54 /* QuickQuestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuickQuestionViewController.m; sourceTree = "<group>"; };
+		BEC42B091DF9F70D00BC16EA /* HttpManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpManager.h; sourceTree = "<group>"; };
+		BEC42B0A1DF9F70D00BC16EA /* HttpManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpManager.m; sourceTree = "<group>"; };
+		BED5611D1E12D6FF0056FD07 /* LectureQuestionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LectureQuestionTableViewCell.h; sourceTree = "<group>"; };
+		BED5611E1E12D6FF0056FD07 /* LectureQuestionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LectureQuestionTableViewCell.m; sourceTree = "<group>"; };
+		BEDBA4A31E1311F500195E3B /* QuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionViewController.h; sourceTree = "<group>"; };
+		BEDBA4A41E1311F500195E3B /* QuestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionViewController.m; sourceTree = "<group>"; };
+		BEDBA4A61E132E5300195E3B /* QAnswerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QAnswerTableViewCell.h; sourceTree = "<group>"; };
+		BEDBA4A71E132E5300195E3B /* QAnswerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QAnswerTableViewCell.m; sourceTree = "<group>"; };
+		BEE973F11DE3C8F100E30FDA /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		BEEB818B1D50C44D00F6D80F /* lecture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lecture.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BEEB818F1D50C44D00F6D80F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		BEEB81911D50C44D00F6D80F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		BEEB81921D50C44D00F6D80F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		BEEB81981D50C44D00F6D80F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		BEEB819B1D50C44D00F6D80F /* lecture.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = lecture.xcdatamodel; sourceTree = "<group>"; };
+		BEEB819D1D50C44D00F6D80F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BEEB81A01D50C44D00F6D80F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		BEEB81A21D50C44D00F6D80F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BEEB81A71D50C44D00F6D80F /* lectureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = lectureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BEEB81AB1D50C44D00F6D80F /* lectureTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = lectureTests.m; sourceTree = "<group>"; };
+		BEEB81AD1D50C44D00F6D80F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BEEB81B21D50C44D00F6D80F /* lectureUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = lectureUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BEEB81B61D50C44D00F6D80F /* lectureUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = lectureUITests.m; sourceTree = "<group>"; };
+		BEEB81B81D50C44D00F6D80F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BEEFFC5A1E2E570900CB9027 /* LectureWallTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LectureWallTableViewCell.h; sourceTree = "<group>"; };
+		BEEFFC5B1E2E570900CB9027 /* LectureWallTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LectureWallTableViewCell.m; sourceTree = "<group>"; };
+		BEEFFC661E2E61C700CB9027 /* ALViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALViewController.h; sourceTree = "<group>"; };
+		BEEFFC671E2E61C700CB9027 /* ALViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALViewController.m; sourceTree = "<group>"; };
+		BEEFFC691E2E6BB800CB9027 /* ALQuestionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALQuestionTableViewCell.h; sourceTree = "<group>"; };
+		BEEFFC6A1E2E6BB800CB9027 /* ALQuestionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALQuestionTableViewCell.m; sourceTree = "<group>"; };
+		EADF2E7ECF8005BF4D50B6AE /* Pods-lectureTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lectureTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-lectureTests/Pods-lectureTests.release.xcconfig"; sourceTree = "<group>"; };
+		F279395B15AC6CBF8C25ED66 /* Pods_lecture.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_lecture.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FC521F2BEE5E872F0E750272 /* Pods_lectureTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_lectureTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BEEB81881D50C44D00F6D80F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				107AC29265B1E16675C22E85 /* Pods_lecture.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BEEB81A41D50C44D00F6D80F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5AEADC37CB3FC87A4E145FC9 /* Pods_lectureTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BEEB81AF1D50C44D00F6D80F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				247E0BC5951760BDA6DECF92 /* Pods_lectureUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		50DB91044161EBD668EAF74B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				033F26B7FD52B85326D3A619 /* Pods-lecture.debug.xcconfig */,
+				8FA71FCD1D37BB184D7E6870 /* Pods-lecture.release.xcconfig */,
+				8115A2222670B47DF7FAC9BD /* Pods-lectureTests.debug.xcconfig */,
+				EADF2E7ECF8005BF4D50B6AE /* Pods-lectureTests.release.xcconfig */,
+				7344EE486014685AEB5D76E2 /* Pods-lectureUITests.debug.xcconfig */,
+				B4B9F6119D8AD1B1B771DD66 /* Pods-lectureUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		BE040DF91E112E900054C5CA /* Lecture */ = {
+			isa = PBXGroup;
+			children = (
+				BE040DF01E112D580054C5CA /* Lecture.h */,
+				BE040DF11E112D580054C5CA /* Lecture.m */,
+				BE040DF31E112D840054C5CA /* LectureQuestion.h */,
+				BE040DF41E112D840054C5CA /* LectureQuestion.m */,
+			);
+			name = Lecture;
+			sourceTree = "<group>";
+		};
+		BE27E1CB1E22DED100F32D6E /* Question */ = {
+			isa = PBXGroup;
+			children = (
+				BEDBA4A31E1311F500195E3B /* QuestionViewController.h */,
+				BEDBA4A41E1311F500195E3B /* QuestionViewController.m */,
+				BEDBA4A61E132E5300195E3B /* QAnswerTableViewCell.h */,
+				BEDBA4A71E132E5300195E3B /* QAnswerTableViewCell.m */,
+				BE94683B1E1D11FB0081F42B /* EditQAnswerTableViewCell.h */,
+				BE94683C1E1D11FB0081F42B /* EditQAnswerTableViewCell.m */,
+			);
+			name = Question;
+			sourceTree = "<group>";
+		};
+		BE5E6ADF1DF1C50900A4FB9D /* Lecturer */ = {
+			isa = PBXGroup;
+			children = (
+				BE5E6ADC1DF1C50200A4FB9D /* EnterProfileInfoViewController.h */,
+				BE5E6ADD1DF1C50200A4FB9D /* EnterProfileInfoViewController.m */,
+				BEABACAD1DF8BF0500BADF54 /* LecturerHomeViewController.h */,
+				BEABACAE1DF8BF0500BADF54 /* LecturerHomeViewController.m */,
+				BEABACB01DF8C58200BADF54 /* LectureTableViewCell.h */,
+				BEABACB11DF8C58200BADF54 /* LectureTableViewCell.m */,
+				BEA8668D1E00389800360C98 /* LecturerSettingTableViewController.h */,
+				BEA8668E1E00389800360C98 /* LecturerSettingTableViewController.m */,
+				BE6BD2891E007923002D9C93 /* CreateLectureViewController.h */,
+				BE6BD28A1E007923002D9C93 /* CreateLectureViewController.m */,
+				BE040DED1E1126D70054C5CA /* LectureViewController.h */,
+				BE040DEE1E1126D70054C5CA /* LectureViewController.m */,
+				BED5611D1E12D6FF0056FD07 /* LectureQuestionTableViewCell.h */,
+				BED5611E1E12D6FF0056FD07 /* LectureQuestionTableViewCell.m */,
+				BEEFFC591E2E56BB00CB9027 /* ActiveLecture */,
+				BE27E1CB1E22DED100F32D6E /* Question */,
+			);
+			name = Lecturer;
+			sourceTree = "<group>";
+		};
+		BE663DAE1E43D4790061109E /* Formatters */ = {
+			isa = PBXGroup;
+			children = (
+				BE663DAF1E43D4790061109E /* DateValueFormatter.h */,
+				BE663DB01E43D4790061109E /* DateValueFormatter.m */,
+				BE663DB11E43D4790061109E /* DayAxisValueFormatter.h */,
+				BE663DB21E43D4790061109E /* DayAxisValueFormatter.m */,
+				BE663DB31E43D4790061109E /* IntAxisValueFormatter.h */,
+				BE663DB41E43D4790061109E /* IntAxisValueFormatter.m */,
+			);
+			path = Formatters;
+			sourceTree = "<group>";
+		};
+		BE9040A31DEF5524001F9BAC /* Listener */ = {
+			isa = PBXGroup;
+			children = (
+				BE9040A01DEF550F001F9BAC /* QuestionsWallViewController.h */,
+				BE9040A11DEF550F001F9BAC /* QuestionsWallViewController.m */,
+				BE9040A41DEF568B001F9BAC /* QuestionTableViewCell.h */,
+				BE9040A51DEF568B001F9BAC /* QuestionTableViewCell.m */,
+				BE9040AA1DEFAB5F001F9BAC /* AskQuestionViewController.h */,
+				BE9040AB1DEFAB5F001F9BAC /* AskQuestionViewController.m */,
+				BEABACB31DF8CCCF00BADF54 /* QuickQuestionViewController.h */,
+				BEABACB41DF8CCCF00BADF54 /* QuickQuestionViewController.m */,
+			);
+			name = Listener;
+			sourceTree = "<group>";
+		};
+		BE90E69F1D5B50DB00BD3BBB /* LogRegAct */ = {
+			isa = PBXGroup;
+			children = (
+				BE90E6961D5B50B400BD3BBB /* LogInViewController.h */,
+				BE90E6971D5B50B400BD3BBB /* LogInViewController.m */,
+				BE90E6991D5B50C700BD3BBB /* RegistrationViewController.h */,
+				BE90E69A1D5B50C700BD3BBB /* RegistrationViewController.m */,
+				BE90E69C1D5B50D200BD3BBB /* ActivationViewController.h */,
+				BE90E69D1D5B50D300BD3BBB /* ActivationViewController.m */,
+			);
+			name = LogRegAct;
+			sourceTree = "<group>";
+		};
+		BEC42B0F1DF9F73D00BC16EA /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				BEC42B091DF9F70D00BC16EA /* HttpManager.h */,
+				BEC42B0A1DF9F70D00BC16EA /* HttpManager.m */,
+				BE927D491DFF818A000969E9 /* LecturerManager.h */,
+				BE927D4A1DFF818A000969E9 /* LecturerManager.m */,
+				BE927D4C1DFF819F000969E9 /* ListenerManager.h */,
+				BE927D4D1DFF819F000969E9 /* ListenerManager.m */,
+				BE1E2B1E1E30DD2A007A9718 /* SocketConnectionManager.h */,
+				BE1E2B1F1E30DD2A007A9718 /* SocketConnectionManager.m */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
+		BEC57A6FFE0C6CE5950E7300 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F279395B15AC6CBF8C25ED66 /* Pods_lecture.framework */,
+				FC521F2BEE5E872F0E750272 /* Pods_lectureTests.framework */,
+				27C9E6F452095A7EA63A78F1 /* Pods_lectureUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BEEB81821D50C44D00F6D80F = {
+			isa = PBXGroup;
+			children = (
+				BEE973F11DE3C8F100E30FDA /* Podfile */,
+				BEEB818D1D50C44D00F6D80F /* lecture */,
+				BEEB81AA1D50C44D00F6D80F /* lectureTests */,
+				BEEB81B51D50C44D00F6D80F /* lectureUITests */,
+				BEEB818C1D50C44D00F6D80F /* Products */,
+				50DB91044161EBD668EAF74B /* Pods */,
+				BEC57A6FFE0C6CE5950E7300 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		BEEB818C1D50C44D00F6D80F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BEEB818B1D50C44D00F6D80F /* lecture.app */,
+				BEEB81A71D50C44D00F6D80F /* lectureTests.xctest */,
+				BEEB81B21D50C44D00F6D80F /* lectureUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BEEB818D1D50C44D00F6D80F /* lecture */ = {
+			isa = PBXGroup;
+			children = (
+				BE663DAE1E43D4790061109E /* Formatters */,
+				BEEB81911D50C44D00F6D80F /* AppDelegate.h */,
+				BEEB81921D50C44D00F6D80F /* AppDelegate.m */,
+				BEEB81971D50C44D00F6D80F /* Main.storyboard */,
+				BEEB819D1D50C44D00F6D80F /* Assets.xcassets */,
+				BEEB819F1D50C44D00F6D80F /* LaunchScreen.storyboard */,
+				BEEB81A21D50C44D00F6D80F /* Info.plist */,
+				BEEB819A1D50C44D00F6D80F /* lecture.xcdatamodeld */,
+				BEC42B0F1DF9F73D00BC16EA /* Managers */,
+				BEEB818E1D50C44D00F6D80F /* Supporting Files */,
+				BE90E6931D5B4FA900BD3BBB /* StartViewController.h */,
+				BE90E6941D5B4FA900BD3BBB /* StartViewController.m */,
+				BE90E69F1D5B50DB00BD3BBB /* LogRegAct */,
+				BE5E6ADF1DF1C50900A4FB9D /* Lecturer */,
+				BE040DF91E112E900054C5CA /* Lecture */,
+				BE9040A31DEF5524001F9BAC /* Listener */,
+				BE9040A71DEFA453001F9BAC /* GlobalData.h */,
+				BE9040A81DEFA453001F9BAC /* GlobalData.m */,
+				BE927D461DFF7AC7000969E9 /* LecturerUser.h */,
+				BE927D471DFF7AC7000969E9 /* LecturerUser.m */,
+				BE040DF61E112D990054C5CA /* ListenerQuestion.h */,
+				BE040DF71E112D990054C5CA /* ListenerQuestion.m */,
+				BE98FD501E37AE9D007B2D48 /* BadgeSegmentedControl.h */,
+				BE98FD511E37AE9D007B2D48 /* BadgeSegmentedControl.m */,
+			);
+			path = lecture;
+			sourceTree = "<group>";
+		};
+		BEEB818E1D50C44D00F6D80F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BEEB818F1D50C44D00F6D80F /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BEEB81AA1D50C44D00F6D80F /* lectureTests */ = {
+			isa = PBXGroup;
+			children = (
+				BEEB81AB1D50C44D00F6D80F /* lectureTests.m */,
+				BEEB81AD1D50C44D00F6D80F /* Info.plist */,
+			);
+			path = lectureTests;
+			sourceTree = "<group>";
+		};
+		BEEB81B51D50C44D00F6D80F /* lectureUITests */ = {
+			isa = PBXGroup;
+			children = (
+				BEEB81B61D50C44D00F6D80F /* lectureUITests.m */,
+				BEEB81B81D50C44D00F6D80F /* Info.plist */,
+			);
+			path = lectureUITests;
+			sourceTree = "<group>";
+		};
+		BEEFFC591E2E56BB00CB9027 /* ActiveLecture */ = {
+			isa = PBXGroup;
+			children = (
+				BEEFFC5A1E2E570900CB9027 /* LectureWallTableViewCell.h */,
+				BEEFFC5B1E2E570900CB9027 /* LectureWallTableViewCell.m */,
+				BEEFFC661E2E61C700CB9027 /* ALViewController.h */,
+				BEEFFC671E2E61C700CB9027 /* ALViewController.m */,
+				BEEFFC691E2E6BB800CB9027 /* ALQuestionTableViewCell.h */,
+				BEEFFC6A1E2E6BB800CB9027 /* ALQuestionTableViewCell.m */,
+				BE14145C1E3507CF0086AA8B /* ALSendQuestionViewController.h */,
+				BE14145D1E3507CF0086AA8B /* ALSendQuestionViewController.m */,
+			);
+			name = ActiveLecture;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BEEB818A1D50C44D00F6D80F /* lecture */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BEEB81BB1D50C44D00F6D80F /* Build configuration list for PBXNativeTarget "lecture" */;
+			buildPhases = (
+				42070E2BAB6FE9E0181FA0B7 /* [CP] Check Pods Manifest.lock */,
+				BEEB81871D50C44D00F6D80F /* Sources */,
+				BEEB81881D50C44D00F6D80F /* Frameworks */,
+				BEEB81891D50C44D00F6D80F /* Resources */,
+				824457A9DA29B7E8E4D92925 /* [CP] Embed Pods Frameworks */,
+				AAAE0034B146A3BD1896DD5A /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = lecture;
+			productName = lecture;
+			productReference = BEEB818B1D50C44D00F6D80F /* lecture.app */;
+			productType = "com.apple.product-type.application";
+		};
+		BEEB81A61D50C44D00F6D80F /* lectureTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BEEB81BE1D50C44D00F6D80F /* Build configuration list for PBXNativeTarget "lectureTests" */;
+			buildPhases = (
+				65B1CA38F296AEB42EF65BD4 /* [CP] Check Pods Manifest.lock */,
+				BEEB81A31D50C44D00F6D80F /* Sources */,
+				BEEB81A41D50C44D00F6D80F /* Frameworks */,
+				BEEB81A51D50C44D00F6D80F /* Resources */,
+				6B3DF7DACD6E1752FD80861A /* [CP] Embed Pods Frameworks */,
+				0852E7DE962406A4BBA8D9F9 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BEEB81A91D50C44D00F6D80F /* PBXTargetDependency */,
+			);
+			name = lectureTests;
+			productName = lectureTests;
+			productReference = BEEB81A71D50C44D00F6D80F /* lectureTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		BEEB81B11D50C44D00F6D80F /* lectureUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BEEB81C11D50C44D00F6D80F /* Build configuration list for PBXNativeTarget "lectureUITests" */;
+			buildPhases = (
+				28CB139558C223B60C6E1297 /* [CP] Check Pods Manifest.lock */,
+				BEEB81AE1D50C44D00F6D80F /* Sources */,
+				BEEB81AF1D50C44D00F6D80F /* Frameworks */,
+				BEEB81B01D50C44D00F6D80F /* Resources */,
+				3195B617CC150D5BC6909FE4 /* [CP] Copy Pods Resources */,
+				CDD9EAA1F65E772AEB6D3BEC /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BEEB81B41D50C44D00F6D80F /* PBXTargetDependency */,
+			);
+			name = lectureUITests;
+			productName = lectureUITests;
+			productReference = BEEB81B21D50C44D00F6D80F /* lectureUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BEEB81831D50C44D00F6D80F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = joeTod;
+				TargetAttributes = {
+					BEEB818A1D50C44D00F6D80F = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = T828QT2TJ8;
+						LastSwiftMigration = 0820;
+					};
+					BEEB81A61D50C44D00F6D80F = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = T828QT2TJ8;
+						TestTargetID = BEEB818A1D50C44D00F6D80F;
+					};
+					BEEB81B11D50C44D00F6D80F = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = T828QT2TJ8;
+						TestTargetID = BEEB818A1D50C44D00F6D80F;
+					};
+				};
+			};
+			buildConfigurationList = BEEB81861D50C44D00F6D80F /* Build configuration list for PBXProject "lecture" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BEEB81821D50C44D00F6D80F;
+			productRefGroup = BEEB818C1D50C44D00F6D80F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BEEB818A1D50C44D00F6D80F /* lecture */,
+				BEEB81A61D50C44D00F6D80F /* lectureTests */,
+				BEEB81B11D50C44D00F6D80F /* lectureUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BEEB81891D50C44D00F6D80F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BEEB81A11D50C44D00F6D80F /* LaunchScreen.storyboard in Resources */,
+				BEEB819E1D50C44D00F6D80F /* Assets.xcassets in Resources */,
+				BEE973F21DE3C8F100E30FDA /* Podfile in Resources */,
+				BEEB81991D50C44D00F6D80F /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BEEB81A51D50C44D00F6D80F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BEEB81B01D50C44D00F6D80F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0852E7DE962406A4BBA8D9F9 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-lectureTests/Pods-lectureTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		28CB139558C223B60C6E1297 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		3195B617CC150D5BC6909FE4 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-lectureUITests/Pods-lectureUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		42070E2BAB6FE9E0181FA0B7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		65B1CA38F296AEB42EF65BD4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		6B3DF7DACD6E1752FD80861A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-lectureTests/Pods-lectureTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		824457A9DA29B7E8E4D92925 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-lecture/Pods-lecture-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AAAE0034B146A3BD1896DD5A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-lecture/Pods-lecture-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CDD9EAA1F65E772AEB6D3BEC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-lectureUITests/Pods-lectureUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BEEB81871D50C44D00F6D80F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BEEB819C1D50C44D00F6D80F /* lecture.xcdatamodeld in Sources */,
+				BE94683D1E1D11FB0081F42B /* EditQAnswerTableViewCell.m in Sources */,
+				BE927D4B1DFF818A000969E9 /* LecturerManager.m in Sources */,
+				BE90E69B1D5B50C700BD3BBB /* RegistrationViewController.m in Sources */,
+				BE9040A21DEF550F001F9BAC /* QuestionsWallViewController.m in Sources */,
+				BE90E6951D5B4FA900BD3BBB /* StartViewController.m in Sources */,
+				BE927D4E1DFF819F000969E9 /* ListenerManager.m in Sources */,
+				BE9040A61DEF568B001F9BAC /* QuestionTableViewCell.m in Sources */,
+				BE90E6981D5B50B400BD3BBB /* LogInViewController.m in Sources */,
+				BE040DF21E112D580054C5CA /* Lecture.m in Sources */,
+				BEC42B0B1DF9F70D00BC16EA /* HttpManager.m in Sources */,
+				BEEB81931D50C44D00F6D80F /* AppDelegate.m in Sources */,
+				BEABACB51DF8CCCF00BADF54 /* QuickQuestionViewController.m in Sources */,
+				BED5611F1E12D6FF0056FD07 /* LectureQuestionTableViewCell.m in Sources */,
+				BE98FD521E37AE9D007B2D48 /* BadgeSegmentedControl.m in Sources */,
+				BEDBA4A81E132E5300195E3B /* QAnswerTableViewCell.m in Sources */,
+				BE6BD28B1E007923002D9C93 /* CreateLectureViewController.m in Sources */,
+				BE1E2B201E30DD2A007A9718 /* SocketConnectionManager.m in Sources */,
+				BE663DB51E43D4790061109E /* DateValueFormatter.m in Sources */,
+				BEDBA4A51E1311F500195E3B /* QuestionViewController.m in Sources */,
+				BEEB81901D50C44D00F6D80F /* main.m in Sources */,
+				BEABACB21DF8C58200BADF54 /* LectureTableViewCell.m in Sources */,
+				BEABACAF1DF8BF0500BADF54 /* LecturerHomeViewController.m in Sources */,
+				BE040DF51E112D840054C5CA /* LectureQuestion.m in Sources */,
+				BEEFFC681E2E61C700CB9027 /* ALViewController.m in Sources */,
+				BE663DB61E43D4790061109E /* DayAxisValueFormatter.m in Sources */,
+				BE9040AC1DEFAB5F001F9BAC /* AskQuestionViewController.m in Sources */,
+				BE9040A91DEFA453001F9BAC /* GlobalData.m in Sources */,
+				BE5E6ADE1DF1C50200A4FB9D /* EnterProfileInfoViewController.m in Sources */,
+				BE663DB71E43D4790061109E /* IntAxisValueFormatter.m in Sources */,
+				BE927D481DFF7AC7000969E9 /* LecturerUser.m in Sources */,
+				BE040DF81E112D990054C5CA /* ListenerQuestion.m in Sources */,
+				BEEFFC5C1E2E570900CB9027 /* LectureWallTableViewCell.m in Sources */,
+				BEEFFC6B1E2E6BB800CB9027 /* ALQuestionTableViewCell.m in Sources */,
+				BE040DEF1E1126D70054C5CA /* LectureViewController.m in Sources */,
+				BEA8668F1E00389800360C98 /* LecturerSettingTableViewController.m in Sources */,
+				BE90E69E1D5B50D300BD3BBB /* ActivationViewController.m in Sources */,
+				BE14145E1E3507CF0086AA8B /* ALSendQuestionViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BEEB81A31D50C44D00F6D80F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BEEB81AC1D50C44D00F6D80F /* lectureTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BEEB81AE1D50C44D00F6D80F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BEEB81B71D50C44D00F6D80F /* lectureUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BEEB81A91D50C44D00F6D80F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BEEB818A1D50C44D00F6D80F /* lecture */;
+			targetProxy = BEEB81A81D50C44D00F6D80F /* PBXContainerItemProxy */;
+		};
+		BEEB81B41D50C44D00F6D80F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BEEB818A1D50C44D00F6D80F /* lecture */;
+			targetProxy = BEEB81B31D50C44D00F6D80F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		BEEB81971D50C44D00F6D80F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BEEB81981D50C44D00F6D80F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		BEEB819F1D50C44D00F6D80F /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BEEB81A01D50C44D00F6D80F /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		BEEB81B91D50C44D00F6D80F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		BEEB81BA1D50C44D00F6D80F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		BEEB81BC1D50C44D00F6D80F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 033F26B7FD52B85326D3A619 /* Pods-lecture.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = lecture/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.joeTod.lecture;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		BEEB81BD1D50C44D00F6D80F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8FA71FCD1D37BB184D7E6870 /* Pods-lecture.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = lecture/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.joeTod.lecture;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		BEEB81BF1D50C44D00F6D80F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8115A2222670B47DF7FAC9BD /* Pods-lectureTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = lectureTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.joeTod.lectureTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/lecture.app/lecture";
+			};
+			name = Debug;
+		};
+		BEEB81C01D50C44D00F6D80F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EADF2E7ECF8005BF4D50B6AE /* Pods-lectureTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = lectureTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.joeTod.lectureTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/lecture.app/lecture";
+			};
+			name = Release;
+		};
+		BEEB81C21D50C44D00F6D80F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7344EE486014685AEB5D76E2 /* Pods-lectureUITests.debug.xcconfig */;
+			buildSettings = {
+				INFOPLIST_FILE = lectureUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.joeTod.lectureUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = lecture;
+			};
+			name = Debug;
+		};
+		BEEB81C31D50C44D00F6D80F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B4B9F6119D8AD1B1B771DD66 /* Pods-lectureUITests.release.xcconfig */;
+			buildSettings = {
+				INFOPLIST_FILE = lectureUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.joeTod.lectureUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = lecture;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BEEB81861D50C44D00F6D80F /* Build configuration list for PBXProject "lecture" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BEEB81B91D50C44D00F6D80F /* Debug */,
+				BEEB81BA1D50C44D00F6D80F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BEEB81BB1D50C44D00F6D80F /* Build configuration list for PBXNativeTarget "lecture" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BEEB81BC1D50C44D00F6D80F /* Debug */,
+				BEEB81BD1D50C44D00F6D80F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BEEB81BE1D50C44D00F6D80F /* Build configuration list for PBXNativeTarget "lectureTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BEEB81BF1D50C44D00F6D80F /* Debug */,
+				BEEB81C01D50C44D00F6D80F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BEEB81C11D50C44D00F6D80F /* Build configuration list for PBXNativeTarget "lectureUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BEEB81C21D50C44D00F6D80F /* Debug */,
+				BEEB81C31D50C44D00F6D80F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		BEEB819A1D50C44D00F6D80F /* lecture.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				BEEB819B1D50C44D00F6D80F /* lecture.xcdatamodel */,
+			);
+			currentVersion = BEEB819B1D50C44D00F6D80F /* lecture.xcdatamodel */;
+			path = lecture.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = BEEB81831D50C44D00F6D80F /* Project object */;
+}
