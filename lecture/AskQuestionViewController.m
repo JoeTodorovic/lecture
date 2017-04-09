@@ -26,14 +26,24 @@
     //SET TSMessage
     [TSMessage setDefaultViewController:self];
     [TSMessage setDelegate:self];
+    
+    //SET notification
+    [self setNotifications];
 }
 
 -(void)setNotifications{
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendQuestionResponse:) name:@"sendListenerQuestionResponseNotification" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(lectureEndded:) name:@"lectureFinishedNotification" object:nil];
+
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Selectors
@@ -51,6 +61,22 @@
                                             type:TSMessageNotificationTypeMessage];
             }];
     }
+}
+
+-(void)lectureEndded:(NSNotification *)not{
+    NSLog(@"Lecturer ended lecture NOTIFICATION");
+//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Lecture" message:@"The lecture has finished." preferredStyle:UIAlertControllerStyleAlert];
+//    
+//    [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+//        
+//        [alertController dismissViewControllerAnimated:YES completion:nil];
+//    }]];
+//    
+//    dispatch_async(dispatch_get_main_queue(), ^ {
+//        [self presentViewController:alertController animated:YES completion:nil];
+//    });
+    [self dismissViewControllerAnimated:YES completion:nil];
+
 }
 
 #pragma mark - TextView

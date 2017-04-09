@@ -7,6 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+
+#import <UIKit/UIKit.h>
+
 #import "LecturerManager.h"
 
 @interface SocketConnectionManager : NSObject<NSStreamDelegate>
@@ -14,6 +17,9 @@
 @property BOOL connected;
 @property BOOL isWaitingResponse;
 @property BOOL isLoggedIn;
+@property BOOL lecturer;
+
+@property (strong, nonatomic) NSString *host;
 
 @property (nonatomic, strong) NSMutableArray *wallQuestions;
 
@@ -44,8 +50,14 @@
 - (void)sendListenerQuestion:(NSString *)question toLecture:(NSString *)lectureId;
 //Get results for test question
 - (void)getResultsForQuestionWithId:(NSString *)questionId;
+//Get number of listeners for lecture
+- (void)getNumberOfListeners;
 
 //Listeners
+
+@property (strong, nonatomic) NSString *enteringLectureId;  // instade of this make new connection function for listeners
+@property (strong, nonatomic) NSString *enteringLecturePassword;    // instade of this make new connection function for listeners
+
 //Login Listener to socket after connecting
 -(void)loginListener;
 //Start listennig lecture with uniqueId, password is optional

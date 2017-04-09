@@ -30,19 +30,21 @@
     self.tvQuestions.estimatedRowHeight = 44.0f;
     self.tvQuestions.rowHeight = UITableViewAutomaticDimension;
     
-    //SET Ask Button
-    self.btnAsk.layer.cornerRadius = 49.0/2.0f;
-    self.btnAsk.layer.borderColor = [[GlobalData sharedInstance] getColor:@"blue"].CGColor;
-    self.btnAsk.layer.borderWidth = 1.0f;
-    
     //SET notifications
     [self setNotifications];
     
-    //SET other
+    //SET never go to sleep
+    [UIApplication sharedApplication].idleTimerDisabled = YES;
     
+    //SET other
     self.lblLectureTitle.text = @"";
     wallQuestions = [[NSMutableArray alloc] init];
     
+}
+
+-(void)dealloc{
+    [UIApplication sharedApplication].idleTimerDisabled = NO;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -83,12 +85,25 @@
 -(void)lectureEndded:(NSNotification *)not{
     NSLog(@"Lecturer ended lecture NOTIFICATION");
     [[SocketConnectionManager sharedInstance] closeConnection];
-    [self.navigationController popViewControllerAnimated:YES];
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Lecture" message:@"The lecture has finished." preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        
+        [alertController dismissViewControllerAnimated:YES completion:nil];
+        [self.navigationController popViewControllerAnimated:YES];
+
+    }]];
+    
+    dispatch_async(dispatch_get_main_queue(), ^ {
+        [self presentViewController:alertController animated:YES completion:nil];
+    });
+    
 }
 
 -(void)stopListeningLectureResponse:(NSNotification *)not{
     
-    if ([((NSNumber *)[not.userInfo valueForKey:@"ok"]) boolValue]) {
+    if ([((NSNumber *)[not.userInfo valueForKey:@"status"]) boolValue]) {
         [[SocketConnectionManager sharedInstance] closeConnection];
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -106,9 +121,9 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     LectureQuestionTableViewCell *cellQuestion = [tableView dequeueReusableCellWithIdentifier:@"ListenerWallQuestionCell"];
-    
-    cellQuestion.lblQuestionText.text = (NSString *)[wallQuestions objectAtIndex:indexPath.row];
-    
+    NSDictionary *messageDict = (NSDictionary *)[wallQuestions objectAtIndex:indexPath.row];
+    cellQuestion.lblQuestionText.text = [messageDict valueForKey:@"question"];
+    cellQuestion.lblQuestionDate.text = [messageDict valueForKey:@"date"];
     return cellQuestion;
 }
 
@@ -122,7 +137,7 @@
     if ([segue.identifier isEqualToString:@"TestQuestionSegue"]) {
         QuickQuestionViewController *vc = segue.destinationViewController;
         vc.question = [[LectureQuestion alloc] init];
-        [vc.question fromDictionary:(NSDictionary *)sender];
+        [vc.question fromDictionary:(NSDictionary *)[sender objectForKey:@"question"]];
         NSLog(@"%@", vc.question);
     }
 }

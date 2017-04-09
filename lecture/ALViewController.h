@@ -28,6 +28,8 @@
 @property (strong, nonatomic) IBOutlet BadgeSegmentedControl *scWallQuestions;
 @property (strong, nonatomic) IBOutlet UITableView *tbvAL;
 @property (strong, nonatomic) IBOutlet UIToolbar *tbSC;
+@property (strong, nonatomic) IBOutlet UILabel *lblNumberOfListeners;
+
 
 - (IBAction)scChanged:(id)sender;
 

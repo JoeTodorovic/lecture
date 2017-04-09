@@ -29,7 +29,7 @@
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-//     self.navigationItem.rightBarButtonItem = self.editButtonItem;
+     self.navigationItem.rightBarButtonItem = self.bbiSave;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,14 +41,19 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
 
-    return 1;
+    return 2;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
-    return 5;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    if (section == 0) {
+        return 5;
+    }
+    else{
+        return 1;
+    }
 }
 
 
@@ -175,7 +180,7 @@
 
 - (IBAction)bbiSavePressed:(id)sender {
     
-    NSDictionary *newParameters = @{@"email" : self.txtfEmail.text, @"firstname" : self.txtfFirstName.text, @"lastname" : self.txtfLastName.text, @"title" : self.txtfTitle.text, @"university" : self.txtfUniversity.text};
+    NSDictionary *newParameters = @{@"firstname" : self.txtfFirstName.text, @"lastname" : self.txtfLastName.text, @"title" : self.txtfTitle.text, @"university" : self.txtfUniversity.text};
     
     [[HttpManager sharedInstance] editUserWithParameters:newParameters successHandler:^(NSDictionary *regInfo) {
         NSLog(@"EDIT_USER successHandler");

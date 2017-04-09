@@ -14,13 +14,15 @@
 #import "HttpManager.h"
 #import "Lecture.h"
 
-@interface CreateLectureViewController : UIViewController <UITextFieldDelegate, UITextViewDelegate>
+#import "TSMessage.h"
+#import "TSMessageView.h"
+
+@interface CreateLectureViewController : UIViewController <UITextFieldDelegate, UITextViewDelegate,TSMessageViewProtocol>
 
 @property (strong, nonatomic) LectureViewController * LectureVC;
 
 @property (strong, nonatomic) IBOutlet UITextField *txtfName;
 @property (strong, nonatomic) IBOutlet UITextView *txtvDescription;
-@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @property (strong, nonatomic) IBOutlet UIButton *btnCancel;
 @property (strong, nonatomic) IBOutlet UIButton *btnCreate;

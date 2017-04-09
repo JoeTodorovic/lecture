@@ -317,7 +317,7 @@
     }
     else{
         QAnswerTableViewCell  *cellAnswer = [tableView dequeueReusableCellWithIdentifier:@"QAnswerCell"];
-        cellAnswer.lblAnswerMark.text = [NSString stringWithFormat:@"%ld)", (long)(indexPath.row)];
+        cellAnswer.lblAnswerMark.text = [NSString stringWithFormat:@"%ld)", (long)(indexPath.row+1)];
         
         if (indexPath.row == correctIndex.integerValue){
             [cellAnswer.lblAnswerMark setTextColor:[UIColor greenColor]];

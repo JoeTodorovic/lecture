@@ -25,7 +25,9 @@
     [TSMessage setDelegate:self];
     
     
-    self.txtfEmailUsername.text = @"jako@qqqq.com";
+//    self.txtfEmailUsername.text = @"jako@qqqq.com";
+//    self.txtfPassword.text = @"123";
+    self.txtfEmailUsername.text = @"newone@www.com";
     self.txtfPassword.text = @"123";
 }
 
@@ -207,6 +209,10 @@
         }];
     }];
     
+}
+
+- (IBAction)btnBackPressed:(id)sender {
+    [[self navigationController] popViewControllerAnimated:YES];
 }
 
 //-(void)initSocketConnectionFail:(NSNotification *)not{

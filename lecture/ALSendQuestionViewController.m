@@ -16,9 +16,10 @@
 
 @interface ALSendQuestionViewController () <ChartViewDelegate> {
     NSTimer *timer;
-    PieChartView *chartView;
-    
+    UIBarButtonItem *resultsButton;
+    UIVisualEffectView *effectView;
     BarChartView *barChartView;
+    NSMutableArray *results;
 }
 
 @end
@@ -44,20 +45,17 @@
     //SET lbl
     self.lblQuestion.text = self.question.question;
     
-    //SEND Question button
-    UIBarButtonItem *sendQuestionButton = [[UIBarButtonItem alloc] initWithTitle:@"Send" style:UIBarButtonItemStylePlain target:self action:@selector(sendQuestion)];
-    self.navigationItem.rightBarButtonItem = sendQuestionButton;
+    //SET SendQuestion button
+//    UIBarButtonItem *sendQuestionButton = [[UIBarButtonItem alloc] initWithTitle:@"Send" style:UIBarButtonItemStylePlain target:self action:@selector(sendQuestion)];
+//    self.navigationItem.rightBarButtonItem = sendQuestionButton;
+    [self setRightItemsSendResults];
     
-    
+    //SET notifications
     [self setNotifications];
     
-    
-    chartView.delegate = self;
+    //Set chart
     barChartView.delegate = self;
-    
-    [self barChart];
-
-
+    results = [[NSMutableArray alloc] init];
 }
 
 
@@ -76,6 +74,34 @@
     
 }
 
+#pragma mark - NavigationBar Right Button Items
+
+//set send and back button (and results button if resultes at least once received)
+-(void)setRightItemsSendResults{
+    
+    self.navigationItem.hidesBackButton = NO;
+    
+    if (self.question.resultsFlag) {
+        UIBarButtonItem *sendQuestionButton = [[UIBarButtonItem alloc] initWithTitle:@"Send" style:UIBarButtonItemStylePlain target:self action:@selector(sendQuestion)];
+        resultsButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Results"] style:UIBarButtonItemStylePlain target:self action:@selector(showChart)];
+
+        self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:sendQuestionButton, resultsButton, nil];
+        
+    }
+    else{
+        UIBarButtonItem *sendQuestionButton = [[UIBarButtonItem alloc] initWithTitle:@"Send" style:UIBarButtonItemStylePlain target:self action:@selector(sendQuestion)];
+        self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:sendQuestionButton, nil];
+    }
+}
+
+//when chart showes hide back button and replace send and results with close button
+-(void)setCloseChartButton{
+    self.navigationItem.hidesBackButton = YES;
+
+    UIBarButtonItem *closeChartButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Delete"] style:UIBarButtonItemStylePlain target:self action:@selector(closeChart)];
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:closeChartButton, nil];
+}
+
 
 #pragma mark - Selectors
 
@@ -85,8 +111,8 @@
 }
 
 -(void)showChart{
-    [self barChart];
-
+    [[SocketConnectionManager sharedInstance] getResultsForQuestionWithId:self.question.questionId];
+    [KVNProgress showWithStatus:@"Refreshing results"];
 }
 
 -(void)getResults{
@@ -99,7 +125,7 @@
         NSLog(@"Question sent successfully");
 //        self.navigationItem.hidesBackButton = YES;
         [KVNProgress updateStatus:@"Waiting results"];
-        timer=[NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(getResults) userInfo:nil repeats:NO];
+        timer=[NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(getResults) userInfo:nil repeats:NO];
     }
     else{
         [KVNProgress dismissWithCompletion:^{
@@ -110,21 +136,82 @@
 }
 
 -(void)getResultsForQuestionResponse:(NSNotification *)not{
-    
-    UIBarButtonItem *resultsButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Results"] style:UIBarButtonItemStylePlain target:self action:@selector(showChart)];
-    self.navigationItem.rightBarButtonItem = resultsButton;
+        
+    [self setCloseChartButton];
     
     if ([[not.userInfo valueForKey:@"status"] boolValue]) {
+        //Show results show chart
         NSLog(@"Get Results successfully");
-        [KVNProgress dismiss];
+        
+        //---------------- results received regardless of whether someone answered or not
+        self.question.resultsFlag = YES;
+        //----------------
+        
+        if ([not.userInfo valueForKey:@"results"]) {
+//            results = [(NSMutableArray *)[not.userInfo valueForKey:@"results"] mutableCopy];
+            self.question.results = [(NSArray *)[not.userInfo valueForKey:@"results"] copy];
+            
+            if ([self checkResults]) {
+                [KVNProgress dismissWithCompletion:^{
+                    [self barChart];
+                }];
+            }
+            else{
+                [KVNProgress dismissWithCompletion:^{
+                    
+                    [self setRightItemsSendResults];
+                    
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Results" message:@"No one answered." preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                        
+                        [alertController dismissViewControllerAnimated:YES completion:nil];
+                    }]];
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^ {
+                        [self presentViewController:alertController animated:YES completion:nil];
+                    });
+                }];
+            }
+        }
+
     }
     else{
-        [KVNProgress dismissWithCompletion:^{
-            [TSMessage showNotificationWithTitle:@"Failed to get result, please try again." type:TSMessageNotificationTypeMessage];
-
-        }];
+        
+        //If old results exist show them else change resultButton action to showResults
         NSLog(@"Get Results fail");
+        
+        if ([self checkResults]) {
+            [KVNProgress dismissWithCompletion:^{
+                [TSMessage showNotificationWithTitle:@"Failed to get result, please try again. Last results will be presented." type:TSMessageNotificationTypeMessage];
+                [self barChart];
+            }];
+        }
+        else{
+            [KVNProgress dismissWithCompletion:^{
+                
+                [self setRightItemsSendResults];
+                [TSMessage showNotificationWithTitle:@"Failed to get result, please try again. Last results will be presented." type:TSMessageNotificationTypeMessage];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Results" message:@"No one answered." preferredStyle:UIAlertControllerStyleAlert];
+                
+                [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                    
+                    [alertController dismissViewControllerAnimated:YES completion:nil];
+                }]];
+                
+                dispatch_async(dispatch_get_main_queue(), ^ {
+                    [self presentViewController:alertController animated:YES completion:nil];
+                });
+            }];
+        }
     }
+}
+
+-(void)closeChart{
+    [barChartView removeFromSuperview];
+    [effectView removeFromSuperview];
+    
+    [self setRightItemsSendResults];
 }
 
 
@@ -138,7 +225,7 @@
     QAnswerTableViewCell *cellAnswer = [tableView dequeueReusableCellWithIdentifier:@"ALSendQuestionCell"];
     cellAnswer.lblAnswerMark.text = [NSString stringWithFormat:@"%ld)", (long)(indexPath.row+1)];
     
-    if (indexPath.row == self.question.correctIndex.integerValue-1){
+    if (indexPath.row == self.question.correctIndex.integerValue){
         [cellAnswer.lblAnswerMark setTextColor:[UIColor greenColor]];
         [cellAnswer.lblAnswer setTextColor:[UIColor greenColor]];
     }
@@ -160,20 +247,20 @@
 
 #pragma mark - ChartViewDelegate
 
-- (void)chartValueSelected:(ChartViewBase * __nonnull)chartView entry:(ChartDataEntry * __nonnull)entry highlight:(ChartHighlight * __nonnull)highlight
-{
+- (void)chartValueSelected:(ChartViewBase * __nonnull)chartView entry:(ChartDataEntry * __nonnull)entry highlight:(ChartHighlight * __nonnull)highlight{
     NSLog(@"chartValueSelected");
 }
 
-- (void)chartValueNothingSelected:(ChartViewBase * __nonnull)chartView
-{
+- (void)chartValueNothingSelected:(ChartViewBase * __nonnull)chartView{
     NSLog(@"chartValueNothingSelected");
 }
 
 -(void)barChart{
     
-    CGRect chartFrame = CGRectMake(0, 50, self.view.frame.size.width, self.view.frame.size.width);
+    CGRect chartFrame = CGRectMake(0, 0, self.view.frame.size.width-10, self.view.frame.size.height-10);
     barChartView = [[BarChartView alloc] initWithFrame:chartFrame];
+
+    barChartView.center = CGPointMake( self.view.superview.frame.size.width  / 2, self.view.superview.frame.size.height / 2);
 
     //------
     barChartView.chartDescription.enabled = NO;
@@ -231,10 +318,16 @@
     
     NSMutableArray *yVals = [[NSMutableArray alloc] init];
     
-    [yVals addObject:[[BarChartDataEntry alloc] initWithX:0.0f y:30]];
-    [yVals addObject:[[BarChartDataEntry alloc] initWithX:1.0f y:20]];
-    [yVals addObject:[[BarChartDataEntry alloc] initWithX:2.0f y:8]];
-    [yVals addObject:[[BarChartDataEntry alloc] initWithX:3.0f y:13]];
+//    [yVals addObject:[[BarChartDataEntry alloc] initWithX:0.0f y:30]];
+//    [yVals addObject:[[BarChartDataEntry alloc] initWithX:1.0f y:20]];
+//    [yVals addObject:[[BarChartDataEntry alloc] initWithX:2.0f y:8]];
+//    [yVals addObject:[[BarChartDataEntry alloc] initWithX:3.0f y:13]];
+//    unsigned int i, cnt = [results count];
+
+
+    for (int i=0; i<[self.question.results count]; i++) {
+        [yVals addObject:[[BarChartDataEntry alloc] initWithX:i y:[(NSNumber *)self.question.results[i] doubleValue]]];
+    }
     
 
     BarChartDataSet *dataSet = [[BarChartDataSet alloc] initWithValues:yVals];
@@ -250,103 +343,65 @@
     
     barChartView.data = data;
     
+    // create blur effect
+    UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    
+    // create vibrancy effect
+    UIVibrancyEffect *vibrancy = [UIVibrancyEffect effectForBlurEffect:blur];
+    
+    // add blur to an effect view
+    effectView = [[UIVisualEffectView alloc]initWithEffect:blur];
+    effectView.frame = self.view.frame;
+    
+    // add vibrancy to yet another effect view
+    UIVisualEffectView *vibrantView = [[UIVisualEffectView alloc]initWithEffect:vibrancy];
+    vibrantView.frame = self.view.frame;
+    
+    [self.view.superview addSubview:effectView];
+//    [self.view.superview addSubview:vibrantView];
+    
+    [self.view.superview addSubview:barChartView];
+    
+    self.navigationItem.hidesBackButton = YES;
 
-    [self.view addSubview:barChartView];
 }
 
--(void)pieChart{
+-(void)showResults{
     
-    CGRect chartframe = CGRectMake(20, 50, self.view.frame.size.width, self.view.frame.size.width);
-    chartView = [[PieChartView alloc] initWithFrame:chartframe];
-    //    chartView.backgroundColor = [uicol/]
-    chartView.usePercentValuesEnabled = YES;
-    chartView.drawSlicesUnderHoleEnabled = NO;
-    chartView.holeRadiusPercent = 0.58;
-    chartView.transparentCircleRadiusPercent = 0.61;
-    chartView.chartDescription.enabled = NO;
-    [chartView setExtraOffsetsWithLeft:5.f top:10.f right:5.f bottom:5.f];
-    
-    chartView.drawCenterTextEnabled = YES;
-    
-    NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
-    paragraphStyle.alignment = NSTextAlignmentCenter;
-    
-    NSMutableAttributedString *centerText = [[NSMutableAttributedString alloc] initWithString:@"Charts\nby Daniel Cohen Gindi"];
-    [centerText setAttributes:@{
-                                NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:13.f],
-                                NSParagraphStyleAttributeName: paragraphStyle
-                                } range:NSMakeRange(0, centerText.length)];
-    [centerText addAttributes:@{
-                                NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:11.f],
-                                NSForegroundColorAttributeName: UIColor.grayColor
-                                } range:NSMakeRange(10, centerText.length - 10)];
-    [centerText addAttributes:@{
-                                NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-LightItalic" size:11.f],
-                                NSForegroundColorAttributeName: [UIColor colorWithRed:51/255.f green:181/255.f blue:229/255.f alpha:1.f]
-                                } range:NSMakeRange(centerText.length - 19, 19)];
-    chartView.centerAttributedText = centerText;
-    
-    chartView.drawHoleEnabled = YES;
-    chartView.rotationAngle = 0.0;
-    chartView.rotationEnabled = YES;
-    chartView.highlightPerTapEnabled = YES;
-    
-    ChartLegend *l = chartView.legend;
-    l.horizontalAlignment = ChartLegendHorizontalAlignmentRight;
-    l.verticalAlignment = ChartLegendVerticalAlignmentTop;
-    l.orientation = ChartLegendOrientationVertical;
-    l.drawInside = NO;
-    l.xEntrySpace = 7.0;
-    l.yEntrySpace = 0.0;
-    l.yOffset = 0.0;
-    
-    
-    //SET data
-    int asciiCode = 65;
-    
-    int count = 4;
-    NSMutableArray *values = [[NSMutableArray alloc] init];
-    
-    NSArray *results = @[@90, @5, @4, @1];
-    
-    for (int i = 0; i < count; i++)
-    {
-        NSString *string = [NSString stringWithFormat:@"%c", asciiCode+i];
-        [values addObject:[[PieChartDataEntry alloc] initWithValue:((NSNumber *)[results objectAtIndex:i]).doubleValue label:[NSString stringWithFormat:@"%@)", string]]];
+    if ([self checkResults]) {
+        [KVNProgress dismissWithCompletion:^{
+            [self setCloseChartButton];
+            [self barChart];
+        }];
     }
+    else{
+        [KVNProgress dismissWithCompletion:^{
+            
+            
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Results" message:@"No one answered." preferredStyle:UIAlertControllerStyleAlert];
+            
+            [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                
+                
+                
+                [alertController dismissViewControllerAnimated:YES completion:nil];
+            }]];
+            
+            dispatch_async(dispatch_get_main_queue(), ^ {
+                [self presentViewController:alertController animated:YES completion:nil];
+            });
+        }];
+    }
+}
+
+-(BOOL)checkResults{
+    //checking if anyone answered, if not then there is no data to present
     
-    PieChartDataSet *dataSet = [[PieChartDataSet alloc] initWithValues:values label:@"nil"];
-    dataSet.sliceSpace = 2.0;
-    
-    // add a lot of colors
-    
-    NSMutableArray *colors = [[NSMutableArray alloc] init];
-    [colors addObjectsFromArray:ChartColorTemplates.vordiplom];
-    [colors addObjectsFromArray:ChartColorTemplates.joyful];
-    [colors addObjectsFromArray:ChartColorTemplates.colorful];
-    [colors addObjectsFromArray:ChartColorTemplates.liberty];
-    [colors addObjectsFromArray:ChartColorTemplates.pastel];
-    [colors addObject:[UIColor colorWithRed:51/255.f green:181/255.f blue:229/255.f alpha:1.f]];
-    
-    dataSet.colors = colors;
-    
-    PieChartData *data = [[PieChartData alloc] initWithDataSet:dataSet];
-    
-    NSNumberFormatter *pFormatter = [[NSNumberFormatter alloc] init];
-    pFormatter.numberStyle = NSNumberFormatterPercentStyle;
-    pFormatter.maximumFractionDigits = 1;
-    pFormatter.multiplier = @1.f;
-    pFormatter.percentSymbol = @" %";
-    [data setValueFormatter:[[ChartDefaultValueFormatter alloc] initWithFormatter:pFormatter]];
-    [data setValueFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:11.f]];
-    [data setValueTextColor:UIColor.whiteColor];
-    
-    chartView.data = data;
-    [chartView highlightValues:nil];
-    
-    //Show View
-    [self.view addSubview:chartView];
+    for (NSNumber *i in self.question.results) {
+        if ([i intValue] != 0)
+            return YES;
+    }
+    return NO;
 }
 
 

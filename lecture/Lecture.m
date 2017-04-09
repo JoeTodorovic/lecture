@@ -34,4 +34,10 @@
         self.uniqueId = (NSString *)[dict objectForKey:@"unique_id"];
 }
 
+-(void)initQuestionsResults{
+    for (LectureQuestion *question in self.questions) {
+        question.results = [[NSArray alloc] init];
+        question.resultsFlag = NO;
+    }
+}
 @end

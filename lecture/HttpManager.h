@@ -14,7 +14,8 @@
 
 @property (nonatomic, strong) AFHTTPSessionManager *sessionManager;
 
-@property (strong, nonatomic) NSDictionary *pointEnds;//URLs
+@property (strong, nonatomic) NSString *host;
+@property (strong, nonatomic) NSMutableDictionary *pointEnds;//URLs
 
 + (HttpManager *)sharedInstance;
 

@@ -12,6 +12,7 @@
 
 
 @property (strong, nonatomic) IBOutlet UILabel *lblQuestionText;
+@property (strong, nonatomic) IBOutlet UILabel *lblQuestionDate;
 
 
 @end

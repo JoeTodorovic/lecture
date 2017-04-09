@@ -26,8 +26,12 @@
 - (id)init {
     if ((self = [super init])) {
         
-        
-        self.pointEnds = [[NSDictionary alloc] init];
+//        self.host = @"localhost";
+//        self.host = @"192.168.0.10";
+        self.host = @"24.135.56.76";
+
+
+        self.pointEnds = [[NSMutableDictionary alloc] init];
         
         NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
         
@@ -46,15 +50,24 @@
 
 
 - (void)getEndPointsWithSuccessHandler:(LoginResponseBlock)success failureHandler:(FailureBlock)failure{
+//    @"http://localhost:8000/home"
     
-       
-    [self.sessionManager GET:@"http://89.216.252.17:8000/home" parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [self.sessionManager GET:[NSString stringWithFormat:@"http://%@:8000/home", self.host] parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSLog(@"GET_EndPoints successful");
         NSDictionary *responseJSON = responseObject;
         NSLog(@"GET_EndPoints response: %@", responseJSON);
         
-        self.pointEnds = responseJSON;
+        self.pointEnds = [responseJSON mutableCopy];
+        
+        for (int i=0; i<[[self.pointEnds allKeys] count]; i++) {
+            
+            NSString *value = self.pointEnds.allValues[i];
+            NSString *key = self.pointEnds.allKeys[i];
+
+            value = [value stringByReplacingOccurrencesOfString:@"24.135.42.105" withString:self.host];
+            [self.pointEnds setValue:value forKey:key];
+        }
         
         success(responseJSON);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -175,9 +188,22 @@
                successHandler:(EditUserResponseBlock)success
                failureHandler:(FailureBlock)failure{
     
-    NSString *registrationURL = [NSString stringWithString:[self.pointEnds objectForKey:@"user"]];
+    NSString *editUserURL = [NSString stringWithString:[self.pointEnds objectForKey:@"user"]];
     
-    [self.sessionManager PATCH:registrationURL parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//    NSMutableDictionary *editParameters = [[NSMutableDictionary alloc] initWithDictionary:parameters];
+//    [editParameters setValue:@"replace" forKey:@"op"];
+    
+//    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+//    [self.sessionManager.requestSerializer setValue:@"application/x-www-form-urlencoded; charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
+//    self.sessionManager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    
+//    NSError *error;
+//    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:parameters
+//                                                       options:NSJSONWritingPrettyPrinted error:&error];
+//    NSString* aStr;
+//    aStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    
+    [self.sessionManager PATCH:editUserURL parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSLog(@"EDIT_USER successful");
         NSDictionary *responseJSON = responseObject;
@@ -240,8 +266,10 @@
     
     NSString *editLectureURL = [NSString stringWithString:[self.pointEnds objectForKey:@"lecture"]];
     
-    NSMutableDictionary *editParameters = [[NSMutableDictionary alloc] initWithDictionary:parameters];
+    NSMutableDictionary *editParameters = [[NSMutableDictionary alloc] init];
     [editParameters setValue:@"replace" forKey:@"op"];
+    [editParameters setObject:parameters forKey:@"parameters"];
+    [editParameters setValue:[parameters valueForKey:@"guid"] forKey:@"path"];
     
     [self.sessionManager PATCH:editLectureURL parameters:editParameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         

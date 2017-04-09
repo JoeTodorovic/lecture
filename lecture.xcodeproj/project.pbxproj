@@ -20,6 +20,7 @@
 		BE663DB51E43D4790061109E /* DateValueFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = BE663DB01E43D4790061109E /* DateValueFormatter.m */; };
 		BE663DB61E43D4790061109E /* DayAxisValueFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = BE663DB21E43D4790061109E /* DayAxisValueFormatter.m */; };
 		BE663DB71E43D4790061109E /* IntAxisValueFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = BE663DB41E43D4790061109E /* IntAxisValueFormatter.m */; };
+		BE68254A1E46644C003DE875 /* EditLectureTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE6825491E46644C003DE875 /* EditLectureTableViewController.m */; };
 		BE6BD28B1E007923002D9C93 /* CreateLectureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE6BD28A1E007923002D9C93 /* CreateLectureViewController.m */; };
 		BE9040A21DEF550F001F9BAC /* QuestionsWallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9040A11DEF550F001F9BAC /* QuestionsWallViewController.m */; };
 		BE9040A61DEF568B001F9BAC /* QuestionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9040A51DEF568B001F9BAC /* QuestionTableViewCell.m */; };
@@ -39,6 +40,7 @@
 		BEABACB21DF8C58200BADF54 /* LectureTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEABACB11DF8C58200BADF54 /* LectureTableViewCell.m */; };
 		BEABACB51DF8CCCF00BADF54 /* QuickQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEABACB41DF8CCCF00BADF54 /* QuickQuestionViewController.m */; };
 		BEC42B0B1DF9F70D00BC16EA /* HttpManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BEC42B0A1DF9F70D00BC16EA /* HttpManager.m */; };
+		BECBD6AC1E562CA100A1F806 /* ChangePasswordTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BECBD6AB1E562CA100A1F806 /* ChangePasswordTableViewController.m */; };
 		BED5611F1E12D6FF0056FD07 /* LectureQuestionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BED5611E1E12D6FF0056FD07 /* LectureQuestionTableViewCell.m */; };
 		BEDBA4A51E1311F500195E3B /* QuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDBA4A41E1311F500195E3B /* QuestionViewController.m */; };
 		BEDBA4A81E132E5300195E3B /* QAnswerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDBA4A71E132E5300195E3B /* QAnswerTableViewCell.m */; };
@@ -100,6 +102,8 @@
 		BE663DB21E43D4790061109E /* DayAxisValueFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DayAxisValueFormatter.m; sourceTree = "<group>"; };
 		BE663DB31E43D4790061109E /* IntAxisValueFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntAxisValueFormatter.h; sourceTree = "<group>"; };
 		BE663DB41E43D4790061109E /* IntAxisValueFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntAxisValueFormatter.m; sourceTree = "<group>"; };
+		BE6825481E46644C003DE875 /* EditLectureTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditLectureTableViewController.h; sourceTree = "<group>"; };
+		BE6825491E46644C003DE875 /* EditLectureTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditLectureTableViewController.m; sourceTree = "<group>"; };
 		BE6BD2891E007923002D9C93 /* CreateLectureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateLectureViewController.h; sourceTree = "<group>"; };
 		BE6BD28A1E007923002D9C93 /* CreateLectureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateLectureViewController.m; sourceTree = "<group>"; };
 		BE9040A01DEF550F001F9BAC /* QuestionsWallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionsWallViewController.h; sourceTree = "<group>"; };
@@ -138,6 +142,8 @@
 		BEABACB41DF8CCCF00BADF54 /* QuickQuestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuickQuestionViewController.m; sourceTree = "<group>"; };
 		BEC42B091DF9F70D00BC16EA /* HttpManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpManager.h; sourceTree = "<group>"; };
 		BEC42B0A1DF9F70D00BC16EA /* HttpManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpManager.m; sourceTree = "<group>"; };
+		BECBD6AA1E562CA100A1F806 /* ChangePasswordTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePasswordTableViewController.h; sourceTree = "<group>"; };
+		BECBD6AB1E562CA100A1F806 /* ChangePasswordTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePasswordTableViewController.m; sourceTree = "<group>"; };
 		BED5611D1E12D6FF0056FD07 /* LectureQuestionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LectureQuestionTableViewCell.h; sourceTree = "<group>"; };
 		BED5611E1E12D6FF0056FD07 /* LectureQuestionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LectureQuestionTableViewCell.m; sourceTree = "<group>"; };
 		BEDBA4A31E1311F500195E3B /* QuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionViewController.h; sourceTree = "<group>"; };
@@ -253,8 +259,12 @@
 				BE040DEE1E1126D70054C5CA /* LectureViewController.m */,
 				BED5611D1E12D6FF0056FD07 /* LectureQuestionTableViewCell.h */,
 				BED5611E1E12D6FF0056FD07 /* LectureQuestionTableViewCell.m */,
+				BE6825481E46644C003DE875 /* EditLectureTableViewController.h */,
+				BE6825491E46644C003DE875 /* EditLectureTableViewController.m */,
 				BEEFFC591E2E56BB00CB9027 /* ActiveLecture */,
 				BE27E1CB1E22DED100F32D6E /* Question */,
+				BECBD6AA1E562CA100A1F806 /* ChangePasswordTableViewController.h */,
+				BECBD6AB1E562CA100A1F806 /* ChangePasswordTableViewController.m */,
 			);
 			name = Lecturer;
 			sourceTree = "<group>";
@@ -498,6 +508,7 @@
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = T828QT2TJ8;
 						LastSwiftMigration = 0820;
+						ProvisioningStyle = Automatic;
 					};
 					BEEB81A61D50C44D00F6D80F = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -709,6 +720,7 @@
 				BE9040A21DEF550F001F9BAC /* QuestionsWallViewController.m in Sources */,
 				BE90E6951D5B4FA900BD3BBB /* StartViewController.m in Sources */,
 				BE927D4E1DFF819F000969E9 /* ListenerManager.m in Sources */,
+				BE68254A1E46644C003DE875 /* EditLectureTableViewController.m in Sources */,
 				BE9040A61DEF568B001F9BAC /* QuestionTableViewCell.m in Sources */,
 				BE90E6981D5B50B400BD3BBB /* LogInViewController.m in Sources */,
 				BE040DF21E112D580054C5CA /* Lecture.m in Sources */,
@@ -739,6 +751,7 @@
 				BE040DEF1E1126D70054C5CA /* LectureViewController.m in Sources */,
 				BEA8668F1E00389800360C98 /* LecturerSettingTableViewController.m in Sources */,
 				BE90E69E1D5B50D300BD3BBB /* ActivationViewController.m in Sources */,
+				BECBD6AC1E562CA100A1F806 /* ChangePasswordTableViewController.m in Sources */,
 				BE14145E1E3507CF0086AA8B /* ALSendQuestionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -886,6 +899,8 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = T828QT2TJ8;
 				INFOPLIST_FILE = lecture/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.joeTod.lecture;
@@ -900,6 +915,8 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = T828QT2TJ8;
 				INFOPLIST_FILE = lecture/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.joeTod.lecture;

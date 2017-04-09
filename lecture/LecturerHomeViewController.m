@@ -8,6 +8,8 @@
 
 #import "LecturerHomeViewController.h"
 
+#import <KVNProgress/KVNProgress.h>
+
 @interface LecturerHomeViewController (){
     
     Lecture *selectedLecture;
@@ -24,9 +26,7 @@
     self.tvLectures.delegate = self;
     self.tvLectures.dataSource = self;
     self.tvLectures.allowsMultipleSelectionDuringEditing = NO;
-    
-    self.activityIndicator.hidden = YES;
-    
+        
     
     if ([LecturerManager sharedInstance].loginToLectureFlag) {
         
@@ -36,6 +36,11 @@
         [self.navigationController pushViewController:vc animated:NO];
     }
 
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.tvLectures reloadData];
 }
 
 
@@ -78,15 +83,40 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         //add code here for when you hit delete
         
-        [[HttpManager sharedInstance] deleteLectureWithId:((Lecture *)[[LecturerManager sharedInstance].lectures objectAtIndex:indexPath.row]).lectureId successHandler:^{
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:[NSString stringWithFormat:@"Delete lecture %@?",((Lecture *)[[LecturerManager sharedInstance].lectures objectAtIndex:indexPath.row]).name ]preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
             
-            [[LecturerManager sharedInstance].lectures removeObjectAtIndex:indexPath.row];
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-            [self.tvLectures reloadData];
+            [alertController dismissViewControllerAnimated:YES completion:nil];
+        }]];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"Delete" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
             
-        } failureHandler:^(NSError *error) {
+            [KVNProgress showWithStatus:[NSString stringWithFormat:@"Deleting lecture %@?",((Lecture *)[[LecturerManager sharedInstance].lectures objectAtIndex:indexPath.row]).name ]];
             
-        }];
+            [[HttpManager sharedInstance] deleteLectureWithId:((Lecture *)[[LecturerManager sharedInstance].lectures objectAtIndex:indexPath.row]).lectureId successHandler:^{
+                
+                [[LecturerManager sharedInstance].lectures removeObjectAtIndex:indexPath.row];
+                [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                [self.tvLectures reloadData];
+                
+                [KVNProgress dismissWithCompletion:^{
+                    [TSMessage showNotificationWithTitle:@"Lecture deleted." type:TSMessageNotificationTypeSuccess];
+                }];
+                
+            } failureHandler:^(NSError *error) {
+                [KVNProgress dismissWithCompletion:^{
+                    [TSMessage showNotificationWithTitle:@"Fail to delete lecture." type:TSMessageNotificationTypeError];
+                }];
+            }];
+
+            [alertController dismissViewControllerAnimated:YES completion:nil];
+        }]];
+        
+        dispatch_async(dispatch_get_main_queue(), ^ {
+            [self presentViewController:alertController animated:YES completion:nil];
+        });
+
     }
 }
 

@@ -9,13 +9,14 @@
 #import "SocketConnectionManager.h"
 
 typedef enum {
-    Login, StartLecture, EndLecture, SendLecturerQuestion, DisplayListenerQuestion, GetResultsForQuestion, ListenLecture, StopListeningLecture, SendListenerQuestion, SendAnswer
+    Login, StartLecture, EndLecture, SendLecturerQuestion, DisplayListenerQuestion, GetResultsForQuestion, ListenLecture, StopListeningLecture, SendListenerQuestion, SendAnswer, GetNumOfListeners, GetLastQuestion, GetListenersQuestions
 } ClientAction;
 
 @implementation SocketConnectionManager{
     
     BOOL startLecture;
     ClientAction lastAction;
+    NSMutableDictionary *parametersLogin;
 }
 
 + (SocketConnectionManager *)sharedInstance {
@@ -26,6 +27,8 @@ typedef enum {
         sharedInstance.connected = NO;
         sharedInstance.isWaitingResponse = NO;
         sharedInstance.isLoggedIn = NO;
+//        sharedInstance.host = @"localhost";
+//        sharedInstance.host = @"192.168.0.12";
     });
     
     return sharedInstance;
@@ -39,7 +42,10 @@ typedef enum {
     if (!self.connected) {
         CFReadStreamRef readStream;
         CFWriteStreamRef writeStream;
-        CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)@"89.216.252.17", 8210, &readStream, &writeStream);
+//        CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)@"localhost", 8210, &readStream, &writeStream);
+//        CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)@"192.168.0.10", 8210, &readStream, &writeStream);
+        CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)@"24.135.56.76", 8210, &readStream, &writeStream);
+
         
         self.inputStream = (__bridge_transfer NSInputStream*) readStream;
         self.outputStream = (__bridge_transfer NSOutputStream*) writeStream;
@@ -54,13 +60,14 @@ typedef enum {
         [self.outputStream open];
         
         NSLog(@"init DONE!");
+        
+        self.connected = YES;
     }
     else{
         NSDictionary *actionResponse = @{@"status" : [NSNumber numberWithBool:YES]};
         [[NSNotificationCenter defaultCenter] postNotificationName:@"socketConnectionResponseNotification" object:nil userInfo:actionResponse];
     }
 }
-
 
 - (void)stream:(NSStream *)theStream handleEvent:(NSStreamEvent)streamEvent {
     
@@ -114,14 +121,14 @@ typedef enum {
                                 
                                 if ([action isEqualToString:@"LOGIN"]) {
                                     
-                                    NSLog(@"%@", action);
-                                    NSLog(@"%@", (NSString *)[socketJson valueForKey:@"message"]);
-                                    self.connected = YES;
-                                    
-//                                    [self loginWithId:[LecturerManager sharedInstance].userProfile.userId];
-//                                    NSDictionary *actionResponse = @{@"status" : [NSNumber numberWithBool:YES]};
-                                    messageInfo = (NSMutableDictionary *)@{@"status" : [NSNumber numberWithBool:YES]};
-                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"socketConnectionResponseNotification" object:nil userInfo:messageInfo];
+//                                    NSLog(@"%@", action);
+//                                    NSLog(@"%@", (NSString *)[socketJson valueForKey:@"message"]);
+//                                    self.connected = YES;
+//                                    
+////                                    [self loginWithId:[LecturerManager sharedInstance].userProfile.userId];
+////                                    NSDictionary *actionResponse = @{@"status" : [NSNumber numberWithBool:YES]};
+//                                    messageInfo = (NSMutableDictionary *)@{@"status" : [NSNumber numberWithBool:YES]};
+////                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"socketConnectionResponseNotification" object:nil userInfo:messageInfo];
                                 }
                                 
                                 //for LECTURER
@@ -129,7 +136,7 @@ typedef enum {
                                     NSLog(@"Listener_Sent_Question");
 //                                    NSLog(@"%@", (NSString *)[json valueForKey:@"message"]);
                                     if ([socketJson valueForKey:@"message"]) {
-                                        [self.wallQuestions addObject:[socketJson valueForKey:@"message"]];
+                                        [self.wallQuestions addObject: (NSDictionary *)[socketJson valueForKey:@"message"]];
                                     }
                                     
                                     [[NSNotificationCenter defaultCenter] postNotificationName:@"listenerSentQuestionNotification" object:nil userInfo:nil];
@@ -139,12 +146,14 @@ typedef enum {
                                 if ([action isEqualToString:@"STOPPEDLECTURE"]) {
                                     NSLog(@"Lecturer_Stoped_Lecture");
 //                                    NSLog(@"%@", (NSString *)[json valueForKey:@"message"]);
-                                    
+//                                    self.wallQuestions = nil;
+//                                    self.activeLectureId = nil;
                                     [[NSNotificationCenter defaultCenter] postNotificationName:@"lectureFinishedNotification" object:nil userInfo:nil];
                                 }
                                 
                                 if ([action isEqualToString:@"LECTURERSENTQUESTION"]) {
                                     NSLog(@"Lecturer_Sent_Question");
+                                    
                                     
                                     if ([socketJson valueForKey:@"message"]) {
                                         messageInfo = (NSMutableDictionary *)@{@"message" : [socketJson objectForKey:@"message"]};
@@ -242,7 +251,23 @@ typedef enum {
                                         case GetResultsForQuestion:
                                             
                                             self.isWaitingResponse = NO;
+                                            if (status && [socketJson valueForKey:@"message"]) {
+                                                [actionResponse setValue:[socketJson valueForKey:@"message"] forKey:@"results"];
+                                            }
                                             [[NSNotificationCenter defaultCenter] postNotificationName:@"getResultsForQuestionResponseNotification" object:nil userInfo:actionResponse];
+                                            break;
+                                            
+                                        case GetNumOfListeners:
+                                            
+                                            self.isWaitingResponse = NO;
+                                            if (status && [socketJson valueForKey:@"message"]) {
+                                                [actionResponse setValue:[socketJson valueForKey:@"message"] forKey:@"numOfListeners"];
+                                            }
+                                            
+                                            
+                                            [[NSNotificationCenter defaultCenter] postNotificationName:@"getNumberOfListenersResponseNotification" object:nil userInfo:actionResponse];
+                                            
+                                            
                                             break;
                                             
                                             
@@ -254,6 +279,7 @@ typedef enum {
                                             
                                             if (status) {
                                                 self.wallQuestions = [[NSMutableArray alloc] init];
+                                                self.isLoggedIn = YES;
                                             }
                                             else{
                                                 self.activeLectureId = nil;
@@ -289,48 +315,109 @@ typedef enum {
                                         default:
                                             break;
                                     }
-                                    
-                                    
                                 }
-                                else
-                                {
+                                else{
                                     NSLog(@"Unknown socket type: %@", type);
-                                    
                                 }
-                                
                             }
+                        }
+                        else{
+                            NSLog(@"%d", self.isWaitingResponse);
+                            NSLog(@"socket vratio null");
                         }
                     }
                 }
             }
             break;
+        
+        case NSStreamEventHasSpaceAvailable:
+                 {
+                     NSLog(@"Has space avaiable");
+                     
+                     if (!self.isLoggedIn && !self.isWaitingResponse) {
+                         
+                         NSLog(@"login called");
+//                         self.isWaitingResponse = YES;
+                         
+                         if (self.lecturer) {
+                             NSLog(@"Lecturer login");
+                             [self loginWithId:[LecturerManager sharedInstance].userProfile.userId];
+                         }
+                         else{
+                             NSLog(@"Listener login");
+
+                             [self loginListener];
+                         }
+                     }
+                 }
+                     
+            break;
             
             
         case NSStreamEventErrorOccurred:
-            {
+        {
+            
+            NSLog(@"Event error occurred");
             NSLog(@"Can not connect to the host!");
+            
+            NSLog(@"HTTPServer stream error: %@", [theStream streamError]);
+            NSError *theError = [theStream streamError];
+            NSLog(@"error: %@", [NSString stringWithFormat:@"Error %li: %@",
+                                 (long)[theError code], [theError localizedDescription]]);
+            
+            
+            
+            //----------------------------
+            [self.outputStream close];
+            [self.inputStream close];
+            
+            [self.outputStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+            [self.inputStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+
+            self.outputStream = nil;
+            self.inputStream = nil;
+            
             self.connected = NO;
-                NSDictionary *actionResponse = @{@"status" : [NSNumber numberWithBool:NO]};
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"socketConnectionResponseNotification" object:nil userInfo:actionResponse];
+            self.isLoggedIn = NO;
+            self.isWaitingResponse = NO;
             
-            }
-            break;
+            [self initSocketConnection];
             
-            case NSStreamEventHasSpaceAvailable:
-            
-            NSLog(@"has space available");
+        }
             break;
             
         case NSStreamEventEndEncountered:
             
-            [theStream close];
-            [theStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-            theStream = nil;
+            NSLog(@"Event End Encountered.");
             
+//            [theStream close];
+//            [theStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+//            theStream = nil;
+            
+            
+            //----------------------------
+//            [self.outputStream close];
+//            [self.inputStream close];
+//            
+//            [self.outputStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+//            [self.inputStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+//            
+//            self.outputStream = nil;
+//            self.inputStream = nil;
+//            
+//            self.connected = NO;
+//            self.isLoggedIn = NO;
+//            self.isWaitingResponse = NO;
+//            
+//            [self initSocketConnection];
             
             break;
+            
         case NSStreamEventNone:
-            NSLog(@"event none");
+            
+            NSLog(@"Event NONE");
+            break;
+            
         default:
             NSLog(@"Unknown event");
             break;
@@ -341,7 +428,6 @@ typedef enum {
 #pragma mark - Methods
 
 #pragma mark - Lecturer Methods
-
 
 - (void) closeConnection{
     
@@ -360,8 +446,6 @@ typedef enum {
     
     [self.outputStream write:[data bytes] maxLength:[data length]];
     
-//    const char* newLine = "\n";
-//    [self.outputStream write:(const uint8_t*)newLine maxLength:1];
     
     [self.inputStream close];
     [self.outputStream close];
@@ -370,11 +454,12 @@ typedef enum {
     self.connected = NO;
     self.isLoggedIn = NO;
     self.isWaitingResponse = NO;
+    
     NSLog(@"Closed socket connection");
 }
 
--(void)loginWithId:(NSString *)clientId{
-    
+- (void)loginWithId:(NSString *)clientId{
+    NSLog(@"socket log in called");
     if (!self.isWaitingResponse) {
         if (!self.isLoggedIn) {
             
@@ -387,12 +472,43 @@ typedef enum {
             const char* newLine = "\n";
             [data appendBytes:newLine length:1];
             
+            NSLog(self.outputStream.hasSpaceAvailable ? @"Yes" : @"No");
+            
             [self.outputStream write:[data bytes] maxLength:[data length]];
             
             lastAction = Login;
             self.isWaitingResponse = YES;
             
             NSLog(@"login with uid : %@", clientId);
+            
+//            NSLog(self.outputStream.hasSpaceAvailable ? @"Yes" : @"No");
+//            
+//            if (self.outputStream.hasSpaceAvailable){
+//                            NSDictionary *parameters = @{@"method": @"login", @"params":clientId};
+//                
+//                NSError *error;
+//                            NSMutableData *data= [[NSJSONSerialization dataWithJSONObject:parameters
+//                                                                                  options:0
+//                                                                                    error:&error] mutableCopy];
+//                            const char* newLine = "\n";
+//                            [data appendBytes:newLine length:1];
+//                
+//                            self.isWaitingResponse = YES;
+//                            [self.outputStream write:[data bytes] maxLength:[data length]];
+//                            
+//                            lastAction = Login;
+////                            self.isWaitingResponse = YES;
+//                            
+//                            NSLog(@"login with uid : %@", clientId);
+//            }
+//            else{
+//                parametersLogin =(NSMutableDictionary *)@{@"method": @"login", @"params":clientId};
+//                
+//                lastAction = Login;
+//                self.isWaitingResponse = YES;
+//                
+//                NSLog(@"login with uid : %@", clientId);
+//            }
         }
         else{
             NSDictionary *actionResponse = @{@"status": @"1"};
@@ -408,6 +524,10 @@ typedef enum {
 
 - (void)startLectureWithId:(NSString *)lectureId andPassword:(NSString *)password{
     
+    if (!self.outputStream.hasSpaceAvailable) {
+        NSLog(@"Has no space available!");
+        return;
+    }
     
     if (!self.isWaitingResponse) {
         
@@ -429,7 +549,8 @@ typedef enum {
         const char* newLine = "\n";
         [data appendBytes:newLine length:1];
         
-        
+        NSLog(self.outputStream.hasSpaceAvailable ? @"Yes" : @"No");
+
         [self.outputStream write:[data bytes] maxLength:[data length]];
         
         lastAction = StartLecture;
@@ -441,10 +562,15 @@ typedef enum {
 }
 
 - (void)endLectureWithId:(NSString *)lectureId{
+    if (!self.outputStream.hasSpaceAvailable) {
+        NSLog(@"Has no space available!");
+        return;
+    }
     
     if (!self.isWaitingResponse) {
-        NSDictionary *dict = @{@"id": lectureId};
-        NSDictionary *parameters = @{@"method":@"stopLecture", @"params": dict};
+//        NSDictionary *dict = @{@"id": lectureId};
+//        NSDictionary *parameters = @{@"method":@"stopLecture", @"params": dict};
+        NSDictionary *parameters = @{@"method":@"stopLecture"};
         
         NSError *error;
         NSMutableData *data= [[NSJSONSerialization dataWithJSONObject:parameters
@@ -452,7 +578,8 @@ typedef enum {
                                                                 error:&error] mutableCopy];
         const char* newLine = "\n";
         [data appendBytes:newLine length:1];
-        
+        NSLog(self.outputStream.hasSpaceAvailable ? @"Yes" : @"No");
+
         [self.outputStream write:[data bytes] maxLength:[data length]];
         
         lastAction = EndLecture;
@@ -463,10 +590,42 @@ typedef enum {
     }
 }
 
-- (void)sendQuestionToListenersWithQid:(NSString *)questionId andLId:(NSString *)lectureId{
+- (void)getNumberOfListeners{
+    if (!self.outputStream.hasSpaceAvailable) {
+        NSLog(@"Has no space available!");
+        return;
+    }
     
     if (!self.isWaitingResponse) {
-        NSDictionary *dict = @{@"lectureId":lectureId, @"questionId": questionId};
+        NSDictionary *parameters = @{@"method":@"getNumOfListeners"};
+        
+        NSError *error;
+        NSMutableData *data= [[NSJSONSerialization dataWithJSONObject:parameters
+                                                              options:0
+                                                                error:&error] mutableCopy];
+        const char* newLine = "\n";
+        [data appendBytes:newLine length:1];
+        NSLog(self.outputStream.hasSpaceAvailable ? @"Yes" : @"No");
+        
+        [self.outputStream write:[data bytes] maxLength:[data length]];
+        
+        lastAction = GetNumOfListeners;
+        self.isWaitingResponse = YES;
+        
+        NSLog(@"Get number of listeners sent");
+        
+    }
+}
+
+- (void)sendQuestionToListenersWithQid:(NSString *)questionId andLId:(NSString *)lectureId{
+    if (!self.outputStream.hasSpaceAvailable) {
+        NSLog(@"Has no space available!");
+        return;
+    }
+    
+    if (!self.isWaitingResponse) {
+//        NSDictionary *dict = @{@"lectureId":lectureId, @"questionId": questionId};
+        NSDictionary *dict = @{@"questionId": questionId};
         NSDictionary *parameters  = @{@"method":@"sendQuestionToListeners", @"params": dict};
         
         NSError *error;
@@ -475,7 +634,8 @@ typedef enum {
                                                                 error:&error] mutableCopy];
         const char* newLine = "\n";
         [data appendBytes:newLine length:1];
-        
+        NSLog(self.outputStream.hasSpaceAvailable ? @"Yes" : @"No");
+
         [self.outputStream write:[data bytes] maxLength:[data length]];
         
         lastAction = SendLecturerQuestion;
@@ -485,9 +645,15 @@ typedef enum {
 }
 
 - (void)sendListenerQuestion:(NSString *)question toLecture:(NSString *)lectureId{
+    if (!self.outputStream.hasSpaceAvailable) {
+        NSLog(@"Has no space available!");
+        return;
+    }
     
     if (!self.isWaitingResponse) {
-        NSDictionary *dict = @{@"lectureId":lectureId, @"questionText": question};
+//        NSDictionary *dict = @{@"lectureId":lectureId, @"questionText": question};
+        NSDictionary *dict = @{@"questionText": (NSString *)[question valueForKey:@"question"], @"date": (NSString *)[question valueForKey:@"date"]};
+        
         NSDictionary *parameters  = @{@"method":@"sendListenerQuestionToListeners", @"params": dict};
         
         NSError *error;
@@ -497,7 +663,8 @@ typedef enum {
         const char* newLine = "\n";
         [data appendBytes:newLine length:1];
         
-        
+        NSLog(self.outputStream.hasSpaceAvailable ? @"Yes" : @"No");
+
         [self.outputStream write:[data bytes] maxLength:[data length]];
         
         lastAction = DisplayListenerQuestion;
@@ -507,6 +674,10 @@ typedef enum {
 }
 
 - (void)getResultsForQuestionWithId:(NSString *)questionId{
+    if (!self.outputStream.hasSpaceAvailable) {
+        NSLog(@"Has no space available!");
+        return;
+    }
  
     if (!self.isWaitingResponse) {
         NSDictionary *dict = @{@"questionId": questionId };
@@ -519,11 +690,39 @@ typedef enum {
         const char* newLine = "\n";
         [data appendBytes:newLine length:1];
         
-        
+        NSLog(self.outputStream.hasSpaceAvailable ? @"Yes" : @"No");
+
         [self.outputStream write:[data bytes] maxLength:[data length]];
         
         lastAction = GetResultsForQuestion;
         self.isWaitingResponse = YES;
+    }
+}
+
+-(void)getLastQuestion{
+    if (!self.outputStream.hasSpaceAvailable) {
+        NSLog(@"Has no space available!");
+        return;
+    }
+    
+    if (!self.isWaitingResponse) {
+        NSDictionary *parameters = @{@"method":@"getListenersQuestion"};
+        
+        NSError *error;
+        NSMutableData *data= [[NSJSONSerialization dataWithJSONObject:parameters
+                                                              options:0
+                                                                error:&error] mutableCopy];
+        const char* newLine = "\n";
+        [data appendBytes:newLine length:1];
+        NSLog(self.outputStream.hasSpaceAvailable ? @"Yes" : @"No");
+        
+        [self.outputStream write:[data bytes] maxLength:[data length]];
+        
+        lastAction = GetListenersQuestions;
+        self.isWaitingResponse = YES;
+        
+        NSLog(@"Get Listeners Question sent");
+        
     }
 }
 
@@ -542,7 +741,8 @@ typedef enum {
                                                                     error:&error] mutableCopy];
             const char* newLine = "\n";
             [data appendBytes:newLine length:1];
-            
+            NSLog(self.outputStream.hasSpaceAvailable ? @"Yes" : @"No");
+
             [self.outputStream write:[data bytes] maxLength:[data length]];
             
             lastAction = Login;
@@ -584,7 +784,8 @@ typedef enum {
         const char* newLine = "\n";
         [data appendBytes:newLine length:1];
         
-        
+        NSLog(self.outputStream.hasSpaceAvailable ? @"Yes" : @"No");
+
         [self.outputStream write:[data bytes] maxLength:[data length]];
         
         lastAction = ListenLecture;
@@ -606,7 +807,8 @@ typedef enum {
         const char* newLine = "\n";
         [data appendBytes:newLine length:1];
         
-        
+        NSLog(self.outputStream.hasSpaceAvailable ? @"Yes" : @"No");
+
         [self.outputStream write:[data bytes] maxLength:[data length]];
         
         lastAction = StopListeningLecture;
@@ -618,7 +820,8 @@ typedef enum {
 - (void)sendQuestion:(NSString *)question toLecture:(NSString *)lectureId{
     
     if (!self.isWaitingResponse) {
-        NSDictionary *dict = @{@"lectureId":lectureId, @"questionText": question};
+//        NSDictionary *dict = @{@"lectureId":lectureId, @"questionText": question};
+        NSDictionary *dict = @{@"questionText": question};
         NSDictionary *parameters  = @{@"method":@"sendQuestionToLecturer", @"params": dict};
         
         NSError *error;
@@ -628,7 +831,8 @@ typedef enum {
         const char* newLine = "\n";
         [data appendBytes:newLine length:1];
         
-        
+        NSLog(self.outputStream.hasSpaceAvailable ? @"Yes" : @"No");
+
         [self.outputStream write:[data bytes] maxLength:[data length]];
         
         lastAction = SendListenerQuestion;
@@ -650,13 +854,41 @@ typedef enum {
         const char* newLine = "\n";
         [data appendBytes:newLine length:1];
         
-        
+        NSLog(self.outputStream.hasSpaceAvailable ? @"Yes" : @"No");
+
         [self.outputStream write:[data bytes] maxLength:[data length]];
         
         lastAction = SendAnswer;
         self.isWaitingResponse = YES;
     }
     
+}
+
+-(void)getListenersQuestions{
+    if (!self.outputStream.hasSpaceAvailable) {
+        NSLog(@"Has no space available!");
+        return;
+    }
+    
+    if (!self.isWaitingResponse) {
+        NSDictionary *parameters = @{@"method":@"getLastQuestions"};
+        
+        NSError *error;
+        NSMutableData *data= [[NSJSONSerialization dataWithJSONObject:parameters
+                                                              options:0
+                                                                error:&error] mutableCopy];
+        const char* newLine = "\n";
+        [data appendBytes:newLine length:1];
+        NSLog(self.outputStream.hasSpaceAvailable ? @"Yes" : @"No");
+        
+        [self.outputStream write:[data bytes] maxLength:[data length]];
+        
+        lastAction = GetLastQuestion;
+        self.isWaitingResponse = YES;
+        
+        NSLog(@"Get Last Question from Lecturer sent");
+        
+    }
 }
 
 
@@ -672,6 +904,36 @@ typedef enum {
             break;
         case EndLecture:
             result = @"EndLecture action Response";
+            break;
+        case SendLecturerQuestion:
+            result = @"SendLecturerQuestion action Response";
+            break;
+        case DisplayListenerQuestion:
+            result = @"DisplayListenerQuestion action Response";
+            break;
+        case GetResultsForQuestion:
+            result = @"GetResultsForQuestion action Response";
+            break;
+        case ListenLecture:
+            result = @"ListenLecture action Response";
+            break;
+        case StopListeningLecture:
+            result = @"StopListeningLecture action Response";
+            break;
+        case SendListenerQuestion:
+            result = @"SendListenerQuestion action Response";
+            break;
+        case SendAnswer:
+            result = @"SendAnswer action Response";
+            break;
+        case GetNumOfListeners:
+            result = @"GetNumOfListeners action Response";
+            break;
+        case GetLastQuestion:
+            result = @"GetLastQuestion action Response";
+            break;
+        case GetListenersQuestions:
+            result = @"GetListenersQuestions action Response";
             break;
             
         default:

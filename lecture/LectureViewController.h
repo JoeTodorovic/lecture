@@ -13,6 +13,7 @@
 
 #import "QuestionViewController.h"
 #import "ALViewController.h"
+#import "EditLectureTableViewController.h"
 
 #import "LectureQuestionTableViewCell.h"
 
@@ -30,7 +31,9 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *lblLectureName;
 @property (strong, nonatomic) IBOutlet UILabel *lblLectureDescription;
-@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (strong, nonatomic) IBOutlet UILabel *lblLectureId;
+@property (strong, nonatomic) IBOutlet UILabel *lblLecturePassword;
+
 
 @property (strong, nonatomic) IBOutlet UITableView *tbvQuestions;
 

@@ -16,12 +16,13 @@
 #import "LecturerUser.h"
 #import "Lecture.h"
 
-@interface LecturerHomeViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+#import "TSMessage.h"
+#import "TSMessageView.h"
+
+@interface LecturerHomeViewController : UIViewController<UITableViewDataSource, UITableViewDelegate,TSMessageViewProtocol>
 
 
 @property (strong, nonatomic) IBOutlet UITableView *tvLectures;
-@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-
 
 - (IBAction)bbiCreateLecturePressed:(id)sender;
 

@@ -26,7 +26,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.navigationItem setTitle:self.lecture.name];
     
     self.tbvAL.delegate = self;
     self.tbvAL.dataSource = self;
@@ -35,22 +34,33 @@
     self.tbvAL.separatorColor = [UIColor whiteColor];
     
     wallQuestions = [[NSMutableArray alloc] init];
-    newUnseenQuestionsCouter = 0;
-    
-    self.tbSC.delegate = self;
-    navBarHairlineImageView = [self findHairlineImageViewUnder:self.navigationController.navigationBar];
-    
     
     [self setNotifications];
+    
+    [UIApplication sharedApplication].idleTimerDisabled = YES;
 
+    //Segment control
+    newUnseenQuestionsCouter = 0;
+    self.tbSC.delegate = self;
+    navBarHairlineImageView = [self findHairlineImageViewUnder:self.navigationController.navigationBar];
     badgeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 15.0, 15.0)];
     badgeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 15.0, 15.0)];
     
+
+    //Navigation Bar
+    [self.navigationItem setTitle:self.lecture.name];
+    //end lecture Button
     self.navigationItem.hidesBackButton = YES;
-    
-    //END Lecture button
     UIBarButtonItem *endLectureButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(endLecture)];
     self.navigationItem.rightBarButtonItem =endLectureButton;
+    
+    //SET Lecture question results
+    [self.lecture initQuestionsResults];
+    
+    //Update listeners number
+    
+    [NSTimer scheduledTimerWithTimeInterval:60.0f target:self selector:@selector(numberOfListeners) userInfo:nil repeats:YES];
+
 
 }
 
@@ -65,6 +75,11 @@
 //    [[SocketConnectionManager sharedInstance] closeConnection];
     
     navBarHairlineImageView.hidden = NO;
+}
+
+-(void)dealloc{
+    [UIApplication sharedApplication].idleTimerDisabled = NO;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -89,6 +104,11 @@
                                                  name:@"listenerSentQuestionNotification"
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(numberOfListenersResponse:)
+                                                 name:@"getNumberOfListenersResponseNotification"
+                                               object:nil];
+    
 }
 
 
@@ -102,6 +122,10 @@
 
 -(void)displayListenerQuestion:(UIButton *)sender{
     [[SocketConnectionManager sharedInstance] sendListenerQuestion:(NSString *)[wallQuestions objectAtIndex:sender.tag] toLecture:self.lecture.uniqueId];
+}
+
+-(void)numberOfListeners{
+    [SocketConnectionManager.sharedInstance getNumberOfListeners];
 }
 
 -(void)listenerSentQuestion:(NSNotification *)not{
@@ -146,6 +170,20 @@
 }
 
 
+-(void)numberOfListenersResponse:(NSNotification *)not{
+    
+    if ([[not.userInfo valueForKey:@"status"] boolValue]) {
+        NSLog(@"GetNumberOfListeners successfully");
+        
+        NSNumber *numOfListenres = (NSNumber *)[not.userInfo valueForKey:@"numOfListeners"];
+        self.lblNumberOfListeners.text = [numOfListenres stringValue];
+    }
+    else{
+        NSLog(@"GetNumberOfListeners fail");
+    }
+}
+
+
 
 #pragma mark - Alert View
 
@@ -169,6 +207,9 @@
     }
     
 }
+
+
+#pragma mark - Navigation Bar
 
 - (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar{
     return UIBarPositionTopAttached;
@@ -246,8 +287,9 @@ forSegmentAtIndex:(NSUInteger)index
     if (self.scWallQuestions.selectedSegmentIndex == 0) {
         LectureWallTableViewCell  *cellW = [tableView dequeueReusableCellWithIdentifier:@"LecturerWallCell"];
         
-        cellW.lblWallQuestion.text = [wallQuestions objectAtIndex:indexPath.row];
-//        cellW.lblTime.text = [NSTimer tim]
+        NSDictionary *questionDict = (NSDictionary *)[wallQuestions objectAtIndex:indexPath.row];
+        cellW.lblWallQuestion.text = (NSString *)[questionDict valueForKey:@"question"];
+        cellW.lblTime.text = (NSString *)[questionDict valueForKey:@"date"];
         cellW.btnDisplay.tag = indexPath.row;
         [cellW.btnDisplay addTarget:self action:@selector(displayListenerQuestion:) forControlEvents:UIControlEventTouchDown];
         return cellW;
@@ -268,6 +310,7 @@ forSegmentAtIndex:(NSUInteger)index
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (self.scWallQuestions.selectedSegmentIndex == 1) {
+        selectedQuestionIndex = indexPath.row;
         [self performSegueWithIdentifier:@"ALtoQuestionSegue" sender:nil];
     }
 }
@@ -281,7 +324,6 @@ forSegmentAtIndex:(NSUInteger)index
 
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     if ([segue.identifier isEqualToString:@"ALtoQuestionSegue"]){

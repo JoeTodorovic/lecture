@@ -30,6 +30,11 @@
     //SET Info Labeles
     self.lblLectureName.text = self.lecture.name;
     self.lblLectureDescription.text = self.lecture.lectureDescription;
+    self.lblLectureId.text = [NSString stringWithFormat:@"lecture id: %@", self.lecture.uniqueId];
+    
+//    if (self.lecture.password) {
+//        <#statements#>
+//    }
     
     
     //SET navigation controller
@@ -87,16 +92,52 @@
 
 }
 
+#pragma mark - NavigationBar Right Button Items
+
+-(void)setRightItemsStartEdit{
+    
+    UIBarButtonItem *startLectureButton = [[UIBarButtonItem alloc] initWithTitle:@"Start" style:UIBarButtonItemStylePlain target:self action:@selector(setSocket)];
+    [startLectureButton setImage:[UIImage imageNamed:@"Start.png"]];
+    
+    UIBarButtonItem *editLectureButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editLecture)];
+    [editLectureButton setImage:[UIImage imageNamed:@"Edit.png"]];
+    
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:editLectureButton, startLectureButton, nil];
+}
+
+-(void)setRightItemsSocketEdit{
+    
+    UIBarButtonItem *setSocketButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRedo target:self action:@selector(setSocket)];
+    
+    UIBarButtonItem *editLectureButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editLecture)];
+    [editLectureButton setImage:[UIImage imageNamed:@"Edit.png"]];
+    
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:editLectureButton, setSocketButton, nil];
+}
+
+-(void)setRightItemReloadLecture{
+    
+    UIBarButtonItem *setSocketButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRedo target:self action:@selector(loadLecture)];
+    
+    self.navigationItem.rightBarButtonItem =setSocketButton;
+}
+
 #pragma mark - Selectors
 
 -(void)back:(UIBarButtonItem *)sender {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
+-(void)editLecture{
+    NSLog(@"edit lecture");
+    [self performSegueWithIdentifier:@"LectureToEditSegue" sender:self];
+}
+
 -(void)setSocket{
     NSLog(@"Set Socket");
     if (![SocketConnectionManager sharedInstance].connected) {
         [KVNProgress showWithStatus:@"Connecting to Socket..."];
+        [SocketConnectionManager sharedInstance].lecturer = YES;
         [[SocketConnectionManager sharedInstance] initSocketConnection];
     }
     else{
@@ -129,9 +170,10 @@
                                             subtitle:NSLocalizedString(@"Failed to connect to socket. Tap redo to try to perform action again.", nil)
                                                 type:TSMessageNotificationTypeMessage];
             }];
-            UIBarButtonItem *setSocketButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRedo target:self action:@selector(setSocket)];
+//            UIBarButtonItem *setSocketButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRedo target:self action:@selector(setSocket)];
+//            self.navigationItem.rightBarButtonItem =setSocketButton;
             
-            self.navigationItem.rightBarButtonItem =setSocketButton;
+            [self setRightItemsSocketEdit];
         }
     }
 }
@@ -154,12 +196,8 @@
                 [SocketConnectionManager sharedInstance].wallQuestions = [[NSMutableArray alloc] init];
                 [SocketConnectionManager sharedInstance].activeLectureId = [NSString stringWithString:self.lecture.uniqueId];
                 [self.navigationController pushViewController:vc animated:NO];
-             
-                UIBarButtonItem *startLectureButton = [[UIBarButtonItem alloc] initWithTitle:@"Start" style:UIBarButtonItemStylePlain target:self action:@selector(setSocket)];
-                [startLectureButton setImage:[UIImage imageNamed:@"Start.png"]];
                 
-                self.navigationItem.rightBarButtonItem =startLectureButton;
-                
+//                [self setRightItemsSocketEdit];
             }
             else{
                 [[NSNotificationCenter defaultCenter] addObserver:self
@@ -186,9 +224,11 @@
                                             subtitle:NSLocalizedString(@"Failed to Login to socket. Tap redo to try to perform selected action again.", nil)
                                                 type:TSMessageNotificationTypeMessage];
             }];
-            UIBarButtonItem *setSocketButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRedo target:self action:@selector(setSocket)];
+//            UIBarButtonItem *setSocketButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRedo target:self action:@selector(setSocket)];
+//            
+//            self.navigationItem.rightBarButtonItem =setSocketButton;
             
-            self.navigationItem.rightBarButtonItem =setSocketButton;
+            [self setRightItemsSocketEdit];
         }
     }
 }
@@ -218,9 +258,11 @@
         [LecturerManager sharedInstance].loginToLectureFlag = NO;
         [LecturerManager sharedInstance].runningLectureUniqueId = nil;
         
-        UIBarButtonItem *startLectureButton = [[UIBarButtonItem alloc] initWithTitle:@"Start" style:UIBarButtonItemStylePlain target:self action:@selector(setSocket)];
-        [startLectureButton setImage:[UIImage imageNamed:@"Start.png"]];
-        self.navigationItem.rightBarButtonItem =startLectureButton;
+//        UIBarButtonItem *startLectureButton = [[UIBarButtonItem alloc] initWithTitle:@"Start" style:UIBarButtonItemStylePlain target:self action:@selector(setSocket)];
+//        [startLectureButton setImage:[UIImage imageNamed:@"Start.png"]];
+//        self.navigationItem.rightBarButtonItem =startLectureButton;
+        
+        [self setRightItemsStartEdit];
         
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"endLectureResponseNotification" object:nil];
         [KVNProgress showSuccessWithStatus:@"Lecture ended."];
@@ -249,10 +291,12 @@
         
         if (![LecturerManager sharedInstance].loginToLectureFlag) {
             
-            UIBarButtonItem *startLectureButton = [[UIBarButtonItem alloc] initWithTitle:@"Start" style:UIBarButtonItemStylePlain target:self action:@selector(setSocket)];
-            [startLectureButton setImage:[UIImage imageNamed:@"Start.png"]];
+//            UIBarButtonItem *startLectureButton = [[UIBarButtonItem alloc] initWithTitle:@"Start" style:UIBarButtonItemStylePlain target:self action:@selector(setSocket)];
+//            [startLectureButton setImage:[UIImage imageNamed:@"Start.png"]];
+//            
+//            self.navigationItem.rightBarButtonItem =startLectureButton;
             
-            self.navigationItem.rightBarButtonItem =startLectureButton;
+            [self setRightItemsStartEdit];
             
             [KVNProgress dismiss];
         }
@@ -295,10 +339,10 @@
                                             type:TSMessageNotificationTypeMessage];
         }];
         
-        UIBarButtonItem *reloadLectureButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRedo target:self action:@selector(loadLecture)];
-
-        self.navigationItem.rightBarButtonItem =reloadLectureButton;
-        
+//        UIBarButtonItem *reloadLectureButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRedo target:self action:@selector(loadLecture)];
+//
+//        self.navigationItem.rightBarButtonItem =reloadLectureButton;
+        [self setRightItemReloadLecture];
     }];
 
 }
@@ -414,6 +458,11 @@
             ALViewController *vc = segue.destinationViewController;
             vc.lecture = self.lecture;
         }
+    }
+    
+    if ([segue.identifier   isEqualToString:@"LectureToEditSegue"]) {
+        EditLectureTableViewController *vc = segue.destinationViewController;
+        vc.lecture = self.lecture;
     }
 }
 

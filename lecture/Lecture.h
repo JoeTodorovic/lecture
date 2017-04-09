@@ -16,9 +16,13 @@
 
 @property(strong, nonatomic) NSString *name;
 @property(strong, nonatomic) NSString *lectureDescription;
+@property(strong, nonatomic) NSString *password;
 
 @property(strong, nonatomic) NSMutableArray *questions;
 
 -(void)fromDictionary:(NSDictionary *)dict;
+
+-(void)initQuestionsResults;//init results array for every question
+
 
 @end

@@ -34,7 +34,9 @@
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    
+}
+
+-(void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -58,7 +60,7 @@
         [KVNProgress dismiss];
         
     } failureHandler:^(NSError *error) {
-        NSLog(@"GET EndPoints success");
+        NSLog(@"GET EndPoints fail");
         [KVNProgress dismissWithCompletion:^{
             [TSMessage showNotificationWithTitle:NSLocalizedString(@"Something failed", nil)
                                         subtitle:NSLocalizedString(@"The internet connection seems to be down. Please check that!", nil)
@@ -129,21 +131,29 @@
 -(void)socketLoginResponse:(NSNotification *)not{
     
     NSLog(@"socketLogin NOTIFICATION Response");
-    if ([((NSNumber *)[not.userInfo valueForKey:@"status"]) boolValue]) {
+    if (    [(NSString*)[not.userInfo valueForKey:@"message"] containsString:@"LISTENER"]) {
         
-        [KVNProgress updateStatus:@"Entering Lecture..."];
+        if ([((NSNumber *)[not.userInfo valueForKey:@"status"]) boolValue]) {
+            
+            [KVNProgress updateStatus:@"Entering Lecture..."];
+            
+            [[SocketConnectionManager sharedInstance] listenLectureWithId:self.txtfLectureID.text andPassword:nil];
+        }
+        else{
+            
+            [KVNProgress dismissWithCompletion:^{
+                [TSMessage showNotificationWithTitle:NSLocalizedString(@"Join lecture", nil)
+                                            subtitle:NSLocalizedString(@"Failed to Login to socket.", nil)
+                                                type:TSMessageNotificationTypeMessage];
+            }];
+            
+        }
         
-        [[SocketConnectionManager sharedInstance] listenLectureWithId:self.txtfLectureID.text andPassword:nil];
+        
     }
-    else{
-        
-        [KVNProgress dismissWithCompletion:^{
-            [TSMessage showNotificationWithTitle:NSLocalizedString(@"Join lecture", nil)
-                                        subtitle:NSLocalizedString(@"Failed to Login to socket.", nil)
-                                            type:TSMessageNotificationTypeMessage];
-        }];
 
-    }
+    
+
 }
 
 -(void)listenLectureResponse:(NSNotification *)not{
@@ -168,6 +178,9 @@
     
     if ((self.txtfLectureID.text != nil) && (![self.txtfLectureID.text isEqualToString:@""])) {
         NSLog(@"Join lecture pressed");
+        [SocketConnectionManager sharedInstance].lecturer = NO;
+        [SocketConnectionManager sharedInstance].enteringLectureId = self.txtfLectureID.text;
+        [SocketConnectionManager sharedInstance].enteringLecturePassword = nil;
         [self setSocket];
     }
     else{

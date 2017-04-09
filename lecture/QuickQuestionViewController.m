@@ -66,9 +66,15 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 -(void)setNotifications{
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendAnswerResponse:) name:@"sendAnswerResponseNotification" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(lectureEndded:) name:@"lectureFinishedNotification" object:nil];
 }
 
 #pragma mark - Timer
@@ -133,6 +139,26 @@
     }
 }
 
+-(void)lectureEndded:(NSNotification *)not{
+    NSLog(@"Lecturer ended lecture NOTIFICATION");
+//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Lecture" message:@"The lecture has finished." preferredStyle:UIAlertControllerStyleAlert];
+//    
+//    [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+//        
+//        [alertController dismissViewControllerAnimated:YES completion:^{
+//            [self dismissViewControllerAnimated:YES completion:nil];
+//            }
+//         ];
+//    }]];
+//    
+//    dispatch_async(dispatch_get_main_queue(), ^ {
+//        [self presentViewController:alertController animated:YES completion:nil];
+//    });
+    [self dismissViewControllerAnimated:YES completion:nil];
+
+}
+
+
 #pragma mark - Table View
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -143,7 +169,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     QAnswerTableViewCell  *cellAnswer = [tableView dequeueReusableCellWithIdentifier:@"QuickQAnswerCell"];
-    cellAnswer.lblAnswerMark.text = [NSString stringWithFormat:@"%ld)", (long)(indexPath.row)];
+    cellAnswer.lblAnswerMark.text = [NSString stringWithFormat:@"%ld)", (long)(indexPath.row)+1];
     cellAnswer.lblAnswer.text = (NSString *)[self.question.answers objectAtIndex:indexPath.row];
 
     [cellAnswer.lblAnswerMark setTextColor:[UIColor blackColor]];

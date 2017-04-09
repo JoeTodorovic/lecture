@@ -26,4 +26,5 @@
 @property (strong, nonatomic) IBOutlet UIButton *btnRegister;
 
 - (IBAction)btnRegisterPressed:(id)sender;
+- (IBAction)btnBackPressed:(id)sender;
 @end

@@ -8,6 +8,8 @@
 
 #import "CreateLectureViewController.h"
 
+#import <KVNProgress/KVNProgress.h>
+
 @interface CreateLectureViewController (){
     Lecture *newLecture;
 }
@@ -19,8 +21,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.activityIndicator.hidden = YES;
+
+    //SET TSMessage
+    [TSMessage setDefaultViewController:self];
+    [TSMessage setDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -36,16 +40,9 @@
 
 - (IBAction)btnCreateLecturePressed:(id)sender {
     
+    [KVNProgress showWithStatus:@"Creating New Lecture..."];
     
     if (![self.txtfName.text isEqualToString:@""]) {
-        
-        [self.activityIndicator startAnimating];
-        self.activityIndicator.hidden =NO;
-        self.view.userInteractionEnabled = NO;
-        self.txtfName.alpha = 0.5;
-        self.txtvDescription.alpha = 0.5;
-        self.btnCancel.alpha = 0.5;
-        self.btnCreate.alpha = 0.5;
         
         NSDictionary *parameters = @{@"title" : self.txtfName.text,
                                      @"description" : self.txtvDescription.text};
@@ -63,78 +60,34 @@
                 
                 [self performSegueWithIdentifier:@"CreateLectureToLectureSegue" sender:self];
                 
-                [self.activityIndicator startAnimating];
-                self.activityIndicator.hidden =YES;
-                self.view.userInteractionEnabled = YES;
-                self.txtfName.alpha = 1;
-                self.txtvDescription.alpha = 1;
-                self.btnCancel.alpha = 1;
-                self.btnCreate.alpha = 1;
+                [KVNProgress dismiss];
                 
             } failureHandler:^(NSError *error) {
                 NSLog(@"Get_LECTURE failureHandler");
-                
-                [self.activityIndicator startAnimating];
-                self.activityIndicator.hidden =YES;
-                self.view.userInteractionEnabled = YES;
-                self.txtfName.alpha = 1;
-                self.txtvDescription.alpha = 1;
-                self.btnCancel.alpha = 1;
-                self.btnCreate.alpha = 1;
-                
-                UIAlertController * alert = [UIAlertController
-                                             alertControllerWithTitle:nil
-                                             message:@"Create new lecture failed"
-                                             preferredStyle:UIAlertControllerStyleAlert];
-                
-                UIAlertAction* okButton = [UIAlertAction
-                                            actionWithTitle:@"OK"
-                                            style:UIAlertActionStyleDefault
-                                            handler:^(UIAlertAction * action) {
-                                                [self dismissViewControllerAnimated:alert completion:^{
-                                                    
-                                                }];
-                                            }];
-                
-                
-                [alert addAction:okButton];
-                
-                [self presentViewController:alert animated:YES completion:nil];
+
+                //TO DO what when fail to get lecture
+
+                [KVNProgress dismissWithCompletion:^{
+//                    [TSMessage showNotificationWithTitle:@"Create Lecture" subtitle:@"Fail to create Lecture. Please try again." type:TSMessageNotificationTypeMessage];
+                }];
             }];
             
         } failureHandler:^(NSError *error) {
             
             NSLog(@"CREATE_LECTURE failureHandler");
             
-            [self.activityIndicator startAnimating];
-            self.activityIndicator.hidden =YES;
-            self.view.userInteractionEnabled = YES;
-            self.txtfName.alpha = 1;
-            self.txtvDescription.alpha = 1;
-            self.btnCancel.alpha = 1;
-            self.btnCreate.alpha = 1;
+            [KVNProgress dismissWithCompletion:^{
+                [TSMessage showNotificationWithTitle:@"Create Lecture" subtitle:@"Fail to create Lecture. Please try again." type:TSMessageNotificationTypeMessage];
+            }];
+            
         }];
     }
     else{
         
-        UIAlertController * alert = [UIAlertController
-                                     alertControllerWithTitle:@"Title"
-                                     message:@"Please enter lectures name."
-                                     preferredStyle:UIAlertControllerStyleAlert];
+        [KVNProgress dismissWithCompletion:^{
+            [TSMessage showNotificationWithTitle:@"Please enter Lecture name." type:TSMessageNotificationTypeMessage];
+        }];
         
-        UIAlertAction* okButton = [UIAlertAction
-                                   actionWithTitle:@"OK"
-                                   style:UIAlertActionStyleDefault
-                                   handler:^(UIAlertAction * action) {
-                                       //Handle your yes please button action here
-                                       
-                                       [alert dismissViewControllerAnimated:YES completion:nil];
-                                   }];
-        
-        
-        [alert addAction:okButton];
-        
-        [self presentViewController:alert animated:YES completion:nil];
     }
     
 }
