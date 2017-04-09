@@ -59,7 +59,7 @@
     
     //Update listeners number
     
-    [NSTimer scheduledTimerWithTimeInterval:60.0f target:self selector:@selector(numberOfListeners) userInfo:nil repeats:YES];
+//    [NSTimer scheduledTimerWithTimeInterval:60.0f target:self selector:@selector(numberOfListeners) userInfo:nil repeats:YES];
 
 
 }

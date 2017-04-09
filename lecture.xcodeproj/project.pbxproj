@@ -17,6 +17,7 @@
 		BE14145E1E3507CF0086AA8B /* ALSendQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE14145D1E3507CF0086AA8B /* ALSendQuestionViewController.m */; };
 		BE1E2B201E30DD2A007A9718 /* SocketConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE1E2B1F1E30DD2A007A9718 /* SocketConnectionManager.m */; };
 		BE5E6ADE1DF1C50200A4FB9D /* EnterProfileInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE5E6ADD1DF1C50200A4FB9D /* EnterProfileInfoViewController.m */; };
+		BE60B1891E9A846D000C6437 /* QTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE60B1881E9A846D000C6437 /* QTextView.m */; };
 		BE663DB51E43D4790061109E /* DateValueFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = BE663DB01E43D4790061109E /* DateValueFormatter.m */; };
 		BE663DB61E43D4790061109E /* DayAxisValueFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = BE663DB21E43D4790061109E /* DayAxisValueFormatter.m */; };
 		BE663DB71E43D4790061109E /* IntAxisValueFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = BE663DB41E43D4790061109E /* IntAxisValueFormatter.m */; };
@@ -96,6 +97,8 @@
 		BE1E2B1F1E30DD2A007A9718 /* SocketConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocketConnectionManager.m; sourceTree = "<group>"; };
 		BE5E6ADC1DF1C50200A4FB9D /* EnterProfileInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnterProfileInfoViewController.h; sourceTree = "<group>"; };
 		BE5E6ADD1DF1C50200A4FB9D /* EnterProfileInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterProfileInfoViewController.m; sourceTree = "<group>"; };
+		BE60B1871E9A846D000C6437 /* QTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTextView.h; sourceTree = "<group>"; };
+		BE60B1881E9A846D000C6437 /* QTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTextView.m; sourceTree = "<group>"; };
 		BE663DAF1E43D4790061109E /* DateValueFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateValueFormatter.h; sourceTree = "<group>"; };
 		BE663DB01E43D4790061109E /* DateValueFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateValueFormatter.m; sourceTree = "<group>"; };
 		BE663DB11E43D4790061109E /* DayAxisValueFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayAxisValueFormatter.h; sourceTree = "<group>"; };
@@ -385,6 +388,8 @@
 				BE040DF71E112D990054C5CA /* ListenerQuestion.m */,
 				BE98FD501E37AE9D007B2D48 /* BadgeSegmentedControl.h */,
 				BE98FD511E37AE9D007B2D48 /* BadgeSegmentedControl.m */,
+				BE60B1871E9A846D000C6437 /* QTextView.h */,
+				BE60B1881E9A846D000C6437 /* QTextView.m */,
 			);
 			path = lecture;
 			sourceTree = "<group>";
@@ -725,6 +730,7 @@
 				BE90E6981D5B50B400BD3BBB /* LogInViewController.m in Sources */,
 				BE040DF21E112D580054C5CA /* Lecture.m in Sources */,
 				BEC42B0B1DF9F70D00BC16EA /* HttpManager.m in Sources */,
+				BE60B1891E9A846D000C6437 /* QTextView.m in Sources */,
 				BEEB81931D50C44D00F6D80F /* AppDelegate.m in Sources */,
 				BEABACB51DF8CCCF00BADF54 /* QuickQuestionViewController.m in Sources */,
 				BED5611F1E12D6FF0056FD07 /* LectureQuestionTableViewCell.m in Sources */,

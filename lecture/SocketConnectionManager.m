@@ -323,6 +323,7 @@ typedef enum {
                         }
                         else{
                             NSLog(@"%d", self.isWaitingResponse);
+                            NSLog(@"%s", buffer);
                             NSLog(@"socket vratio null");
                         }
                     }
@@ -819,6 +820,8 @@ typedef enum {
 
 - (void)sendQuestion:(NSString *)question toLecture:(NSString *)lectureId{
     
+    
+    
     if (!self.isWaitingResponse) {
 //        NSDictionary *dict = @{@"lectureId":lectureId, @"questionText": question};
         NSDictionary *dict = @{@"questionText": question};
@@ -830,6 +833,9 @@ typedef enum {
                                                                 error:&error] mutableCopy];
         const char* newLine = "\n";
         [data appendBytes:newLine length:1];
+        
+        
+        
         
         NSLog(self.outputStream.hasSpaceAvailable ? @"Yes" : @"No");
 
