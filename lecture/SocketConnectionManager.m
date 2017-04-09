@@ -98,233 +98,254 @@ typedef enum {
                         
                         NSData* inputData= [NSData dataWithBytes:buffer length:len];
                         
-                        NSError* error = [NSError new];
-                        NSDictionary* socketJson = [NSJSONSerialization
-                                              JSONObjectWithData:inputData
-                                              
-                                              options:kNilOptions
-                                              error:&error];
+                        //
+                        NSString *inputString = [[NSString alloc] initWithData:inputData
+                                                                 encoding:NSASCIIStringEncoding];
+//                        NSMutableArray *allResponses = [[inputString componentsSeparatedByCharactersInSet: [NSCharacterSet newlineCharacterSet]] mutableCopy];
+                        NSMutableArray *allResponses = [[inputString componentsSeparatedByString:@"\n"] mutableCopy];
+                        //
                         
-                        NSLog(@"input JSON:%@", socketJson);
+//                        NSError* error = [NSError new];
+//                        NSDictionary* socketJson = [NSJSONSerialization
+//                                              JSONObjectWithData:inputData
+//                                              
+//                                              options:kNilOptions
+//                                              error:&error];
+//                        
+//                        NSLog(@"input JSON:%@", socketJson);
                         
-                        if (socketJson != nil) {
+                        for (NSString *responseString in allResponses) {
                             
-                            NSString *type = (NSString *)[socketJson valueForKey:@"type"];
+                            NSData *responseData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
                             
+                            NSError* error = [NSError new];
+                            NSDictionary* socketJson = [NSJSONSerialization
+                                                        JSONObjectWithData:responseData
+                                                        
+                                                        options:kNilOptions
+                                                        error:&error];
                             
-                            if ([type isEqualToString:@"message"]) {
+                            NSLog(@"input JSON:%@", socketJson);
+                            
+                            if (socketJson != nil) {
                                 
-                                NSLog(@"Socket Message:");
-                                NSMutableDictionary *messageInfo = [[NSMutableDictionary alloc] init];
-
-                                NSString *action = (NSString *)[socketJson valueForKey:@"method"];
+                                NSString *type = (NSString *)[socketJson valueForKey:@"type"];
                                 
-                                if ([action isEqualToString:@"LOGIN"]) {
+                                
+                                if ([type isEqualToString:@"message"]) {
                                     
-//                                    NSLog(@"%@", action);
-//                                    NSLog(@"%@", (NSString *)[socketJson valueForKey:@"message"]);
-//                                    self.connected = YES;
-//                                    
-////                                    [self loginWithId:[LecturerManager sharedInstance].userProfile.userId];
-////                                    NSDictionary *actionResponse = @{@"status" : [NSNumber numberWithBool:YES]};
-//                                    messageInfo = (NSMutableDictionary *)@{@"status" : [NSNumber numberWithBool:YES]};
-////                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"socketConnectionResponseNotification" object:nil userInfo:messageInfo];
-                                }
-                                
-                                //for LECTURER
-                                if ([action isEqualToString:@"LISTENERSENTQUESTION"]) {
-                                    NSLog(@"Listener_Sent_Question");
-//                                    NSLog(@"%@", (NSString *)[json valueForKey:@"message"]);
-                                    if ([socketJson valueForKey:@"message"]) {
-                                        [self.wallQuestions addObject: (NSDictionary *)[socketJson valueForKey:@"message"]];
+                                    NSLog(@"Socket Message:");
+                                    NSMutableDictionary *messageInfo = [[NSMutableDictionary alloc] init];
+
+                                    NSString *action = (NSString *)[socketJson valueForKey:@"method"];
+                                    
+                                    if ([action isEqualToString:@"LOGIN"]) {
+                                        
+    //                                    NSLog(@"%@", action);
+    //                                    NSLog(@"%@", (NSString *)[socketJson valueForKey:@"message"]);
+    //                                    self.connected = YES;
+    //                                    
+    ////                                    [self loginWithId:[LecturerManager sharedInstance].userProfile.userId];
+    ////                                    NSDictionary *actionResponse = @{@"status" : [NSNumber numberWithBool:YES]};
+    //                                    messageInfo = (NSMutableDictionary *)@{@"status" : [NSNumber numberWithBool:YES]};
+    ////                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"socketConnectionResponseNotification" object:nil userInfo:messageInfo];
                                     }
                                     
-                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"listenerSentQuestionNotification" object:nil userInfo:nil];
-                                }
-                                
-                                //for LISTENER
-                                if ([action isEqualToString:@"STOPPEDLECTURE"]) {
-                                    NSLog(@"Lecturer_Stoped_Lecture");
-//                                    NSLog(@"%@", (NSString *)[json valueForKey:@"message"]);
-//                                    self.wallQuestions = nil;
-//                                    self.activeLectureId = nil;
-                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"lectureFinishedNotification" object:nil userInfo:nil];
-                                }
-                                
-                                if ([action isEqualToString:@"LECTURERSENTQUESTION"]) {
-                                    NSLog(@"Lecturer_Sent_Question");
-                                    
-                                    
-                                    if ([socketJson valueForKey:@"message"]) {
-                                        messageInfo = (NSMutableDictionary *)@{@"message" : [socketJson objectForKey:@"message"]};
+                                    //for LECTURER
+                                    if ([action isEqualToString:@"LISTENERSENTQUESTION"]) {
+                                        NSLog(@"Listener_Sent_Question");
+    //                                    NSLog(@"%@", (NSString *)[json valueForKey:@"message"]);
+                                        if ([socketJson valueForKey:@"message"]) {
+                                            [self.wallQuestions addObject: (NSDictionary *)[socketJson valueForKey:@"message"]];
+                                        }
+                                        
+                                        [[NSNotificationCenter defaultCenter] postNotificationName:@"listenerSentQuestionNotification" object:nil userInfo:nil];
                                     }
                                     
-                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"lecturerSentQuestionNotification" object:nil userInfo:messageInfo];
-                                }
-                                
-                                if ([action isEqualToString:@"LECTURERSENTLISTENERQUESTION"]) {
-                                    NSLog(@"Lecturer_Displayed_Question");
-
-                                    if ([socketJson valueForKey:@"message"]) {
-                                        [self.wallQuestions addObject:[socketJson valueForKey:@"message"]];
-                                        messageInfo = (NSMutableDictionary *)@{@"message" : [socketJson objectForKey:@"message"]};
+                                    //for LISTENER
+                                    if ([action isEqualToString:@"STOPPEDLECTURE"]) {
+                                        NSLog(@"Lecturer_Stoped_Lecture");
+    //                                    NSLog(@"%@", (NSString *)[json valueForKey:@"message"]);
+    //                                    self.wallQuestions = nil;
+    //                                    self.activeLectureId = nil;
+                                        [[NSNotificationCenter defaultCenter] postNotificationName:@"lectureFinishedNotification" object:nil userInfo:nil];
                                     }
                                     
-                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"listenerDisplyedQuestionNotification" object:nil userInfo:messageInfo];
-                                }
-                                
-                            }
-                            else{
-                                if ([type isEqualToString:@"response"]) {
+                                    if ([action isEqualToString:@"LECTURERSENTQUESTION"]) {
+                                        NSLog(@"Lecturer_Sent_Question");
+                                        
+                                        
+                                        if ([socketJson valueForKey:@"message"]) {
+                                            messageInfo = (NSMutableDictionary *)@{@"message" : [socketJson objectForKey:@"message"]};
+                                        }
+                                        
+                                        [[NSNotificationCenter defaultCenter] postNotificationName:@"lecturerSentQuestionNotification" object:nil userInfo:messageInfo];
+                                    }
                                     
-                                    NSMutableDictionary *actionResponse = [[NSMutableDictionary alloc] init];
-                                    NSNumber *ok = (NSNumber *)[socketJson valueForKey:@"ok"];
-                                    BOOL status = [ok boolValue];
-                                    [actionResponse setValue:(NSNumber *)[socketJson valueForKey:@"ok"] forKey:@"status"];
-                                    
-                                    NSString *respone_message = (NSString *)[socketJson valueForKey:@"message"];
-                                    NSLog(@"Action: %@", [self enumToString:lastAction]);
-//                                    NSLog(@"status: %@", [actionResponse valueForKey:@"status"]);
-//                                    NSLog(@"Socket respone: %@", respone_message);
-                                    
-                                    switch (lastAction) {
-                                            
-                                        case Login:
-                                            
-                                            NSLog(self.isLoggedIn ? @"LoggedIn: Yes" : @"LoggedIn: No");
+                                    if ([action isEqualToString:@"LECTURERSENTLISTENERQUESTION"]) {
+                                        NSLog(@"Lecturer_Displayed_Question");
 
-                                            if (status) {
-                                                self.isLoggedIn = YES;
-                                            }
-                                            
-                                            [actionResponse setValue:respone_message forKey:@"message"];
-                                            self.isWaitingResponse = NO;
-                                            [[NSNotificationCenter defaultCenter] postNotificationName:@"loginResponseNotification" object:actionResponse userInfo:actionResponse];
-                                            break;
-                                            
-                                            
-                                        //LECTURER responses
-                                        case StartLecture:
-                                            
-                                            self.isWaitingResponse = NO;
-                                            
-                                            if (status) {
-                                                self.wallQuestions = [[NSMutableArray alloc] init];
-                                                [[NSNotificationCenter defaultCenter] postNotificationName:@"startLectureResponseNotification" object:nil userInfo:actionResponse];
-                                            }
-                                            else{
-                                                self.wallQuestions = [[NSMutableArray alloc] init];
-                                                if ([respone_message isEqualToString:@"lecture already started"]) {
-                                                    [actionResponse setValue:[NSNumber numberWithBool:YES] forKey:@"status"];
+                                        if ([socketJson valueForKey:@"message"]) {
+                                            [self.wallQuestions addObject:[socketJson valueForKey:@"message"]];
+                                            messageInfo = (NSMutableDictionary *)@{@"message" : [socketJson objectForKey:@"message"]};
+                                        }
+                                        
+                                        [[NSNotificationCenter defaultCenter] postNotificationName:@"listenerDisplyedQuestionNotification" object:nil userInfo:messageInfo];
+                                    }
+                                    
+                                }
+                                else{
+                                    if ([type isEqualToString:@"response"]) {
+                                        
+                                        NSMutableDictionary *actionResponse = [[NSMutableDictionary alloc] init];
+                                        NSNumber *ok = (NSNumber *)[socketJson valueForKey:@"ok"];
+                                        BOOL status = [ok boolValue];
+                                        [actionResponse setValue:(NSNumber *)[socketJson valueForKey:@"ok"] forKey:@"status"];
+                                        
+                                        NSString *respone_message = (NSString *)[socketJson valueForKey:@"message"];
+                                        NSLog(@"Action: %@", [self enumToString:lastAction]);
+    //                                    NSLog(@"status: %@", [actionResponse valueForKey:@"status"]);
+    //                                    NSLog(@"Socket respone: %@", respone_message);
+                                        
+                                        switch (lastAction) {
+                                                
+                                            case Login:
+                                                
+                                                NSLog(self.isLoggedIn ? @"LoggedIn: Yes" : @"LoggedIn: No");
+
+                                                if (status) {
+                                                    self.isLoggedIn = YES;
+                                                }
+                                                
+                                                [actionResponse setValue:respone_message forKey:@"message"];
+                                                self.isWaitingResponse = NO;
+                                                [[NSNotificationCenter defaultCenter] postNotificationName:@"loginResponseNotification" object:actionResponse userInfo:actionResponse];
+                                                break;
+                                                
+                                                
+                                            //LECTURER responses
+                                            case StartLecture:
+                                                
+                                                self.isWaitingResponse = NO;
+                                                
+                                                if (status) {
+                                                    self.wallQuestions = [[NSMutableArray alloc] init];
                                                     [[NSNotificationCenter defaultCenter] postNotificationName:@"startLectureResponseNotification" object:nil userInfo:actionResponse];
+                                                }
+                                                else{
+                                                    self.wallQuestions = [[NSMutableArray alloc] init];
+                                                    if ([respone_message isEqualToString:@"lecture already started"]) {
+                                                        [actionResponse setValue:[NSNumber numberWithBool:YES] forKey:@"status"];
+                                                        [[NSNotificationCenter defaultCenter] postNotificationName:@"startLectureResponseNotification" object:nil userInfo:actionResponse];
+                                                    }
+                                                    else{
+                                                        self.activeLectureId = nil;
+                                                    }
+                                                }
+
+                                                break;
+                                                
+                                            case EndLecture:
+                                                
+                                                self.isWaitingResponse = NO;
+                                                if (status) {
+                                                    self.wallQuestions = nil;
+                                                    self.activeLectureId = nil;
+                                                    }
+
+                                                [[NSNotificationCenter defaultCenter] postNotificationName:@"endLectureResponseNotification" object:nil userInfo:actionResponse];
+                                                break;
+                                                
+                                            case SendLecturerQuestion:
+                                                
+                                                self.isWaitingResponse = NO;
+                                                [[NSNotificationCenter defaultCenter] postNotificationName:@"sendLecturerQuestionResponseNotification" object:nil userInfo:actionResponse];
+                                                break;
+                                                
+                                            case DisplayListenerQuestion:
+                                                
+                                                self.isWaitingResponse = NO;
+                                                [[NSNotificationCenter defaultCenter] postNotificationName:@"displayListenerQuestionResponseNotification" object:nil userInfo:actionResponse];
+                                                break;
+                                                
+                                            case GetResultsForQuestion:
+                                                
+                                                self.isWaitingResponse = NO;
+                                                if (status && [socketJson valueForKey:@"message"]) {
+                                                    [actionResponse setValue:[socketJson valueForKey:@"message"] forKey:@"results"];
+                                                }
+                                                [[NSNotificationCenter defaultCenter] postNotificationName:@"getResultsForQuestionResponseNotification" object:nil userInfo:actionResponse];
+                                                break;
+                                                
+                                            case GetNumOfListeners:
+                                                
+                                                self.isWaitingResponse = NO;
+                                                if (status && [socketJson valueForKey:@"message"]) {
+                                                    [actionResponse setValue:[socketJson valueForKey:@"message"] forKey:@"numOfListeners"];
+                                                }
+                                                
+                                                
+                                                [[NSNotificationCenter defaultCenter] postNotificationName:@"getNumberOfListenersResponseNotification" object:nil userInfo:actionResponse];
+                                                
+                                                
+                                                break;
+                                                
+                                                
+                                            //LISTENER responses
+                                                
+                                            case ListenLecture:
+                                                
+                                                self.isWaitingResponse = NO;
+                                                
+                                                if (status) {
+                                                    self.wallQuestions = [[NSMutableArray alloc] init];
+                                                    self.isLoggedIn = YES;
                                                 }
                                                 else{
                                                     self.activeLectureId = nil;
                                                 }
-                                            }
-
-                                            break;
-                                            
-                                        case EndLecture:
-                                            
-                                            self.isWaitingResponse = NO;
-                                            if (status) {
-                                                self.wallQuestions = nil;
-                                                self.activeLectureId = nil;
+                                                
+                                                [[NSNotificationCenter defaultCenter] postNotificationName:@"listenLectureResponseNotification" object:nil userInfo:actionResponse];
+                                                break;
+                                                
+                                            case StopListeningLecture:
+                                                
+                                                self.isWaitingResponse = NO;
+                                                
+                                                if (status) {
+                                                    self.wallQuestions = nil;
+                                                    self.activeLectureId = nil;
                                                 }
-
-                                            [[NSNotificationCenter defaultCenter] postNotificationName:@"endLectureResponseNotification" object:nil userInfo:actionResponse];
-                                            break;
-                                            
-                                        case SendLecturerQuestion:
-                                            
-                                            self.isWaitingResponse = NO;
-                                            [[NSNotificationCenter defaultCenter] postNotificationName:@"sendLecturerQuestionResponseNotification" object:nil userInfo:actionResponse];
-                                            break;
-                                            
-                                        case DisplayListenerQuestion:
-                                            
-                                            self.isWaitingResponse = NO;
-                                            [[NSNotificationCenter defaultCenter] postNotificationName:@"displayListenerQuestionResponseNotification" object:nil userInfo:actionResponse];
-                                            break;
-                                            
-                                        case GetResultsForQuestion:
-                                            
-                                            self.isWaitingResponse = NO;
-                                            if (status && [socketJson valueForKey:@"message"]) {
-                                                [actionResponse setValue:[socketJson valueForKey:@"message"] forKey:@"results"];
-                                            }
-                                            [[NSNotificationCenter defaultCenter] postNotificationName:@"getResultsForQuestionResponseNotification" object:nil userInfo:actionResponse];
-                                            break;
-                                            
-                                        case GetNumOfListeners:
-                                            
-                                            self.isWaitingResponse = NO;
-                                            if (status && [socketJson valueForKey:@"message"]) {
-                                                [actionResponse setValue:[socketJson valueForKey:@"message"] forKey:@"numOfListeners"];
-                                            }
-                                            
-                                            
-                                            [[NSNotificationCenter defaultCenter] postNotificationName:@"getNumberOfListenersResponseNotification" object:nil userInfo:actionResponse];
-                                            
-                                            
-                                            break;
-                                            
-                                            
-                                        //LISTENER responses
-                                            
-                                        case ListenLecture:
-                                            
-                                            self.isWaitingResponse = NO;
-                                            
-                                            if (status) {
-                                                self.wallQuestions = [[NSMutableArray alloc] init];
-                                                self.isLoggedIn = YES;
-                                            }
-                                            else{
-                                                self.activeLectureId = nil;
-                                            }
-                                            
-                                            [[NSNotificationCenter defaultCenter] postNotificationName:@"listenLectureResponseNotification" object:nil userInfo:actionResponse];
-                                            break;
-                                            
-                                        case StopListeningLecture:
-                                            
-                                            self.isWaitingResponse = NO;
-                                            
-                                            if (status) {
-                                                self.wallQuestions = nil;
-                                                self.activeLectureId = nil;
-                                            }
-                                            
-                                            [[NSNotificationCenter defaultCenter] postNotificationName:@"stopListeningLectureResponseNotification" object:nil userInfo:actionResponse];
-                                            break;
-                                            
-                                        case SendListenerQuestion:
-                                            
-                                            self.isWaitingResponse = NO;
-                                            [[NSNotificationCenter defaultCenter] postNotificationName:@"sendListenerQuestionResponseNotification" object:nil userInfo:actionResponse];
-                                            break;
-                                            
-                                        case SendAnswer:
-                                            
-                                            self.isWaitingResponse = NO;
-                                            [[NSNotificationCenter defaultCenter] postNotificationName:@"sendAnswerResponseNotification" object:nil userInfo:actionResponse];
-                                            break;
-                                            
-                                        default:
-                                            break;
+                                                
+                                                [[NSNotificationCenter defaultCenter] postNotificationName:@"stopListeningLectureResponseNotification" object:nil userInfo:actionResponse];
+                                                break;
+                                                
+                                            case SendListenerQuestion:
+                                                
+                                                self.isWaitingResponse = NO;
+                                                [[NSNotificationCenter defaultCenter] postNotificationName:@"sendListenerQuestionResponseNotification" object:nil userInfo:actionResponse];
+                                                break;
+                                                
+                                            case SendAnswer:
+                                                
+                                                self.isWaitingResponse = NO;
+                                                [[NSNotificationCenter defaultCenter] postNotificationName:@"sendAnswerResponseNotification" object:nil userInfo:actionResponse];
+                                                break;
+                                                
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                    else{
+                                        NSLog(@"Unknown socket type: %@", type);
                                     }
                                 }
-                                else{
-                                    NSLog(@"Unknown socket type: %@", type);
-                                }
                             }
-                        }
-                        else{
-                            NSLog(@"%d", self.isWaitingResponse);
-                            NSLog(@"%s", buffer);
-                            NSLog(@"socket vratio null");
+                            else{
+                                NSLog(@"%d", self.isWaitingResponse);
+                                NSLog(@"%s", buffer);
+                                NSLog(@"socket vratio null");
+                            }
                         }
                     }
                 }
