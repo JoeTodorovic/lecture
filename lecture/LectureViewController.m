@@ -197,6 +197,7 @@
                 [SocketConnectionManager sharedInstance].activeLectureId = [NSString stringWithString:self.lecture.uniqueId];
                 [self.navigationController pushViewController:vc animated:NO];
                 
+                [self setRightItemsStartEdit];
 //                [self setRightItemsSocketEdit];
             }
             else{

@@ -26,9 +26,14 @@
 @property (strong, nonatomic) Lecture *lecture;
 
 @property (strong, nonatomic) IBOutlet BadgeSegmentedControl *scWallQuestions;
+
 @property (strong, nonatomic) IBOutlet UITableView *tbvAL;
+
 @property (strong, nonatomic) IBOutlet UIToolbar *tbSC;
+
+@property (strong, nonatomic) IBOutlet UIView *viewBottomStatus;
 @property (strong, nonatomic) IBOutlet UILabel *lblNumberOfListeners;
+@property (strong, nonatomic) IBOutlet UILabel *lblLectureID;
 
 
 - (IBAction)scChanged:(id)sender;

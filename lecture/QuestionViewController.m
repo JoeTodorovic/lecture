@@ -310,6 +310,7 @@
         cellEditAnswer.txtvAnswer.delegate = self;
         cellEditAnswer.btnSetCorrectAnswer.tag = indexPath.row;
         cellEditAnswer.txtvAnswer.tag = indexPath.row;
+        cellEditAnswer.btnSetCorrectAnswer.tag = indexPath.row;
         
         cellEditAnswer.txtvAnswer.text = answer;
         

@@ -676,11 +676,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "lecture/ALViewController.m"
-            timestampString = "513437536.169146"
+            timestampString = "514634737.251305"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "144"
-            endingLineNumber = "144"
+            startingLineNumber = "153"
+            endingLineNumber = "153"
             landmarkName = "-listenerSentQuestion:"
             landmarkType = "7">
          </BreakpointContent>
@@ -788,12 +788,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "lecture/ALViewController.m"
-            timestampString = "513437536.169146"
+            timestampString = "514634737.251305"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
-            landmarkName = "-listenerSentQuestion:"
+            startingLineNumber = "140"
+            endingLineNumber = "140"
+            landmarkName = "-numberOfListeners"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1108,11 +1108,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "lecture/ALViewController.m"
-            timestampString = "513437536.169146"
+            timestampString = "514634737.251305"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "121"
-            endingLineNumber = "121"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
             landmarkName = "-endLecture"
             landmarkType = "7">
          </BreakpointContent>
@@ -1124,11 +1124,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "lecture/ALViewController.m"
-            timestampString = "513437536.169146"
+            timestampString = "514634737.251305"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "331"
-            endingLineNumber = "331"
+            startingLineNumber = "346"
+            endingLineNumber = "346"
             landmarkName = "-prepareForSegue:sender:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1156,11 +1156,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "lecture/LectureViewController.m"
-            timestampString = "511978480.598636"
+            timestampString = "514418370.25298"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "199"
-            endingLineNumber = "199"
+            startingLineNumber = "200"
+            endingLineNumber = "200"
             landmarkName = "-socketLoginResponse:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1172,11 +1172,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "lecture/LectureViewController.m"
-            timestampString = "511978480.598636"
+            timestampString = "514418370.25298"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "230"
-            endingLineNumber = "230"
+            startingLineNumber = "231"
+            endingLineNumber = "231"
             landmarkName = "-socketLoginResponse:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1364,12 +1364,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "lecture/ALViewController.m"
-            timestampString = "513437536.169146"
+            timestampString = "514634737.251305"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "128"
-            endingLineNumber = "128"
-            landmarkName = "-numberOfListeners"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
+            landmarkName = "-displayListenerQuestion:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1380,11 +1380,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "lecture/ALViewController.m"
-            timestampString = "513437536.169146"
+            timestampString = "514634737.251305"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "177"
-            endingLineNumber = "177"
+            startingLineNumber = "186"
+            endingLineNumber = "186"
             landmarkName = "-numberOfListenersResponse:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1460,13 +1460,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "lecture/ALViewController.m"
-            timestampString = "513438419.900975"
+            timestampString = "514634737.251305"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "163"
-            endingLineNumber = "163"
-            landmarkName = "-displayListenerQuestionResponse:"
-            landmarkType = "7">
+            startingLineNumber = "172"
+            endingLineNumber = "172"
+            landmarkName = "@implementation ALViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1514,6 +1514,118 @@
             startingLineNumber = "118"
             endingLineNumber = "118"
             landmarkName = "-stream:handleEvent:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "lecture/QuestionsWallViewController.m"
+            timestampString = "514415550.815991"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
+            landmarkName = "-prepareForSegue:sender:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "lecture/QuestionViewController.m"
+            timestampString = "514633045.831632"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
+            landmarkName = "-saveEditing"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[QuestionViewController saveEditing]"
+                  moduleName = "lecture"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/DusanTodorovic/Documents/xcode/lecture/lecture/QuestionViewController.m"
+                  timestampString = "514633046.090736"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "168"
+                  endingLineNumber = "168"
+                  offsetFromSymbolStart = "1643">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__37-[QuestionViewController saveEditing]_block_invoke_3"
+                  moduleName = "lecture"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/DusanTodorovic/Documents/xcode/lecture/lecture/QuestionViewController.m"
+                  timestampString = "514633046.094083"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "168"
+                  endingLineNumber = "168"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "lecture/QuestionViewController.m"
+            timestampString = "514633101.455771"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "171"
+            endingLineNumber = "171"
+            landmarkName = "-saveEditing"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "lecture/LectureQuestion.m"
+            timestampString = "514633125.232051"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "-fromDictionary:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "lecture/LectureQuestion.m"
+            timestampString = "514633126.128871"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "23"
+            endingLineNumber = "23"
+            landmarkName = "-fromDictionary:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

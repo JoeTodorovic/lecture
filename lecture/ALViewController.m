@@ -15,6 +15,7 @@
     UIImageView *navBarHairlineImageView;
     int newUnseenQuestionsCouter;
     
+    
     UIView *badgeView;
     UILabel *badgeLabel;
 }
@@ -35,11 +36,13 @@
     
     wallQuestions = [[NSMutableArray alloc] init];
     
+    
     [self setNotifications];
     
     [UIApplication sharedApplication].idleTimerDisabled = YES;
+    
 
-    //Segment control
+    //SET Segment control
     newUnseenQuestionsCouter = 0;
     self.tbSC.delegate = self;
     navBarHairlineImageView = [self findHairlineImageViewUnder:self.navigationController.navigationBar];
@@ -47,12 +50,19 @@
     badgeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 15.0, 15.0)];
     
 
-    //Navigation Bar
+    //SET Navigation Bar
     [self.navigationItem setTitle:self.lecture.name];
     //end lecture Button
     self.navigationItem.hidesBackButton = YES;
     UIBarButtonItem *endLectureButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(endLecture)];
     self.navigationItem.rightBarButtonItem =endLectureButton;
+    
+    //Set bottom status bar
+    
+    self.lblLectureID.text = [NSString stringWithFormat:@"id: %@", self.lecture.uniqueId];
+    self.viewBottomStatus.layer.borderWidth = 0.5;
+    self.viewBottomStatus.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    
     
     //SET Lecture question results
     [self.lecture initQuestionsResults];
@@ -62,6 +72,8 @@
 //    [NSTimer scheduledTimerWithTimeInterval:60.0f target:self selector:@selector(numberOfListeners) userInfo:nil repeats:YES];
 
 
+    
+//    forwardedFlags = ]
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -292,6 +304,12 @@ forSegmentAtIndex:(NSUInteger)index
         cellW.lblTime.text = (NSString *)[questionDict valueForKey:@"date"];
         cellW.btnDisplay.tag = indexPath.row;
         [cellW.btnDisplay addTarget:self action:@selector(displayListenerQuestion:) forControlEvents:UIControlEventTouchDown];
+        
+        
+        if (indexPath.row == 3 || indexPath.row == 0) {
+            UIImage *btnImage = [UIImage imageNamed:@"Forwarded"];
+            [cellW.imgvForwarded setImage:btnImage forState:UIControlStateNormal];
+        }
         return cellW;
     
     }

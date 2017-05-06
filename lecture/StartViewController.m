@@ -30,6 +30,9 @@
     [KVNProgress setConfiguration:configuration];
     
     [self getEndPoints];
+    
+    [self setNotifications];
+
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -43,7 +46,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    [self setNotifications];
+//    [self setNotifications];
 }
 
 - (void)didReceiveMemoryWarning {

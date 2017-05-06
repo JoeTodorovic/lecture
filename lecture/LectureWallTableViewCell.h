@@ -15,4 +15,5 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *btnDisplay;
 
+@property (strong, nonatomic) IBOutlet UIButton *imgvForwarded;
 @end
