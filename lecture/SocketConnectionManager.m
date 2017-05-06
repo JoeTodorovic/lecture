@@ -43,7 +43,7 @@ typedef enum {
         CFReadStreamRef readStream;
         CFWriteStreamRef writeStream;
 //        CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)@"localhost", 8210, &readStream, &writeStream);
-        CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)@"192.168.0.13", 8210, &readStream, &writeStream);
+        CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)@"192.168.0.12", 8210, &readStream, &writeStream);
 //        CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)@"24.135.56.76", 8210, &readStream, &writeStream);
 
         
@@ -160,6 +160,15 @@ typedef enum {
                                         }
                                         
                                         [[NSNotificationCenter defaultCenter] postNotificationName:@"listenerSentQuestionNotification" object:nil userInfo:nil];
+                                    }
+                                    
+                                    if ([action isEqualToString:@"CHANGEDNUMBEROFLISTENERS"]) {
+                                        NSLog(@"Changed_number_of_listeners");
+                                        if ([socketJson valueForKey:@"message"]) {
+                                                messageInfo = (NSMutableDictionary *)@{@"message" : [socketJson objectForKey:@"message"]};
+                                        }
+                                        
+                                        [[NSNotificationCenter defaultCenter] postNotificationName:@"changedNumberOfListenersNotification" object:nil userInfo:messageInfo];
                                     }
                                     
                                     //for LISTENER
@@ -721,7 +730,7 @@ typedef enum {
     }
 }
 
--(void)getLastQuestion{
+- (void)getListenersQuestions{
     if (!self.outputStream.hasSpaceAvailable) {
         NSLog(@"Has no space available!");
         return;
@@ -750,7 +759,7 @@ typedef enum {
 
 #pragma mark - Listener Methods
 
--(void)loginListener{
+- (void)loginListener{
     
     if (!self.isWaitingResponse) {
         if (!self.isLoggedIn) {
@@ -815,7 +824,6 @@ typedef enum {
     }
     
 }
-
 
 - (void)stopListenLecture{
     
@@ -891,7 +899,7 @@ typedef enum {
     
 }
 
--(void)getListenersQuestions{
+- (void)getLastQuestion{
     if (!self.outputStream.hasSpaceAvailable) {
         NSLog(@"Has no space available!");
         return;

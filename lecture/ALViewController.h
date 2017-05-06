@@ -25,6 +25,8 @@
 
 @property (strong, nonatomic) Lecture *lecture;
 
+@property bool continuedLectureFlag;
+
 @property (strong, nonatomic) IBOutlet BadgeSegmentedControl *scWallQuestions;
 
 @property (strong, nonatomic) IBOutlet UITableView *tbvAL;

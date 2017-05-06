@@ -13,7 +13,7 @@
     NSInteger selectedQuestionIndex;
     NSInteger displayQuestionIndex;
     UIImageView *navBarHairlineImageView;
-    int newUnseenQuestionsCouter;
+    int newUnseenQuestionsCounter;
     
     
     UIView *badgeView;
@@ -43,7 +43,7 @@
     
 
     //SET Segment control
-    newUnseenQuestionsCouter = 0;
+    newUnseenQuestionsCounter = 0;
     self.tbSC.delegate = self;
     navBarHairlineImageView = [self findHairlineImageViewUnder:self.navigationController.navigationBar];
     badgeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 15.0, 15.0)];
@@ -66,6 +66,13 @@
     
     //SET Lecture question results
     [self.lecture initQuestionsResults];
+    
+    //SET number of liteners & listeners questons when lecture is continued
+    if (self.continuedLectureFlag) {
+        [SocketConnectionManager.sharedInstance getNumberOfListeners];
+//        [SocketConnectionManager.sharedInstance listener];
+    }
+    
     
     //Update listeners number
     
@@ -121,6 +128,11 @@
                                                  name:@"getNumberOfListenersResponseNotification"
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(changedNumberOfListeners:)
+                                                 name:@"changedNumberOfListenersNotification"
+                                               object:nil];
+    
 }
 
 
@@ -145,8 +157,8 @@
     wallQuestions = [[SocketConnectionManager sharedInstance].wallQuestions mutableCopy];
     
     if (self.scWallQuestions.selectedSegmentIndex == 1) {
-        newUnseenQuestionsCouter++;
-        [self setBadge:[NSString stringWithFormat:@"%d",newUnseenQuestionsCouter] forSegmentAtIndex:0];
+        newUnseenQuestionsCounter++;
+        [self setBadge:[NSString stringWithFormat:@"%d",newUnseenQuestionsCounter] forSegmentAtIndex:0];
 
     }
     else{
@@ -170,7 +182,6 @@
     }
 }
 
-
 -(void)displayListenerQuestionResponse:(NSNotification *)not{
  
     if ([[not.userInfo valueForKey:@"status"] boolValue]) {
@@ -180,7 +191,6 @@
         NSLog(@"DisplayListenerQuestion fail");
     }
 }
-
 
 -(void)numberOfListenersResponse:(NSNotification *)not{
     
@@ -195,6 +205,18 @@
     }
 }
 
+-(void)changedNumberOfListeners:(NSNotification *)not{
+    NSDictionary *message = [not.userInfo valueForKey:@"message"];
+    if ([message valueForKey:@"NumOfListeners"] != nil) {
+        NSLog(@"changedNumberOfListeners GOOD data");
+        
+        NSNumber *numOfListenres = (NSNumber *)[message valueForKey:@"NumOfListeners"];
+        self.lblNumberOfListeners.text = [numOfListenres stringValue];
+    }
+    else{
+        NSLog(@"changedNumberOfListeners BAD data");
+    }
+}
 
 
 #pragma mark - Alert View
@@ -209,7 +231,7 @@
 - (IBAction)scChanged:(id)sender {
     
     if (((UISegmentedControl *)sender).selectedSegmentIndex == 0) {
-        newUnseenQuestionsCouter = 0;
+        newUnseenQuestionsCounter = 0;
         [self setBadge:@"0" forSegmentAtIndex:0];
         [self.tbvAL reloadData];
 //        [self scrollToBottom];

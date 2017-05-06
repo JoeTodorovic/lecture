@@ -27,7 +27,7 @@
     if ((self = [super init])) {
         
 //        self.host = @"localhost";
-        self.host = @"192.168.0.13";
+        self.host = @"192.168.0.12";
 //        self.host = @"24.135.56.76";
 
 

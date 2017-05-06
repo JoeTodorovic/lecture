@@ -54,7 +54,7 @@
     self.tbvQuestions.estimatedRowHeight = 44.0f;
     self.tbvQuestions.rowHeight = UITableViewAutomaticDimension;
     
-    //GET Questions for lecture
+    //GET Lecture info & questions
     [self loadLecture];
 }
 
@@ -66,6 +66,10 @@
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"endLectureResponseNotification" object:nil];
+}
+
+-(void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -89,7 +93,7 @@
                                              selector:@selector(startLectureResponse:)
                                                  name:@"startLectureResponseNotification"
                                                object:nil];
-
+    
 }
 
 #pragma mark - NavigationBar Right Button Items
@@ -167,7 +171,7 @@
         else{
             [KVNProgress dismissWithCompletion:^{
                 [TSMessage showNotificationWithTitle:NSLocalizedString(self.lecture.name, nil)
-                                            subtitle:NSLocalizedString(@"Failed to connect to socket. Tap redo to try to perform action again.", nil)
+                                            subtitle:NSLocalizedString(@"Failed to connect to socket. Tap redo to try to make connection again.", nil)
                                                 type:TSMessageNotificationTypeMessage];
             }];
 //            UIBarButtonItem *setSocketButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRedo target:self action:@selector(setSocket)];
@@ -193,6 +197,7 @@
                 [KVNProgress dismiss];
                 ALViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ActiveLectureViewSID"];
                 vc.lecture = self.lecture;
+                vc.continuedLectureFlag = YES;
                 [SocketConnectionManager sharedInstance].wallQuestions = [[NSMutableArray alloc] init];
                 [SocketConnectionManager sharedInstance].activeLectureId = [NSString stringWithString:self.lecture.uniqueId];
                 [self.navigationController pushViewController:vc animated:NO];
@@ -458,6 +463,7 @@
         if ([segue.identifier   isEqualToString:@"StartLectureSegue"]) {
             ALViewController *vc = segue.destinationViewController;
             vc.lecture = self.lecture;
+            vc.continuedLectureFlag = NO;
         }
     }
     
