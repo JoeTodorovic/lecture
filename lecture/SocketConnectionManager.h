@@ -52,9 +52,11 @@
 - (void)getResultsForQuestionWithId:(NSString *)questionId;
 //Get number of listeners for lecture
 - (void)getNumberOfListeners;
+//Get all recived listeners questions for lecture
+- (void)getListenersQuestions;
+
 
 //Listeners
-
 @property (strong, nonatomic) NSString *enteringLectureId;  // instade of this make new connection function for listeners
 @property (strong, nonatomic) NSString *enteringLecturePassword;    // instade of this make new connection function for listeners
 
@@ -68,6 +70,7 @@
 - (void)sendQuestion:(NSString *)question toLecture:(NSString *)lectureId;
 //Send listeners answer for test question
 - (void)sendAnswer:(NSNumber *)answer toQuestion:(NSString *)questionId;
-
+//Get last test question from lecturer
+- (void)getLastQuestion;
 
 @end

@@ -25,6 +25,15 @@
         
         NSLog(@"%@", self.correctIndex);
     }
+    
+    if ([dict objectForKey:@"correctIndex"] != nil){
+        
+        self.correctIndex = (NSNumber *)[dict objectForKey:@"correctIndex"];
+        
+        NSLog(@"%@", self.correctIndex);
+    }
+    
+    
     if ([dict objectForKey:@"duration"] != nil)
         self.time = (NSNumber *)[dict objectForKey:@"duration"];
     

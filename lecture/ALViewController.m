@@ -69,8 +69,7 @@
     
     //SET number of liteners & listeners questons when lecture is continued
     if (self.continuedLectureFlag) {
-        [SocketConnectionManager.sharedInstance getNumberOfListeners];
-//        [SocketConnectionManager.sharedInstance listener];
+        [SocketConnectionManager.sharedInstance getListenersQuestions];
     }
     
     
@@ -131,6 +130,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(changedNumberOfListeners:)
                                                  name:@"changedNumberOfListenersNotification"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(getListenersQuestionsResponse:)
+                                                 name:@"getListenersQuestionsResponseNotification"
                                                object:nil];
     
 }
@@ -217,6 +221,25 @@
         NSLog(@"changedNumberOfListeners BAD data");
     }
 }
+
+-(void)getListenersQuestionsResponse:(NSNotification *)not{
+    
+    [SocketConnectionManager.sharedInstance getNumberOfListeners];
+    
+    wallQuestions = [[SocketConnectionManager sharedInstance].wallQuestions mutableCopy];
+    
+    if (self.scWallQuestions.selectedSegmentIndex == 1) {
+        newUnseenQuestionsCounter++;
+        [self setBadge:[NSString stringWithFormat:@"%d",newUnseenQuestionsCounter] forSegmentAtIndex:0];
+        
+    }
+    else{
+        [self.tbvAL reloadData];
+        //        [self scrollToBottom];
+    }
+    
+}
+
 
 
 #pragma mark - Alert View

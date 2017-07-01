@@ -37,6 +37,8 @@
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
 }
 
 -(void)dealloc{
@@ -46,7 +48,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-//    [self setNotifications];
+    [self setNotifications];
 }
 
 - (void)didReceiveMemoryWarning {

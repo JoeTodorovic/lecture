@@ -15,6 +15,7 @@ typedef enum {
 @implementation SocketConnectionManager{
     
     BOOL startLecture;
+    BOOL eventErrorOccurredFlag;
     ClientAction lastAction;
     NSMutableDictionary *parametersLogin;
 }
@@ -42,8 +43,8 @@ typedef enum {
     if (!self.connected) {
         CFReadStreamRef readStream;
         CFWriteStreamRef writeStream;
-//        CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)@"localhost", 8210, &readStream, &writeStream);
-        CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)@"192.168.0.12", 8210, &readStream, &writeStream);
+        CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)@"localhost", 8210, &readStream, &writeStream);
+//        CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)@"192.168.0.12", 8210, &readStream, &writeStream);
 //        CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)@"24.135.56.76", 8210, &readStream, &writeStream);
 
         
@@ -226,9 +227,17 @@ typedef enum {
                                                     self.isLoggedIn = YES;
                                                 }
                                                 
+                                                
                                                 [actionResponse setValue:respone_message forKey:@"message"];
                                                 self.isWaitingResponse = NO;
+                                                
+                                                if (eventErrorOccurredFlag && self.lecturer) {
+                                                    eventErrorOccurredFlag = NO;
+                                                    [self getListenersQuestions];
+                                                }
                                                 [[NSNotificationCenter defaultCenter] postNotificationName:@"loginResponseNotification" object:actionResponse userInfo:actionResponse];
+                                                
+                                                
                                                 break;
                                                 
                                                 
@@ -295,8 +304,18 @@ typedef enum {
                                                 
                                                 
                                                 [[NSNotificationCenter defaultCenter] postNotificationName:@"getNumberOfListenersResponseNotification" object:nil userInfo:actionResponse];
+                                                break;
+                                                
+                                            case GetListenersQuestions:
+                                                
+                                                self.isWaitingResponse = NO;
+                                                if (status && [socketJson valueForKey:@"message"]) {
+                                                    [self.wallQuestions addObjectsFromArray:(NSArray*)[socketJson valueForKey:@"message"]];
+//                                                    self.wallQuestions = (NSMutableArray*)[socketJson valueForKey:@"message"];
+                                                }
                                                 
                                                 
+                                                [[NSNotificationCenter defaultCenter] postNotificationName:@"getListenersQuestionsResponseNotification" object:nil userInfo:actionResponse];
                                                 break;
                                                 
                                                 
@@ -339,6 +358,12 @@ typedef enum {
                                                 
                                                 self.isWaitingResponse = NO;
                                                 [[NSNotificationCenter defaultCenter] postNotificationName:@"sendAnswerResponseNotification" object:nil userInfo:actionResponse];
+                                                break;
+                                                
+                                            case GetLastQuestion:
+                                                
+                                                self.isWaitingResponse = NO;
+                                                [[NSNotificationCenter defaultCenter] postNotificationName:@"getLastQuestionResponseNotification" object:nil userInfo:actionResponse];
                                                 break;
                                                 
                                             default:
@@ -411,6 +436,8 @@ typedef enum {
             self.connected = NO;
             self.isLoggedIn = NO;
             self.isWaitingResponse = NO;
+            
+            eventErrorOccurredFlag = YES;
             
             [self initSocketConnection];
             
@@ -737,8 +764,9 @@ typedef enum {
     }
     
     if (!self.isWaitingResponse) {
-        NSDictionary *parameters = @{@"method":@"getListenersQuestion"};
-        
+
+        NSDictionary *parameters = @{@"method":@"getListenerQuestions"};
+
         NSError *error;
         NSMutableData *data= [[NSJSONSerialization dataWithJSONObject:parameters
                                                               options:0
@@ -906,7 +934,7 @@ typedef enum {
     }
     
     if (!self.isWaitingResponse) {
-        NSDictionary *parameters = @{@"method":@"getLastQuestions"};
+        NSDictionary *parameters = @{@"method":@"getLastQuestion"};
         
         NSError *error;
         NSMutableData *data= [[NSJSONSerialization dataWithJSONObject:parameters

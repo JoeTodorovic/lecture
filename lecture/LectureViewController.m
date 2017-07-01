@@ -23,6 +23,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+
+    
     //SET TSMessage
     [TSMessage setDefaultViewController:self];
     [TSMessage setDelegate:self];
@@ -56,17 +59,26 @@
     
     //GET Lecture info & questions
     [self loadLecture];
+    
+    //Set notifications
+//    [self setNotifications];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self setNotifications];
     [self.tbvQuestions reloadData];
+    
+    
+    //Set notifications
+    [self setNotifications];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"endLectureResponseNotification" object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"endLectureResponseNotification" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
 }
 
 -(void)dealloc{
@@ -203,6 +215,8 @@
                 [self.navigationController pushViewController:vc animated:NO];
                 
                 [self setRightItemsStartEdit];
+                continueLecture = NO;
+                
 //                [self setRightItemsSocketEdit];
             }
             else{
