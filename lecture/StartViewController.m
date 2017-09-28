@@ -31,7 +31,7 @@
     
     [self getEndPoints];
     
-    [self setNotifications];
+//    [self setNotifications];
 
 }
 
@@ -42,7 +42,7 @@
 }
 
 -(void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -136,7 +136,7 @@
 -(void)socketLoginResponse:(NSNotification *)not{
     
     NSLog(@"socketLogin NOTIFICATION Response");
-    if (    [(NSString*)[not.userInfo valueForKey:@"message"] containsString:@"LISTENER"]) {
+    if (![((NSNumber *)[not.userInfo valueForKey:@"userType"]) boolValue]) {
         
         if ([((NSNumber *)[not.userInfo valueForKey:@"status"]) boolValue]) {
             

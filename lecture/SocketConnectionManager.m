@@ -7,6 +7,7 @@
 //
 
 #import "SocketConnectionManager.h"
+#import <uuid/uuid.h>
 
 typedef enum {
     Login, StartLecture, EndLecture, SendLecturerQuestion, DisplayListenerQuestion, GetResultsForQuestion, ListenLecture, StopListeningLecture, SendListenerQuestion, SendAnswer, GetNumOfListeners, GetLastQuestion, GetListenersQuestions
@@ -16,6 +17,7 @@ typedef enum {
     
     BOOL startLecture;
     BOOL eventErrorOccurredFlag;
+    BOOL lecturerLoginFlag;
     ClientAction lastAction;
     NSMutableDictionary *parametersLogin;
 }
@@ -43,8 +45,8 @@ typedef enum {
     if (!self.connected) {
         CFReadStreamRef readStream;
         CFWriteStreamRef writeStream;
-        CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)@"localhost", 8210, &readStream, &writeStream);
-//        CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)@"192.168.0.12", 8210, &readStream, &writeStream);
+//        CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)@"localhost", 8210, &readStream, &writeStream);
+        CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)@"192.168.0.12", 8210, &readStream, &writeStream);
 //        CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)@"24.135.56.76", 8210, &readStream, &writeStream);
 
         
@@ -157,6 +159,7 @@ typedef enum {
                                         NSLog(@"Listener_Sent_Question");
     //                                    NSLog(@"%@", (NSString *)[json valueForKey:@"message"]);
                                         if ([socketJson valueForKey:@"message"]) {
+                                           
                                             [self.wallQuestions addObject: (NSDictionary *)[socketJson valueForKey:@"message"]];
                                         }
                                         
@@ -229,12 +232,14 @@ typedef enum {
                                                 
                                                 
                                                 [actionResponse setValue:respone_message forKey:@"message"];
+                                                [actionResponse setValue:[NSNumber numberWithBool:lecturerLoginFlag] forKey:@"userType"];
                                                 self.isWaitingResponse = NO;
                                                 
                                                 if (eventErrorOccurredFlag && self.lecturer) {
                                                     eventErrorOccurredFlag = NO;
                                                     [self getListenersQuestions];
                                                 }
+                                                
                                                 [[NSNotificationCenter defaultCenter] postNotificationName:@"loginResponseNotification" object:actionResponse userInfo:actionResponse];
                                                 
                                                 
@@ -521,8 +526,9 @@ typedef enum {
     if (!self.isWaitingResponse) {
         if (!self.isLoggedIn) {
             
-            NSDictionary *parameters = @{@"method": @"login", @"params":clientId};
-            
+//            NSDictionary *parameters = @{@"method": @"login", @"params":clientId};
+            NSDictionary *parameters = @{@"method": @"login", @"params":@{@"guid":clientId}};
+
             NSError *error;
             NSMutableData *data= [[NSJSONSerialization dataWithJSONObject:parameters
                                                                   options:0
@@ -535,6 +541,7 @@ typedef enum {
             [self.outputStream write:[data bytes] maxLength:[data length]];
             
             lastAction = Login;
+            lecturerLoginFlag = YES;
             self.isWaitingResponse = YES;
             
             NSLog(@"login with uid : %@", clientId);
@@ -712,7 +719,11 @@ typedef enum {
 //        NSDictionary *dict = @{@"lectureId":lectureId, @"questionText": question};
         NSDictionary *dict = @{@"questionText": (NSString *)[question valueForKey:@"question"], @"date": (NSString *)[question valueForKey:@"date"]};
         
-        NSDictionary *parameters  = @{@"method":@"sendListenerQuestionToListeners", @"params": dict};
+//        NSDictionary *parameters  = @{@"method":@"sendListenerQuestionToListeners", @"params": dict};
+        
+        
+        NSDictionary *parameters  = @{@"method":@"sendListenerQuestionToListeners", @"id": dict};
+        
         
         NSError *error;
         NSMutableData *data= [[NSJSONSerialization dataWithJSONObject:parameters
@@ -792,7 +803,9 @@ typedef enum {
     if (!self.isWaitingResponse) {
         if (!self.isLoggedIn) {
             
-            NSDictionary *parameters = @{@"method": @"login", @"params":@"LISTENER"};
+//            NSDictionary *parameters = @{@"method": @"login", @"params":@"LISTENER", @"listener":@YES};
+            NSDictionary *parameters = @{@"method": @"login", @"params":@{@"guid":[[UIDevice currentDevice] identifierForVendor].UUIDString, @"listener":@YES}};
+
             
             NSError *error;
             NSMutableData *data= [[NSJSONSerialization dataWithJSONObject:parameters
@@ -805,6 +818,7 @@ typedef enum {
             [self.outputStream write:[data bytes] maxLength:[data length]];
             
             lastAction = Login;
+            lecturerLoginFlag = NO;
             self.isWaitingResponse = YES;
             
             NSLog(@"login LISTENER");
@@ -881,7 +895,7 @@ typedef enum {
     
     if (!self.isWaitingResponse) {
 //        NSDictionary *dict = @{@"lectureId":lectureId, @"questionText": question};
-        NSDictionary *dict = @{@"questionText": question};
+        NSDictionary *dict = @{@"question": question};
         NSDictionary *parameters  = @{@"method":@"sendQuestionToLecturer", @"params": dict};
         
         NSError *error;

@@ -10,4 +10,13 @@
 
 @interface ListenerQuestion : NSObject
 
+@property(strong, nonatomic) NSString *guid;
+@property(strong, nonatomic) NSString *question;
+@property(strong, nonatomic) NSString *messageDate;
+@property(strong, nonatomic) NSString *date;
+@property(strong, nonatomic) NSString *lectureId;
+@property BOOL sharedFlag;
+
+-(void)fromDictionary:(NSDictionary *)dict;
+
 @end

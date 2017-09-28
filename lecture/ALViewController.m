@@ -344,19 +344,23 @@ forSegmentAtIndex:(NSUInteger)index
     if (self.scWallQuestions.selectedSegmentIndex == 0) {
         LectureWallTableViewCell  *cellW = [tableView dequeueReusableCellWithIdentifier:@"LecturerWallCell"];
         
-        NSDictionary *questionDict = (NSDictionary *)[wallQuestions objectAtIndex:indexPath.row];
-        cellW.lblWallQuestion.text = (NSString *)[questionDict valueForKey:@"question"];
-        cellW.lblTime.text = (NSString *)[questionDict valueForKey:@"date"];
+        ListenerQuestion *question = [ListenerQuestion init];
+        [question fromDictionary:[wallQuestions objectAtIndex:indexPath.row]];
+        
+        
+        cellW.lblWallQuestion.text = question.question;
+        cellW.lblTime.text = question.date;
         cellW.btnDisplay.tag = indexPath.row;
         [cellW.btnDisplay addTarget:self action:@selector(displayListenerQuestion:) forControlEvents:UIControlEventTouchDown];
         
         
-        if (indexPath.row == 3 || indexPath.row == 0) {
-            UIImage *btnImage = [UIImage imageNamed:@"Forwarded"];
-            [cellW.imgvForwarded setImage:btnImage forState:UIControlStateNormal];
+        if (question.sharedFlag) {
+            [cellW.imgvForwarded setImage:[UIImage imageNamed:@"Forwarded"] forState:UIControlStateNormal];
+        } else{
+            [cellW.imgvForwarded setImage:[UIImage imageNamed:@"Forward"] forState:UIControlStateNormal];
         }
+        
         return cellW;
-    
     }
     else{
         
