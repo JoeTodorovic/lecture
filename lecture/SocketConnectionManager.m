@@ -163,7 +163,7 @@ typedef enum {
                                             [self.wallQuestions addObject: (NSDictionary *)[socketJson valueForKey:@"message"]];
                                         }
                                         
-                                        [[NSNotificationCenter defaultCenter] postNotificationName:@"listenerSentQuestionNotification" object:nil userInfo:nil];
+                                        [[NSNotificationCenter defaultCenter] postNotificationName:@"listenerSentQuestionNotification" object:nil userInfo:(NSDictionary *)[socketJson valueForKey:@"message"]];
                                     }
                                     
                                     if ([action isEqualToString:@"CHANGEDNUMBEROFLISTENERS"]) {
@@ -315,6 +315,7 @@ typedef enum {
                                                 
                                                 self.isWaitingResponse = NO;
                                                 if (status && [socketJson valueForKey:@"message"]) {
+                                                    [self.wallQuestions removeAllObjects];
                                                     [self.wallQuestions addObjectsFromArray:(NSArray*)[socketJson valueForKey:@"message"]];
 //                                                    self.wallQuestions = (NSMutableArray*)[socketJson valueForKey:@"message"];
                                                 }
@@ -709,20 +710,22 @@ typedef enum {
 
 }
 
-- (void)sendListenerQuestion:(NSString *)question toLecture:(NSString *)lectureId{
+//- (void)sendListenerQuestion:(NSString *)question toLecture:(NSString *)lectureId{
+- (void)sendListenerQuestionWithId:(NSString *)questionId{
+
     if (!self.outputStream.hasSpaceAvailable) {
         NSLog(@"Has no space available!");
         return;
     }
     
     if (!self.isWaitingResponse) {
-//        NSDictionary *dict = @{@"lectureId":lectureId, @"questionText": question};
-        NSDictionary *dict = @{@"questionText": (NSString *)[question valueForKey:@"question"], @"date": (NSString *)[question valueForKey:@"date"]};
+//        NSDictionary *dict = @{@"questionText": (NSString *)[question valueForKey:@"question"], @"date": (NSString *)[question valueForKey:@"date"]};
         
-//        NSDictionary *parameters  = @{@"method":@"sendListenerQuestionToListeners", @"params": dict};
+        NSDictionary *dict = @{@"id": questionId};
         
-        
-        NSDictionary *parameters  = @{@"method":@"sendListenerQuestionToListeners", @"id": dict};
+        NSDictionary *parameters  = @{@"method":@"sendListenerQuestionToListeners", @"params": dict};
+//        NSDictionary *parameters  = @{@"method":@"sendListenerQuestionToListeners", @"id": questionId};
+
         
         
         NSError *error;
@@ -967,6 +970,7 @@ typedef enum {
         
     }
 }
+
 
 
 - (NSString*)enumToString:(ClientAction) action {

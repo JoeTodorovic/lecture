@@ -216,8 +216,6 @@
                 
                 [self setRightItemsStartEdit];
                 continueLecture = NO;
-                
-//                [self setRightItemsSocketEdit];
             }
             else{
                 [[NSNotificationCenter defaultCenter] addObserver:self
@@ -244,9 +242,6 @@
                                             subtitle:NSLocalizedString(@"Failed to Login to socket. Tap redo to try to perform selected action again.", nil)
                                                 type:TSMessageNotificationTypeMessage];
             }];
-//            UIBarButtonItem *setSocketButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRedo target:self action:@selector(setSocket)];
-//            
-//            self.navigationItem.rightBarButtonItem =setSocketButton;
             
             [self setRightItemsSocketEdit];
         }

@@ -50,7 +50,6 @@
 
 
 - (void)getEndPointsWithSuccessHandler:(LoginResponseBlock)success failureHandler:(FailureBlock)failure{
-//    @"http://localhost:8000/home"
     
     [self.sessionManager GET:[NSString stringWithFormat:@"http://%@:8000/home", self.host] parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         

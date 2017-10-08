@@ -16,21 +16,22 @@
         self.messageDate = (NSString *)[dict objectForKey:@"date"];
     
     if ([dict objectForKey:@"question"] != nil) {
-        if ([dict objectForKey:@"guid"] != nil)
-            self.guid = (NSString *)[dict objectForKey:@"guid"];
+        NSDictionary *questionDict = [dict objectForKey:@"question"];
+        if ([questionDict objectForKey:@"guid"] != nil)
+            self.guid = (NSString *)[questionDict objectForKey:@"guid"];
         
-        if ([dict objectForKey:@"question"] != nil)
-            self.question = (NSString *)[dict objectForKey:@"question"];
+        if ([questionDict objectForKey:@"question"] != nil)
+            self.question = (NSString *)[questionDict objectForKey:@"question"];
         
-        if ([dict objectForKey:@"date"] != nil)
-            self.date = (NSString *)[dict objectForKey:@"date"];
+        if ([questionDict objectForKey:@"date"] != nil)
+            self.date = (NSString *)[questionDict objectForKey:@"date"];
         
-        if ([dict objectForKey:@"lectureId"] != nil)
-            self.lectureId = (NSString *)[dict objectForKey:@"lectureId"];
+        if ([questionDict objectForKey:@"lectureId"] != nil)
+            self.lectureId = (NSString *)[questionDict objectForKey:@"lectureId"];
         
-        if ([dict objectForKey:@"shared"] != nil)
-            self.sharedFlag = (NSString *)[dict objectForKey:@"shared"];
-
+        if ([questionDict objectForKey:@"shared"] != nil)
+            self.sharedFlag = [(NSNumber *)[questionDict objectForKey:@"shared"] boolValue];
+//            self.sharedFlag = [(NSString *)[questionDict objectForKey:@"shared"]  isEqual: @"true"] ? YES : NO;
     }
 }
 

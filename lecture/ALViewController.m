@@ -15,6 +15,7 @@
     UIImageView *navBarHairlineImageView;
     int newUnseenQuestionsCounter;
     
+    BOOL pullToRefreshFlag;
     
     UIView *badgeView;
     UILabel *badgeLabel;
@@ -26,13 +27,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
+
     self.tbvAL.delegate = self;
     self.tbvAL.dataSource = self;
     self.tbvAL.estimatedRowHeight = 74.0f;
     self.tbvAL.rowHeight = UITableViewAutomaticDimension;
     self.tbvAL.separatorColor = [UIColor whiteColor];
+    self.tbvAL.refreshControl = [[UIRefreshControl alloc]init];
+    [self.tbvAL.refreshControl addTarget:self action:@selector(refreshListenersQuestions) forControlEvents:UIControlEventValueChanged];
+    
+    pullToRefreshFlag = NO;
     
     wallQuestions = [[NSMutableArray alloc] init];
     
@@ -76,10 +80,8 @@
     //Update listeners number
     
 //    [NSTimer scheduledTimerWithTimeInterval:60.0f target:self selector:@selector(numberOfListeners) userInfo:nil repeats:YES];
-
-
     
-//    forwardedFlags = ]
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -149,7 +151,46 @@
 }
 
 -(void)displayListenerQuestion:(UIButton *)sender{
-    [[SocketConnectionManager sharedInstance] sendListenerQuestion:(NSString *)[wallQuestions objectAtIndex:sender.tag] toLecture:self.lecture.uniqueId];
+
+    ListenerQuestion *question = [[ListenerQuestion alloc] init];
+    [question fromDictionary:[wallQuestions objectAtIndex:sender.tag]];
+    
+    if (!question.sharedFlag) {
+        [[SocketConnectionManager sharedInstance] sendListenerQuestionWithId:question.guid];
+        NSMutableDictionary *newMessageDict = ((NSDictionary *)[wallQuestions objectAtIndex:sender.tag]).mutableCopy;
+        NSMutableDictionary *newQuestionDict = ((NSDictionary *)[newMessageDict objectForKey:@"question"]).mutableCopy;
+        [newQuestionDict setValue:[NSNumber numberWithBool:YES] forKey:@"shared"];
+        [newMessageDict setValue:newQuestionDict forKey:@"question"];
+        [wallQuestions replaceObjectAtIndex:sender.tag withObject:(NSDictionary*)newMessageDict];
+        [sender setImage:[UIImage imageNamed:@"Forwarded"] forState:UIControlStateNormal];
+        
+    } else{
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:[NSString stringWithFormat:@"You have already shared this question with listerers. Would you like to share it again?"] preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            
+            [[SocketConnectionManager sharedInstance] sendListenerQuestionWithId:question.guid];
+            NSMutableDictionary *newMessageDict = ((NSDictionary *)[wallQuestions objectAtIndex:sender.tag]).mutableCopy;
+            NSMutableDictionary *newQuestionDict = ((NSDictionary *)[newMessageDict objectForKey:@"question"]).mutableCopy;
+            [newQuestionDict setValue:[NSNumber numberWithBool:YES] forKey:@"shared"];
+            [newMessageDict setValue:newQuestionDict forKey:@"question"];
+            [wallQuestions replaceObjectAtIndex:sender.tag withObject:(NSDictionary*)newMessageDict];
+            [sender setImage:[UIImage imageNamed:@"Forwarded"] forState:UIControlStateNormal];
+            
+            [alertController dismissViewControllerAnimated:YES completion:^{
+            }];
+        }]];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            
+            [alertController dismissViewControllerAnimated:YES completion:^{
+            }];
+        }]];
+        
+        dispatch_async(dispatch_get_main_queue(), ^ {
+            [self presentViewController:alertController animated:YES completion:nil];
+        });
+    }
 }
 
 -(void)numberOfListeners{
@@ -158,7 +199,10 @@
 
 -(void)listenerSentQuestion:(NSNotification *)not{
     
-    wallQuestions = [[SocketConnectionManager sharedInstance].wallQuestions mutableCopy];
+//    wallQuestions = [[SocketConnectionManager sharedInstance].wallQuestions mutableCopy];
+    
+    NSDictionary *message = (NSDictionary *)not.userInfo;
+    [wallQuestions addObject:message];
     
     if (self.scWallQuestions.selectedSegmentIndex == 1) {
         newUnseenQuestionsCounter++;
@@ -167,7 +211,6 @@
     }
     else{
         [self.tbvAL reloadData];
-//        [self scrollToBottom];
     }
 }
 
@@ -229,18 +272,27 @@
     wallQuestions = [[SocketConnectionManager sharedInstance].wallQuestions mutableCopy];
     
     if (self.scWallQuestions.selectedSegmentIndex == 1) {
-        newUnseenQuestionsCounter++;
-        [self setBadge:[NSString stringWithFormat:@"%d",newUnseenQuestionsCounter] forSegmentAtIndex:0];
-        
+//        newUnseenQuestionsCounter++;
+//        [self setBadge:[NSString stringWithFormat:@"%d",newUnseenQuestionsCounter] forSegmentAtIndex:0];
+    
     }
     else{
         [self.tbvAL reloadData];
-        //        [self scrollToBottom];
+        
+        if (pullToRefreshFlag) {
+            [self.tbvAL.refreshControl endRefreshing];
+            pullToRefreshFlag = NO;
+        }
     }
     
 }
 
 
+// refresh tableview
+-(void)refreshListenersQuestions{
+    pullToRefreshFlag = YES;
+    [SocketConnectionManager.sharedInstance getListenersQuestions];
+}
 
 #pragma mark - Alert View
 
@@ -254,12 +306,15 @@
 - (IBAction)scChanged:(id)sender {
     
     if (((UISegmentedControl *)sender).selectedSegmentIndex == 0) {
+        self.tbvAL.refreshControl = [[UIRefreshControl alloc]init];
+        [self.tbvAL.refreshControl addTarget:self action:@selector(refreshListenersQuestions) forControlEvents:UIControlEventValueChanged];
         newUnseenQuestionsCounter = 0;
         [self setBadge:@"0" forSegmentAtIndex:0];
         [self.tbvAL reloadData];
 //        [self scrollToBottom];
     }
     else{
+        self.tbvAL.refreshControl = nil;
         [self.tbvAL reloadData];
     }
     
@@ -315,7 +370,7 @@ forSegmentAtIndex:(NSUInteger)index
         frame.origin.x -= badgeView.frame.size.width + 2.0;                                       // Pull it in
         frame.origin.x -= MAX(0.0,
                               CGRectGetMaxX(frame) - CGRectGetMaxX(self.scWallQuestions.superview.bounds)); // Not too much to the right!
-        frame.origin.y -= 10.0;                                                             // Just on top
+        frame.origin.y -= 15.0f/2;                                                             // Just on top
         frame.origin.y = MAX(2.0,
                              frame.origin.y);                                               // Not too high!
         badgeView.frame = frame;
@@ -344,16 +399,18 @@ forSegmentAtIndex:(NSUInteger)index
     if (self.scWallQuestions.selectedSegmentIndex == 0) {
         LectureWallTableViewCell  *cellW = [tableView dequeueReusableCellWithIdentifier:@"LecturerWallCell"];
         
-        ListenerQuestion *question = [ListenerQuestion init];
+        ListenerQuestion *question = [[ListenerQuestion alloc] init];
         [question fromDictionary:[wallQuestions objectAtIndex:indexPath.row]];
         
+        if (question.question != nil) {
+            cellW.lblWallQuestion.text = question.question;
+        }
+        if (question.date != nil) {
+            cellW.lblTime.text = question.date;
+        }
         
-        cellW.lblWallQuestion.text = question.question;
-        cellW.lblTime.text = question.date;
         cellW.btnDisplay.tag = indexPath.row;
         [cellW.btnDisplay addTarget:self action:@selector(displayListenerQuestion:) forControlEvents:UIControlEventTouchDown];
-        
-        
         if (question.sharedFlag) {
             [cellW.imgvForwarded setImage:[UIImage imageNamed:@"Forwarded"] forState:UIControlStateNormal];
         } else{

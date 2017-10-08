@@ -47,7 +47,8 @@
 //Send test question to listeners
 - (void)sendQuestionToListenersWithQid:(NSString *)questionId andLId:(NSString *)lectureId;
 //Send Listeners question to all listeners
-- (void)sendListenerQuestion:(NSString *)question toLecture:(NSString *)lectureId;
+//- (void)sendListenerQuestion:(NSString *)question toLecture:(NSString *)lectureId;
+- (void)sendListenerQuestionWithId:(NSString *)questionId;
 //Get results for test question
 - (void)getResultsForQuestionWithId:(NSString *)questionId;
 //Get number of listeners for lecture

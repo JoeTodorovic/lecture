@@ -8,6 +8,7 @@
 
 #import "QuestionsWallViewController.h"
 #import "LectureQuestionTableViewCell.h"
+#import "ListenerQuestion.h"
 
 #import "GlobalData.h"
 
@@ -29,6 +30,9 @@
     self.tvQuestions.dataSource = self;
     self.tvQuestions.estimatedRowHeight = 44.0f;
     self.tvQuestions.rowHeight = UITableViewAutomaticDimension;
+    self.tvQuestions.refreshControl = [[UIRefreshControl alloc]init];
+    [self.tvQuestions.refreshControl addTarget:self action:@selector(refreshListenersQuestions) forControlEvents:UIControlEventValueChanged];
+    
     
     //SET notifications
     [self setNotifications];
@@ -39,6 +43,9 @@
     //SET other
     self.lblLectureTitle.text = @"";
     wallQuestions = [[NSMutableArray alloc] init];
+    
+    //GET wall questions
+    [SocketConnectionManager.sharedInstance getListenersQuestions];
     
 }
 
@@ -61,6 +68,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(lectureQuestionReceived:) name:@"lecturerSentQuestionNotification" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopListeningLectureResponse:) name:@"stopListeningLectureResponseNotification" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(getListenersQuestionsResponse:)
+                                                 name:@"getListenersQuestionsResponseNotification"
+                                               object:nil];
     
 }
 
@@ -110,7 +122,19 @@
     
 }
 
+-(void)getListenersQuestionsResponse:(NSNotification *)not{
+    
+    [SocketConnectionManager.sharedInstance getNumberOfListeners];
+    
+    wallQuestions = [[SocketConnectionManager sharedInstance].wallQuestions mutableCopy];
 
+    [self.tvQuestions reloadData];
+    [self.tvQuestions.refreshControl endRefreshing];
+}
+
+-(void)refreshListenersQuestions{
+    [SocketConnectionManager.sharedInstance getListenersQuestions];
+}
 
 #pragma mark - Table View
 
@@ -122,8 +146,18 @@
     
     LectureQuestionTableViewCell *cellQuestion = [tableView dequeueReusableCellWithIdentifier:@"ListenerWallQuestionCell"];
     NSDictionary *messageDict = (NSDictionary *)[wallQuestions objectAtIndex:indexPath.row];
-    cellQuestion.lblQuestionText.text = [messageDict valueForKey:@"question"];
-    cellQuestion.lblQuestionDate.text = [messageDict valueForKey:@"date"];
+    
+    ListenerQuestion *question = [[ListenerQuestion alloc] init];
+    [question fromDictionary:[wallQuestions objectAtIndex:indexPath.row]];
+    
+    
+    if (question.question != nil) {
+        cellQuestion.lblQuestionText.text = question.question;
+    }
+    if (question.date != nil) {
+        cellQuestion.lblQuestionDate.text = question.date;
+    }
+    
     return cellQuestion;
 }
 
