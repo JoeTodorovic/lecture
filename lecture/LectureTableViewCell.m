@@ -7,12 +7,14 @@
 //
 
 #import "LectureTableViewCell.h"
+#import "GlobalData.h"
 
 @implementation LectureTableViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+    self.textLabel.textColor = [[GlobalData sharedInstance] getColor:@"darkGray"];
+    self.detailTextLabel.textColor = [[GlobalData sharedInstance] getColor:@"extraLightGray"];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

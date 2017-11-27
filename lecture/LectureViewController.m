@@ -8,6 +8,7 @@
 
 #import "LectureViewController.h"
 #import <KVNProgress/KVNProgress.h>
+#import "GlobalData.h"
 
 
 @interface LectureViewController (){
@@ -20,11 +21,11 @@
 
 @implementation LectureViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-
+    self.title = @"some long text to how will behaive in this case like osnovi elektrotehnike 1 sa laboratorijsknim vezbama";
     
     //SET TSMessage
     [TSMessage setDefaultViewController:self];
@@ -35,8 +36,11 @@
     self.lblLectureDescription.text = self.lecture.lectureDescription;
     self.lblLectureId.text = [NSString stringWithFormat:@"lecture id: %@", self.lecture.uniqueId];
     
+    //SET label colors
+    self.lblLectureName.textColor = [[GlobalData sharedInstance] getColor:@"red"];
+
 //    if (self.lecture.password) {
-//        <#statements#>
+//
 //    }
     
     

@@ -23,9 +23,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *txtfPassword;
 @property (strong, nonatomic) IBOutlet UIButton *btnLogIn;
 @property (strong, nonatomic) IBOutlet UIButton *btnRegistration;
-@property (strong, nonatomic) IBOutlet UIButton *btnBack;
 
 - (IBAction)btnLogInPressed:(id)sender;
-- (IBAction)btnBackPressed:(id)sender;
 
 @end

@@ -12,8 +12,11 @@
 
 #import <KVNProgress/KVNProgress.h>
 
+#import "GlobalData.h"
 
-@interface StartViewController ()
+@interface StartViewController (){
+    UIView *navigationBottomLine;
+}
 
 @end
 
@@ -31,8 +34,49 @@
     
     [self getEndPoints];
     
-//    [self setNotifications];
+    NSDictionary *attrs1 = @{ NSForegroundColorAttributeName : [UIColor darkGrayColor], NSFontAttributeName : [UIFont systemFontOfSize:28.0]};
+    NSAttributedString *attrString1 = [[NSAttributedString alloc] initWithString:@"Welcome \n" attributes:attrs1];
+    
+    NSDictionary *attrs2 = @{ NSForegroundColorAttributeName : [UIColor lightGrayColor], NSFontAttributeName : [UIFont systemFontOfSize:28.0] };
+    NSAttributedString *attrString2 = [[NSAttributedString alloc] initWithString:@"enter lecture ID to join lecture, \nor continue as lecturer." attributes:attrs2];
 
+    NSMutableAttributedString *welcomeString = [[NSMutableAttributedString alloc] init];
+    
+    [welcomeString appendAttributedString:attrString1];
+    [welcomeString appendAttributedString:attrString2];
+    
+    self.lblWelcome.attributedText = welcomeString;
+    
+    
+    self.txtfLectureID.layer.borderColor = [[GlobalData sharedInstance] getColor:@"extraLightGray"].CGColor;
+    self.txtfLectureID.layer.borderWidth = 0.75;
+    self.txtfLectureID.textColor = [[GlobalData sharedInstance] getColor:@"lightGray"];
+    self.txtfLectureID.layer.cornerRadius = 11.0;
+    
+    [self.btnJoin setTitleColor:[[GlobalData sharedInstance] getColor:@"red"] forState:UIControlStateNormal];
+    [self.btnContinue setTitleColor:[[GlobalData sharedInstance] getColor:@"lightGray"] forState:UIControlStateNormal];
+    
+    
+    NSDictionary *attrs3 = @{ NSForegroundColorAttributeName : [[GlobalData sharedInstance] getColor:@"red"], NSFontAttributeName : [UIFont systemFontOfSize:17.0]};
+    NSAttributedString *attrString3 = [[NSAttributedString alloc] initWithString:@"Login " attributes:attrs3];
+    
+    NSDictionary *attrs4 = @{ NSForegroundColorAttributeName : [UIColor lightGrayColor], NSFontAttributeName : [UIFont systemFontOfSize:17.0] };
+    NSAttributedString *attrString4 = [[NSAttributedString alloc] initWithString:@"to continue as lecturer" attributes:attrs4];
+    
+    NSMutableAttributedString *loginString = [[NSMutableAttributedString alloc] init];
+    
+    [loginString appendAttributedString:attrString3];
+    [loginString appendAttributedString:attrString4];
+    
+    [self.btnContinue setAttributedTitle:loginString forState:UIControlStateNormal];
+    
+    
+    
+    navigationBottomLine = [self findHairlineImageViewUnder:self.navigationController.navigationBar];
+    [navigationBottomLine setHidden:YES];
+    
+    [self.navigationController.navigationBar setTintColor:[UIColor darkGrayColor]];
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -49,6 +93,7 @@
     [super viewWillAppear:animated];
     
     [self setNotifications];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -166,6 +211,7 @@
     NSLog(@"enterLecture NOTIFICATION Response");
     if ([((NSNumber *)[not.userInfo valueForKey:@"status"]) boolValue]) {
         [KVNProgress dismiss];
+    
         [self performSegueWithIdentifier:@"StartToLectureSegue" sender:self];
     }
     else{
@@ -197,6 +243,28 @@
 
 - (IBAction)btnLogInPressed:(id)sender{
     [self performSegueWithIdentifier:@"StartToLogInSegue" sender:nil];
+}
+
+
+#pragma mark - Navigation Bar
+
+- (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar{
+    return UIBarPositionTopAttached;
+}
+
+- (UIImageView *)findHairlineImageViewUnder:(UIView *)view {
+    if ([view isKindOfClass:UIImageView.class] && view.bounds.size.height <= 1.0) {
+        return (UIImageView *)view;
+    }
+    
+    for (UIView *subview in view.subviews) {
+        UIImageView *imageView = [self findHairlineImageViewUnder:subview];
+        if (imageView) {
+            return imageView;
+        }
+    }
+    
+    return nil;
 }
 
 #pragma mark - Navigation

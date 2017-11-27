@@ -19,6 +19,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedInstance = [[GlobalData alloc] init];
+        
     });
     return sharedInstance;
 }
@@ -26,6 +27,7 @@
 - (id)init {
     if ((self = [super init])) {
         [self initColours];
+        defaultCornerRadious = 11.0;
     }
     return self;
 }
@@ -58,7 +60,8 @@
 + (NSString *)dateToString:(NSDate *)date {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"dd.MM.yyyy  HH:mm"];
-    
+//    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+
     //Optionally for time zone converstions
     [formatter setTimeZone:[NSTimeZone timeZoneWithName:@"..."]];
     
@@ -67,17 +70,6 @@
     return stringFromDate;
 }
 
-+ (NSString *)dateToStringV3:(NSDate *)date {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    
-    //Optionally for time zone converstions
-    [formatter setTimeZone:[NSTimeZone timeZoneWithName:@"..."]];
-    
-    NSString *stringFromDate = [formatter stringFromDate:date];
-    
-    return stringFromDate;
-}
 
 + (NSString *)stringToFrontDay:(NSString *)stringDate{
     NSDate *date = [self stringToDate:stringDate];
@@ -249,10 +241,12 @@
 - (void)initColours {
     colors = [[NSMutableDictionary alloc] init];
     
-    [colors setObject:[UIColor colorWithRed:57.0/255.0 green:155.0/255.0 blue:232.0/255.0 alpha:1.0] forKey:@"blue"];
-    
-    
-    
+    [colors setObject:[UIColor colorWithRed:233.0/255.0 green:63.0/255.0 blue:51.0/255.0 alpha:1.0] forKey:@"red"];
+    [colors setObject:[UIColor colorWithRed:51.0/255.0 green:52.0/255.0 blue:53.0/255.0 alpha:1.0] forKey:@"darkGray"];
+    [colors setObject:[UIColor colorWithRed:72.0/255.0 green:84.0/255.0 blue:94.0/255.0 alpha:1.0] forKey:@"lightGray"];
+    [colors setObject:[UIColor colorWithRed:130.0/255.0 green:140.0/255.0 blue:160.0/255.0 alpha:1.0] forKey:@"extraLightGray"];
+
+
 }
 
 - (UIColor *)getColor:(NSString *)name {

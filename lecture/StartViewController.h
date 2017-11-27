@@ -16,8 +16,11 @@
 
 @interface StartViewController : UIViewController <UITextFieldDelegate, TSMessageViewProtocol>
 
+@property (strong, nonatomic) IBOutlet UILabel *lblWelcome;
 @property (strong, nonatomic) IBOutlet UITextField *txtfLectureID;
 
+@property (strong, nonatomic) IBOutlet UIButton *btnJoin;
+@property (strong, nonatomic) IBOutlet UIButton *btnContinue;
 
 - (IBAction)btnJoinLecturePressed:(id)sender;
 - (IBAction)btnLogInPressed:(id)sender;

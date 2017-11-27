@@ -7,12 +7,15 @@
 //
 
 #import "LectureQuestionTableViewCell.h"
+#import "GlobalData.h"
+
 
 @implementation LectureQuestionTableViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+    self.lblQuestionDate.textColor = [[GlobalData sharedInstance] getColor:@"extraLightGray"];
+    self.lblQuestionText.textColor = [[GlobalData sharedInstance] getColor:@"darkGray"];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

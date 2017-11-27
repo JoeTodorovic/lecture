@@ -1,21 +1,23 @@
 //
-//  ActivationViewController.m
+//  LectureTabBarController.m
 //  lecture
 //
-//  Created by Dusan Todorovic on 8/10/16.
-//  Copyright © 2016 joeTod. All rights reserved.
+//  Created by Dusan Todorovic on 10/13/17.
+//  Copyright © 2017 joeTod. All rights reserved.
 //
 
-#import "ActivationViewController.h"
+#import "LectureTabBarController.h"
 
-@interface ActivationViewController ()
+@interface LectureTabBarController ()
 
 @end
 
-@implementation ActivationViewController
+@implementation LectureTabBarController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.selectedIndex = 1;
     // Do any additional setup after loading the view.
 }
 
@@ -34,8 +36,4 @@
 }
 */
 
-- (IBAction)btnActivatePressed:(id)sender {
-    [self.navigationController setNavigationBarHidden:true];
-    [self performSegueWithIdentifier:@"ActivationToLecturerHomeSegue" sender:self];
-}
 @end

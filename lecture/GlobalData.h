@@ -11,6 +11,7 @@
 
 @interface GlobalData : NSObject {
     NSMutableDictionary *colors;
+    CGFloat defaultCornerRadious;
 }
 
 + (GlobalData *)sharedInstance;

@@ -23,6 +23,7 @@
 		BE663DB71E43D4790061109E /* IntAxisValueFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = BE663DB41E43D4790061109E /* IntAxisValueFormatter.m */; };
 		BE68254A1E46644C003DE875 /* EditLectureTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE6825491E46644C003DE875 /* EditLectureTableViewController.m */; };
 		BE6BD28B1E007923002D9C93 /* CreateLectureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE6BD28A1E007923002D9C93 /* CreateLectureViewController.m */; };
+		BE7C8A561FC9D9C80089C7DB /* UIColorExtention.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7C8A551FC9D9C80089C7DB /* UIColorExtention.m */; };
 		BE9040A21DEF550F001F9BAC /* QuestionsWallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9040A11DEF550F001F9BAC /* QuestionsWallViewController.m */; };
 		BE9040A61DEF568B001F9BAC /* QuestionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9040A51DEF568B001F9BAC /* QuestionTableViewCell.m */; };
 		BE9040A91DEFA453001F9BAC /* GlobalData.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9040A81DEFA453001F9BAC /* GlobalData.m */; };
@@ -36,6 +37,7 @@
 		BE927D4E1DFF819F000969E9 /* ListenerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE927D4D1DFF819F000969E9 /* ListenerManager.m */; };
 		BE94683D1E1D11FB0081F42B /* EditQAnswerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE94683C1E1D11FB0081F42B /* EditQAnswerTableViewCell.m */; };
 		BE98FD521E37AE9D007B2D48 /* BadgeSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = BE98FD511E37AE9D007B2D48 /* BadgeSegmentedControl.m */; };
+		BEA015C91F911CDC00C31F3B /* LectureTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA015C81F911CDC00C31F3B /* LectureTabBarController.m */; };
 		BEA8668F1E00389800360C98 /* LecturerSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA8668E1E00389800360C98 /* LecturerSettingTableViewController.m */; };
 		BEABACAF1DF8BF0500BADF54 /* LecturerHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEABACAE1DF8BF0500BADF54 /* LecturerHomeViewController.m */; };
 		BEABACB21DF8C58200BADF54 /* LectureTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEABACB11DF8C58200BADF54 /* LectureTableViewCell.m */; };
@@ -109,6 +111,8 @@
 		BE6825491E46644C003DE875 /* EditLectureTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditLectureTableViewController.m; sourceTree = "<group>"; };
 		BE6BD2891E007923002D9C93 /* CreateLectureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateLectureViewController.h; sourceTree = "<group>"; };
 		BE6BD28A1E007923002D9C93 /* CreateLectureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateLectureViewController.m; sourceTree = "<group>"; };
+		BE7C8A541FC9D9C80089C7DB /* UIColorExtention.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIColorExtention.h; sourceTree = "<group>"; };
+		BE7C8A551FC9D9C80089C7DB /* UIColorExtention.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIColorExtention.m; sourceTree = "<group>"; };
 		BE9040A01DEF550F001F9BAC /* QuestionsWallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionsWallViewController.h; sourceTree = "<group>"; };
 		BE9040A11DEF550F001F9BAC /* QuestionsWallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionsWallViewController.m; sourceTree = "<group>"; };
 		BE9040A41DEF568B001F9BAC /* QuestionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionTableViewCell.h; sourceTree = "<group>"; };
@@ -135,6 +139,8 @@
 		BE94683C1E1D11FB0081F42B /* EditQAnswerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditQAnswerTableViewCell.m; sourceTree = "<group>"; };
 		BE98FD501E37AE9D007B2D48 /* BadgeSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BadgeSegmentedControl.h; sourceTree = "<group>"; };
 		BE98FD511E37AE9D007B2D48 /* BadgeSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BadgeSegmentedControl.m; sourceTree = "<group>"; };
+		BEA015C71F911CDC00C31F3B /* LectureTabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LectureTabBarController.h; sourceTree = "<group>"; };
+		BEA015C81F911CDC00C31F3B /* LectureTabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LectureTabBarController.m; sourceTree = "<group>"; };
 		BEA8668D1E00389800360C98 /* LecturerSettingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LecturerSettingTableViewController.h; sourceTree = "<group>"; };
 		BEA8668E1E00389800360C98 /* LecturerSettingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LecturerSettingTableViewController.m; sourceTree = "<group>"; };
 		BEABACAD1DF8BF0500BADF54 /* LecturerHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LecturerHomeViewController.h; sourceTree = "<group>"; };
@@ -383,6 +389,8 @@
 				BE9040A71DEFA453001F9BAC /* GlobalData.h */,
 				BE9040A81DEFA453001F9BAC /* GlobalData.m */,
 				BE927D461DFF7AC7000969E9 /* LecturerUser.h */,
+				BE7C8A541FC9D9C80089C7DB /* UIColorExtention.h */,
+				BE7C8A551FC9D9C80089C7DB /* UIColorExtention.m */,
 				BE927D471DFF7AC7000969E9 /* LecturerUser.m */,
 				BE040DF61E112D990054C5CA /* ListenerQuestion.h */,
 				BE040DF71E112D990054C5CA /* ListenerQuestion.m */,
@@ -390,6 +398,8 @@
 				BE98FD511E37AE9D007B2D48 /* BadgeSegmentedControl.m */,
 				BE60B1871E9A846D000C6437 /* QTextView.h */,
 				BE60B1881E9A846D000C6437 /* QTextView.m */,
+				BEA015C71F911CDC00C31F3B /* LectureTabBarController.h */,
+				BEA015C81F911CDC00C31F3B /* LectureTabBarController.m */,
 			);
 			path = lecture;
 			sourceTree = "<group>";
@@ -738,6 +748,7 @@
 				BEDBA4A81E132E5300195E3B /* QAnswerTableViewCell.m in Sources */,
 				BE6BD28B1E007923002D9C93 /* CreateLectureViewController.m in Sources */,
 				BE1E2B201E30DD2A007A9718 /* SocketConnectionManager.m in Sources */,
+				BE7C8A561FC9D9C80089C7DB /* UIColorExtention.m in Sources */,
 				BE663DB51E43D4790061109E /* DateValueFormatter.m in Sources */,
 				BEDBA4A51E1311F500195E3B /* QuestionViewController.m in Sources */,
 				BEEB81901D50C44D00F6D80F /* main.m in Sources */,
@@ -748,6 +759,7 @@
 				BE663DB61E43D4790061109E /* DayAxisValueFormatter.m in Sources */,
 				BE9040AC1DEFAB5F001F9BAC /* AskQuestionViewController.m in Sources */,
 				BE9040A91DEFA453001F9BAC /* GlobalData.m in Sources */,
+				BEA015C91F911CDC00C31F3B /* LectureTabBarController.m in Sources */,
 				BE5E6ADE1DF1C50200A4FB9D /* EnterProfileInfoViewController.m in Sources */,
 				BE663DB71E43D4790061109E /* IntAxisValueFormatter.m in Sources */,
 				BE927D481DFF7AC7000969E9 /* LecturerUser.m in Sources */,

@@ -8,6 +8,8 @@
 
 #import "RegistrationViewController.h"
 
+#import "GlobalData.h"
+
 @interface RegistrationViewController ()
 
 @end
@@ -16,6 +18,39 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.txtfEmail.layer.cornerRadius = 11.0;
+    self.txtfEmail.layer.borderWidth = 0.75;
+    self.txtfEmail.layer.borderColor = [UIColor darkGrayColor].CGColor;
+    self.txtfEmail.textColor = [UIColor darkGrayColor];
+
+    self.txtfTitle.layer.cornerRadius = 11.0;
+    self.txtfTitle.layer.borderWidth = 0.75;
+    self.txtfTitle.layer.borderColor = [UIColor darkGrayColor].CGColor;
+    self.txtfTitle.textColor = [UIColor darkGrayColor];
+
+    self.txtfLastName.layer.cornerRadius = 11.0;
+    self.txtfLastName.layer.borderWidth = 0.75;
+    self.txtfLastName.layer.borderColor = [UIColor darkGrayColor].CGColor;
+    self.txtfLastName.textColor = [UIColor darkGrayColor];
+
+    self.txtfUniversity.layer.cornerRadius = 11.0;
+    self.txtfUniversity.layer.borderWidth = 0.75;
+    self.txtfUniversity.layer.borderColor = [UIColor darkGrayColor].CGColor;
+    self.txtfUniversity.textColor = [UIColor darkGrayColor];
+
+    self.txtfFirstName.layer.cornerRadius = 11.0;
+    self.txtfFirstName.layer.borderWidth = 0.75;
+    self.txtfFirstName.layer.borderColor = [UIColor darkGrayColor].CGColor;
+    self.txtfFirstName.textColor = [UIColor darkGrayColor];
+
+    self.txtfPassword.layer.cornerRadius = 11.0;
+    self.txtfPassword.layer.borderWidth = 0.75;
+    self.txtfPassword.layer.borderColor = [UIColor darkGrayColor].CGColor;
+    self.txtfPassword.textColor = [UIColor darkGrayColor];
+
+    [self.btnRegister setTitleColor:[[GlobalData sharedInstance] getColor:@"red"] forState:UIControlStateNormal];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -34,7 +69,10 @@
     [self.txtfDescription resignFirstResponder];
     [self.txtfFirstName resignFirstResponder];
     [self.txtfPassword resignFirstResponder];
+    
+    
 
+    
 
 }
 

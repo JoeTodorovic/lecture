@@ -46,7 +46,7 @@ typedef enum {
         CFReadStreamRef readStream;
         CFWriteStreamRef writeStream;
 //        CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)@"localhost", 8210, &readStream, &writeStream);
-        CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)@"192.168.0.12", 8210, &readStream, &writeStream);
+        CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)@"192.168.0.14", 8210, &readStream, &writeStream);
 //        CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)@"24.135.56.76", 8210, &readStream, &writeStream);
 
         

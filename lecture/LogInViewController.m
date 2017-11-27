@@ -12,6 +12,8 @@
 #import "TSMessage.h"
 #import "TSMessageView.h"
 
+#import "GlobalData.h"
+
 @interface LogInViewController ()
 
 @end
@@ -24,11 +26,35 @@
     [TSMessage setDefaultViewController:self];
     [TSMessage setDelegate:self];
     
-    
-//    self.txtfEmailUsername.text = @"jako@qqqq.com";
-//    self.txtfPassword.text = @"123";
     self.txtfEmailUsername.text = @"newone@www.com";
     self.txtfPassword.text = @"123";
+    
+    self.txtfPassword.layer.cornerRadius = 11.0;
+    self.txtfPassword.layer.borderWidth = 0.75;
+    self.txtfPassword.layer.borderColor = [UIColor darkGrayColor].CGColor;
+    
+    self.txtfEmailUsername.layer.cornerRadius = 11.0;
+    self.txtfEmailUsername.layer.borderWidth = 0.75;
+    self.txtfEmailUsername.layer.borderColor = [UIColor darkGrayColor].CGColor;
+    
+    self.txtfEmailUsername.textColor = [UIColor darkGrayColor];
+    self.txtfPassword.textColor = [UIColor darkGrayColor];
+    
+    
+    [self.btnLogIn setTitleColor:[[GlobalData sharedInstance] getColor:@"red"] forState:UIControlStateNormal];
+    
+    NSDictionary *attrs1 = @{ NSForegroundColorAttributeName : [[GlobalData sharedInstance] getColor:@"red"], NSFontAttributeName : [UIFont systemFontOfSize:17.0]};
+    NSAttributedString *attrString1 = [[NSAttributedString alloc] initWithString:@"SignUp " attributes:attrs1];
+    
+    NSDictionary *attrs2 = @{ NSForegroundColorAttributeName : [UIColor lightGrayColor], NSFontAttributeName : [UIFont systemFontOfSize:17.0] };
+    NSAttributedString *attrString2 = [[NSAttributedString alloc] initWithString:@"if you don't have account" attributes:attrs2];
+    
+    NSMutableAttributedString *signupString = [[NSMutableAttributedString alloc] init];
+    
+    [signupString appendAttributedString:attrString1];
+    [signupString appendAttributedString:attrString2];
+    
+    [self.btnRegistration setAttributedTitle:signupString forState:UIControlStateNormal];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -184,6 +210,7 @@
             }
             else{
 
+                [self.navigationController setNavigationBarHidden:true];
                 [self performSegueWithIdentifier:@"LogInToLecturerHomeSegue" sender:self];
                 [KVNProgress dismiss];
 
@@ -211,9 +238,9 @@
     
 }
 
-- (IBAction)btnBackPressed:(id)sender {
-    [[self navigationController] popViewControllerAnimated:YES];
-}
+//- (IBAction)btnBackPressed:(id)sender {
+//    [[self navigationController] popViewControllerAnimated:YES];
+//}
 
 //-(void)initSocketConnectionFail:(NSNotification *)not{
 //    

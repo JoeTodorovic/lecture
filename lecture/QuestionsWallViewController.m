@@ -15,6 +15,8 @@
 @interface QuestionsWallViewController (){
     
     NSMutableArray *wallQuestions;
+    UIImageView *navBarHairlineImageView;
+
 }
 
 @end
@@ -24,6 +26,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    //SET Navigation Bar
+    [self setTitle:@"Lecture title"];
+    [self.navigationController setNavigationBarHidden:NO];
+    navBarHairlineImageView = [self findHairlineImageViewUnder:self.navigationController.navigationBar];
+    [navBarHairlineImageView setHidden:YES];
+    if (@available(iOS 11.0, *)) {
+        [self.navigationController.navigationBar setPrefersLargeTitles:YES];
+    } else {
+        // Fallback on earlier versions
+    }
+    
+    [self.navigationItem setHidesBackButton:YES];
+    
+    UIBarButtonItem *exitLecture = [[UIBarButtonItem alloc] initWithImage: [UIImage imageNamed:@"Delete"] style:UIBarButtonItemStylePlain target:self action:@selector(exitLecture)];
+    [exitLecture setTintColor:[[GlobalData sharedInstance] getColor:@"red"]];
+//    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithImage: [UIImage imageNamed:@"Delete"] style:UIBarButtonItemStylePlain target:self action:@selector(exitLecture)]];
+    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"leave" style:UIBarButtonItemStylePlain target:self action:@selector(exitLecture)]];
+    [self.navigationItem.rightBarButtonItem setTintColor:[[GlobalData sharedInstance] getColor:@"red"]];
     
     //SET Table View
     self.tvQuestions.delegate = self;
@@ -33,6 +53,11 @@
     self.tvQuestions.refreshControl = [[UIRefreshControl alloc]init];
     [self.tvQuestions.refreshControl addTarget:self action:@selector(refreshListenersQuestions) forControlEvents:UIControlEventValueChanged];
     
+    //SET question btn
+    self.btnAsk.backgroundColor = [[GlobalData sharedInstance] getColor:@"red"];
+    self.btnAsk.layer.cornerRadius = 11.0;
+    [self.btnAsk setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.btnAsk setTitle:@"ask a question" forState:UIControlStateNormal];
     
     //SET notifications
     [self setNotifications];
@@ -42,6 +67,7 @@
     
     //SET other
     self.lblLectureTitle.text = @"";
+    
     wallQuestions = [[NSMutableArray alloc] init];
     
     //GET wall questions
@@ -76,6 +102,27 @@
     
 }
 
+
+#pragma mark - Navigation Bar
+
+- (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar{
+    return UIBarPositionTopAttached;
+}
+
+- (UIImageView *)findHairlineImageViewUnder:(UIView *)view {
+    if ([view isKindOfClass:UIImageView.class] && view.bounds.size.height <= 1.0) {
+        return (UIImageView *)view;
+    }
+    
+    for (UIView *subview in view.subviews) {
+        UIImageView *imageView = [self findHairlineImageViewUnder:subview];
+        if (imageView) {
+            return imageView;
+        }
+    }
+    
+    return nil;
+}
 
 
 #pragma mark - Selectors
@@ -181,6 +228,10 @@
 
 - (IBAction)btnAskPressed:(id)sender {
     
+}
+
+- (void)exitLecture{
+    [[SocketConnectionManager sharedInstance] stopListenLecture];
 }
 
 - (IBAction)btnLeaveLecturePressed:(id)sender {

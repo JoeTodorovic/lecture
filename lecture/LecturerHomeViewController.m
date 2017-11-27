@@ -22,6 +22,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if (@available(iOS 11.0, *)) {
+        self.navigationController.navigationBar.prefersLargeTitles = YES;
+    } else {
+        // Fallback on earlier versions
+    }
     
     self.tvLectures.delegate = self;
     self.tvLectures.dataSource = self;
@@ -41,6 +46,15 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.tvLectures reloadData];
+    
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
 }
 
 
@@ -81,7 +95,6 @@
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        //add code here for when you hit delete
         
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:[NSString stringWithFormat:@"Delete lecture %@?",((Lecture *)[[LecturerManager sharedInstance].lectures objectAtIndex:indexPath.row]).name ]preferredStyle:UIAlertControllerStyleAlert];
         
